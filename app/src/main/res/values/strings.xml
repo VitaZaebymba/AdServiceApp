@@ -13,5 +13,9 @@
     <string name="ad_sign_in">Вход</string>
     <string name="ad_sign_out">Выход</string>
 
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+
 
 </resources>
