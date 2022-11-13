@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init(){
-        var toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
+        var toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close) //кнопка для бокового меню
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
     }
