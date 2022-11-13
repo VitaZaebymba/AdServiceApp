@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/layout/activity_main.xml" value="0.33605072463768115" />
-        <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/menu/drawer_main_menu.xml" value="0.365625" />
+        <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/layout/nav_header_main.xml" value="0.7361111111111112" />
+        <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/menu/drawer_main_menu.xml" value="0.33" />
+        <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/menu/menu.xml" value="1.828125" />
+        <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/menu/menu_draw.xml" value="0.33" />
       </map>
     </option>
   </component>
