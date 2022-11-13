@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "237598412586",
+    "project_id": "adservicekotlin",
+    "storage_bucket": "adservicekotlin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:237598412586:android:ef7ab1589490778c495853",
+        "android_client_info": {
+          "package_name": "com.vita_zaebymba.adserviceapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "237598412586-gnomhgq9hpgsgln72bne2v7ghcq41563.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANPm8HX3ePwC3AMNNbieYxEW65Hf0ZHow"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "237598412586-gnomhgq9hpgsgln72bne2v7ghcq41563.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
