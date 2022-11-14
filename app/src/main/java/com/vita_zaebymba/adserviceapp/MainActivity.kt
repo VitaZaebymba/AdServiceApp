@@ -8,21 +8,26 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.main_content.*
+import com.vita_zaebymba.adserviceapp.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    private lateinit var rootElement: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        rootElement = ActivityMainBinding.inflate(layoutInflater)
+        val view = rootElement.root
+        setContentView(view)
         init()
     }
 
     private fun init(){
-        var toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close) //кнопка для бокового меню
-        drawerLayout.addDrawerListener(toggle)
+        var toggle = ActionBarDrawerToggle(this, rootElement.drawerLayout, rootElement.toolbarMainContent.toolbar, R.string.open, R.string.close) //кнопка для бокового меню
+        rootElement.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-        navView.setNavigationItemSelectedListener(this)//navigation view будет передавать нажатия на кнопки меню
+        rootElement.navView.setNavigationItemSelectedListener(this) //navigation view будет передавать нажатия на кнопки меню
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -54,7 +59,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
         }
-        drawerLayout.closeDrawer(GravityCompat.START)
+        rootElement.drawerLayout.closeDrawer(GravityCompat.START) //меню сворачивается после нажатия на раздел
         return true
     }
 
