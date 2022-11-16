@@ -9,11 +9,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 import com.vita_zaebymba.adserviceapp.databinding.ActivityMainBinding
+import com.vita_zaebymba.adserviceapp.dialoghelper.DialogHelper
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var rootElement: ActivityMainBinding
+    private val dialogHelper = DialogHelper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +51,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this, "Pressed to dm", Toast.LENGTH_LONG).show()
             }
             R.id.id_sign_up -> {
-                Toast.makeText(this, "Pressed to sign up", Toast.LENGTH_LONG).show()
+
+                dialogHelper.createSignDialog()
+
             }
             R.id.id_sign_in -> {
                 Toast.makeText(this, "Pressed to sign in", Toast.LENGTH_LONG).show()
