@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.id_sign_up -> {
 
-                dialogHelper.createSignDialog()
+                dialogHelper.createSignDialog() // создание диалогового окна с регистрацией
 
             }
             R.id.id_sign_in -> {
