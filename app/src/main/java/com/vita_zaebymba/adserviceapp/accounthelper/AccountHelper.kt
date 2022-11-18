@@ -10,7 +10,7 @@ class AccountHelper(act:MainActivity) {
     private  val act = act // передаем активити
 
     fun signUpWithEmail(email:String, password: String){
-        if (email.isNullOrEmpty() && password.isNullOrEmpty()){
+        if (email.isNotEmpty() && password.isNotEmpty()){
             act.mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { // функция addOnComplete возвращает task - специальный объект,
                 // который несет информацию об успешности регистрации
                     task -> if (task.isSuccessful) {
@@ -23,7 +23,7 @@ class AccountHelper(act:MainActivity) {
              }
         }
     }
-    private  fun sendEmailVerification(user:FirebaseUser){ // функция для отправки письмо с подтверждением
+    private fun sendEmailVerification(user:FirebaseUser){ // функция для отправки письмо с подтверждением
             user.sendEmailVerification().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(act, act.resources.getString(R.string.send_verification_done), Toast.LENGTH_LONG).show()
