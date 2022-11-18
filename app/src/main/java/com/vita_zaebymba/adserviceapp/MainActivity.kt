@@ -9,6 +9,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 import com.vita_zaebymba.adserviceapp.databinding.ActivityMainBinding
+import com.vita_zaebymba.adserviceapp.dialoghelper.DialogConst
 import com.vita_zaebymba.adserviceapp.dialoghelper.DialogHelper
 
 
@@ -52,11 +53,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.id_sign_up -> {
 
-                dialogHelper.createSignDialog() // создание диалогового окна с регистрацией
+                dialogHelper.createSignDialog(DialogConst.SIGN_UP_STATE) // создание диалогового окна с регистрацией
 
             }
             R.id.id_sign_in -> {
-                Toast.makeText(this, "Pressed to sign in", Toast.LENGTH_LONG).show()
+
+                dialogHelper.createSignDialog(DialogConst.SIGN_IN_STATE)
+
             }
             R.id.id_sign_out -> {
                 Toast.makeText(this, "Pressed to sign out", Toast.LENGTH_LONG).show()
