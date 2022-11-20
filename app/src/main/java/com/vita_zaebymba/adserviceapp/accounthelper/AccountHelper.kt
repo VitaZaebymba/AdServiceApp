@@ -12,7 +12,7 @@ class AccountHelper(act:MainActivity) {
     fun signUpWithEmail(email:String, password: String){
         if (email.isNotEmpty() && password.isNotEmpty()){
             act.mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { // функция addOnComplete возвращает task - специальный объект,
-                // который несет информацию об успешности регистрации
+                    // который несет информацию об успешности регистрации
                     task -> if (task.isSuccessful) {
                         sendEmailVerification(task.result?.user!!)
 
