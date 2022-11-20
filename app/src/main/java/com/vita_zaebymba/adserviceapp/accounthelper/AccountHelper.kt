@@ -11,18 +11,39 @@ class AccountHelper(act:MainActivity) {
 
     fun signUpWithEmail(email:String, password: String){
         if (email.isNotEmpty() && password.isNotEmpty()){
-            act.mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { // функция addOnComplete возвращает task - специальный объект,
-                    // который несет информацию об успешности регистрации
-                    task -> if (task.isSuccessful) {
-                        sendEmailVerification(task.result?.user!!)
+            act.mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { // функция addOnComplete возвращает task - специальный объект,который несет информацию об успешности регистраци
 
-            } else {
-                Toast.makeText(act, act.resources.getString(R.string.sign_up_error), Toast.LENGTH_LONG).show()
+                    task ->
+                    if (task.isSuccessful) {
+                        sendEmailVerification(task.result?.user!!) //отправляем email
+                        act.uiUpdate(task.result?.user)
+
+                    }
+                    else {
+                        Toast.makeText(act, act.resources.getString(R.string.sign_up_error), Toast.LENGTH_LONG).show()
                 }
 
              }
         }
     }
+
+    fun signInpWithEmail(email:String, password: String){
+        if (email.isNotEmpty() && password.isNotEmpty()){
+            act.mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { // функция addOnComplete возвращает task - специальный объект,который несет информацию об успешности регистраци
+
+                    task ->
+                if (task.isSuccessful) {
+                    act.uiUpdate(task.result?.user)
+                }
+                else {
+                    Toast.makeText(act, act.resources.getString(R.string.sign_in_error), Toast.LENGTH_LONG).show()
+                }
+
+            }
+        }
+    }
+
+
     private fun sendEmailVerification(user:FirebaseUser){ // функция для отправки письмо с подтверждением
             user.sendEmailVerification().addOnCompleteListener { task ->
                 if (task.isSuccessful) {

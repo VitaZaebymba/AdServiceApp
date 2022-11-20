@@ -14,6 +14,7 @@ class DialogHelper(act:MainActivity) {
         val builder = AlertDialog.Builder(act)
         val rootDialogElement = SignDialogBinding.inflate(act.layoutInflater)
         val view = rootDialogElement.root // можно было сразу rootDialogElement передать в setView, но так более наглядно
+        builder.setView(view)
 
 
         if (index == DialogConst.SIGN_UP_STATE){ // меняем диалоговое окно в зависимости от вохода или регистрации
@@ -24,17 +25,20 @@ class DialogHelper(act:MainActivity) {
             rootDialogElement.tvSignTitle.text = act.resources.getString(R.string.ad_sign_in)
             rootDialogElement.btSignUpIn.text = act.resources.getString(R.string.sign_in_action)
         }
+        val dialog = builder.create()
+
         rootDialogElement.btSignUpIn.setOnClickListener{
+            dialog.dismiss() // закрытие окна с регистрацией после нажатия на кнопку
             if (index == DialogConst.SIGN_UP_STATE){
 
                 accHelper.signUpWithEmail(rootDialogElement.edSignEmail.text.toString(), rootDialogElement.edSignPassword.text.toString())
 
             } else {
+                accHelper.signInpWithEmail(rootDialogElement.edSignEmail.text.toString(), rootDialogElement.edSignPassword.text.toString())
 
             }
         }
 
-        builder.setView(view)
-        builder.show()
+        dialog.show()
     }
 }
