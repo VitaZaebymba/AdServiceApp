@@ -44,7 +44,7 @@ class AccountHelper(act:MainActivity) {
     }
 
 
-    private fun sendEmailVerification(user:FirebaseUser){ // функция для отправки письмо с подтверждением
+    private fun sendEmailVerification(user:FirebaseUser){  // функция для отправки письмо с подтверждением
             user.sendEmailVerification().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(act, act.resources.getString(R.string.send_verification_done), Toast.LENGTH_LONG).show()
