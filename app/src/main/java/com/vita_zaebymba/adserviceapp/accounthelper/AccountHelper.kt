@@ -29,7 +29,7 @@ class AccountHelper(act:MainActivity) {
 
     fun signInpWithEmail(email:String, password: String){
         if (email.isNotEmpty() && password.isNotEmpty()){
-            act.mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { // функция addOnComplete возвращает task - специальный объект,который несет информацию об успешности регистраци
+            act.mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {  // функция addOnComplete возвращает task - специальный объект,который несет информацию об успешности регистраци
 
                     task ->
                 if (task.isSuccessful) {
