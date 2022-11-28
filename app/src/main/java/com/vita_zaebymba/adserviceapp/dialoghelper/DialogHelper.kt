@@ -2,6 +2,7 @@ package com.vita_zaebymba.adserviceapp.dialoghelper
 
 import android.app.AlertDialog
 import android.view.View
+import android.widget.Toast
 import com.vita_zaebymba.adserviceapp.MainActivity
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.accounthelper.AccountHelper
@@ -24,8 +25,28 @@ class DialogHelper(act:MainActivity) {
         rootDialogElement.btSignUpIn.setOnClickListener{
             setOnClickSignUpIn(index, rootDialogElement, dialog)
         }
+        rootDialogElement.btForgetPassword.setOnClickListener{
+            setOnClickResetPassword(rootDialogElement, dialog)
+        }
 
         dialog.show()
+    }
+
+    private fun setOnClickResetPassword(rootDialogElement: SignDialogBinding, dialog: AlertDialog?) { // функция восстановления пароля
+
+
+        if (rootDialogElement.edSignEmail.text.isNotEmpty()){
+            act.mAuth.sendPasswordResetEmail(rootDialogElement.edSignEmail.text.toString()).addOnCompleteListener { // отправка письма с ссылкой на восстановление
+                task ->
+                if (task.isSuccessful){
+                    Toast.makeText(act, R.string.email_reset_password_was_sent, Toast.LENGTH_LONG).show()
+                }
+            }
+            dialog?.dismiss() // спрятать диалоговое окно
+        } else{
+            rootDialogElement.tvDialogMessage.visibility = View.VISIBLE
+        }
+
     }
 
     private fun setOnClickSignUpIn(index: Int, rootDialogElement: SignDialogBinding, dialog: AlertDialog?) {
