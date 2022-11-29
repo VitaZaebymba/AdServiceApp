@@ -1,6 +1,10 @@
 package com.vita_zaebymba.adserviceapp.accounthelper
 
 import android.widget.Toast
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseUser
 import com.vita_zaebymba.adserviceapp.MainActivity
 import com.vita_zaebymba.adserviceapp.R
@@ -8,6 +12,7 @@ import com.vita_zaebymba.adserviceapp.R
 class AccountHelper(act:MainActivity) {
 
     private  val act = act // передаем активити
+    private lateinit var signInClient: GoogleSignInClient
 
     fun signUpWithEmail(email:String, password: String){
         if (email.isNotEmpty() && password.isNotEmpty()){
@@ -53,4 +58,17 @@ class AccountHelper(act:MainActivity) {
                 }
             }
     }
+
+    private fun getSignInClient():GoogleSignInClient { // класс GoogleSignInClient создает интент для отправки сообщения к системе для получения доступа к аккаунту
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(act.getString(R.string.default_web_client_id)).build()
+        return GoogleSignIn.getClient(act, gso)
+    }
+
+    fun signInWithGoogle(){
+        signInClient = getSignInClient()
+        val intent = signInClient.signInIntent
+    }
+
+
 }
