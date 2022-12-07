@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "237598412586-dmvbhres1tbd80erkotdjfoojj4god5u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vita_zaebymba.adserviceapp",
+            "certificate_hash": "b0579fae1a28f6fdef98579b57fe8f11b4d9a39d"
+          }
+        },
+        {
           "client_id": "237598412586-gnomhgq9hpgsgln72bne2v7ghcq41563.apps.googleusercontent.com",
           "client_type": 3
         }

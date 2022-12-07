@@ -10,7 +10,7 @@ import com.vita_zaebymba.adserviceapp.databinding.SignDialogBinding
 
 class DialogHelper(act:MainActivity) {
     private val act = act
-    private val accHelper = AccountHelper(act)
+    val accHelper = AccountHelper(act)
 
     fun createSignDialog(index:Int){
         val builder = AlertDialog.Builder(act)

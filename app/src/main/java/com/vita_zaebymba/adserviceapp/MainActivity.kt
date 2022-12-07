@@ -10,6 +10,9 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.api.Api
+import com.google.android.gms.common.api.ApiException
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -37,6 +40,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE){
             //Log.d("MyLog", "Sign in Result")
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data) // передаем интент аккаунта, по которому зашли
+            try {
+                val account = task.getResult(ApiException::class.java)
+                if (account != null){
+                    dialogHelper.accHelper.signInFirebaseWithGoogle(account.idToken!!)
+                }
+
+            } catch (e:ApiException){
+                Log.d("MyLog", "Api error: ${e.message}")
+            }
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
