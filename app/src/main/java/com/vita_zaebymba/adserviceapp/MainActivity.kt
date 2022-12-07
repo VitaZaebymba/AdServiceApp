@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE){
-            Log.d("MyLog", "Sign in Result")
+            //Log.d("MyLog", "Sign in Result")
         }
         super.onActivityResult(requestCode, resultCode, data)
     }

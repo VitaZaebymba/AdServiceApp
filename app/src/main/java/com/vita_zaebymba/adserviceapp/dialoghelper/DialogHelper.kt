@@ -29,6 +29,10 @@ class DialogHelper(act:MainActivity) {
             setOnClickResetPassword(rootDialogElement, dialog)
         }
 
+        rootDialogElement.btGoogleSignIn.setOnClickListener{
+            accHelper.signInWithGoogle()
+        }
+
         dialog.show()
     }
 

@@ -6,6 +6,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.vita_zaebymba.adserviceapp.MainActivity
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.dialoghelper.GoogleAccConst
@@ -70,6 +71,10 @@ class AccountHelper(act:MainActivity) {
         signInClient = getSignInClient()
         val intent = signInClient.signInIntent // интент для входа
         act.startActivityForResult(intent, GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE) // ожидание результата - аккаунт, откуда берется токен
+    }
+
+    fun signInFirebaseWithGoogle(token: String){
+        val credential = GoogleAuthProvider
     }
 
 
