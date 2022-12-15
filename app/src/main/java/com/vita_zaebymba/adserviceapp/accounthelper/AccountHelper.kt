@@ -6,10 +6,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.*
 import com.vita_zaebymba.adserviceapp.MainActivity
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.constants.FirebaseAuthConstants
@@ -45,6 +42,14 @@ class AccountHelper(act:MainActivity) {
                                 //Log.d("MyLog", "Exception: ${exception.errorCode}")
                             }
                         }
+                        if (task.exception is FirebaseAuthWeakPasswordException) {
+                            val exception = task.exception as FirebaseAuthWeakPasswordException
+                            Log.d("MyLog", "Exception: ${exception.errorCode}")
+                            if (exception.errorCode == FirebaseAuthConstants.ERROR_WEAK_PASSWORD) {
+                                Toast.makeText(act, FirebaseAuthConstants.ERROR_WEAK_PASSWORD, Toast.LENGTH_LONG).show()
+                                //Log.d("MyLog", "Exception: ${exception.errorCode}")
+                            }
+                        }
                 }
 
              }
@@ -63,11 +68,13 @@ class AccountHelper(act:MainActivity) {
                         if (task.exception is FirebaseAuthInvalidCredentialsException) {
                             Log.d("MyLog", "Exception: ${task.exception}")
                         val exception = task.exception as FirebaseAuthInvalidCredentialsException
+
                         if (exception.errorCode == FirebaseAuthConstants.ERROR_INVALID_EMAIL){
                             Toast.makeText(act, FirebaseAuthConstants.ERROR_INVALID_EMAIL, Toast.LENGTH_LONG).show()
                             //Log.d("MyLog", "Exception: ${exception.errorCode}")
-                        } else if (exception.errorCode == FirebaseAuthConstants.ERROR_WRONG_PASSWORD){
+                        } else if (exception.errorCode == FirebaseAuthConstants.ERROR_WRONG_PASSWORD) {
                             Toast.makeText(act, FirebaseAuthConstants.ERROR_WRONG_PASSWORD, Toast.LENGTH_LONG).show()
+                        }
                     }
                 }
 
