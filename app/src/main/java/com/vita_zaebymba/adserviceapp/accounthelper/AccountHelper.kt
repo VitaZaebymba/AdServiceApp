@@ -61,11 +61,13 @@ class AccountHelper(act:MainActivity) {
                 }
                 else {
                         if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                            Log.d("MyLog", "Exception: ${task.exception}")
                         val exception = task.exception as FirebaseAuthInvalidCredentialsException
                         if (exception.errorCode == FirebaseAuthConstants.ERROR_INVALID_EMAIL){
                             Toast.makeText(act, FirebaseAuthConstants.ERROR_INVALID_EMAIL, Toast.LENGTH_LONG).show()
                             //Log.d("MyLog", "Exception: ${exception.errorCode}")
-                        }
+                        } else if (exception.errorCode == FirebaseAuthConstants.ERROR_WRONG_PASSWORD){
+                            Toast.makeText(act, FirebaseAuthConstants.ERROR_WRONG_PASSWORD, Toast.LENGTH_LONG).show()
                     }
                 }
 
