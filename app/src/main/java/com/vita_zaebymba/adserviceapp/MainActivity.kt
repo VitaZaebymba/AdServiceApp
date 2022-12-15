@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    fun uiUpdate(user:FirebaseUser?){
+    fun uiUpdate(user:FirebaseUser?){ // шапка бокового меню
 
         tvAccount.text = if (user == null) {
             resources.getString(R.string.not_reg)

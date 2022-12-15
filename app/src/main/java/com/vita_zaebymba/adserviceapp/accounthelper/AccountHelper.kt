@@ -79,6 +79,7 @@ class AccountHelper(act:MainActivity) {
             task ->
                 if (task.isSuccessful) {
                 Toast.makeText(act, "Sign in done", Toast.LENGTH_LONG).show()
+                    act.uiUpdate(task.result?.user)
             }
         }
     }
