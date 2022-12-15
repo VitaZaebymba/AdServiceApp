@@ -1,14 +1,17 @@
 package com.vita_zaebymba.adserviceapp.accounthelper
 
+import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.vita_zaebymba.adserviceapp.MainActivity
 import com.vita_zaebymba.adserviceapp.R
+import com.vita_zaebymba.adserviceapp.constants.FirebaseAuthConstants
 import com.vita_zaebymba.adserviceapp.dialoghelper.GoogleAccConst
 
 class AccountHelper(act:MainActivity) {
@@ -27,7 +30,14 @@ class AccountHelper(act:MainActivity) {
 
                     }
                     else {
-                        Toast.makeText(act, act.resources.getString(R.string.sign_up_error), Toast.LENGTH_LONG).show()
+                        //Toast.makeText(act, act.resources.getString(R.string.sign_up_error), Toast.LENGTH_LONG).show()
+                        //Log.d("MyLog", "Exception: ${exception.errorCode}")
+                        if (task.exception is FirebaseAuthUserCollisionException){
+                            val exception = task.exception as FirebaseAuthUserCollisionException
+                            if (exception.errorCode == FirebaseAuthConstants.ERROR_EMAIL_ALREADY_IN_USE){
+                                Toast.makeText(act, FirebaseAuthConstants.ERROR_EMAIL_ALREADY_IN_USE, Toast.LENGTH_LONG).show()
+                            }
+                        }
                 }
 
              }
