@@ -30,5 +30,9 @@
     <string name="send_verification_email_error">Не удалось email для подтверждения!</string>
     <string name="send_verification_done">На вашу почту была отправлена ссылка для подтверждения. Пожалуйста, подтвердите почту.</string>
 
+    <!-- Email link -->
+    <string name="link_done">Email успешно подключен к Google Account!</string>
+    <string name="enter_to_gmail">У вас уже есть аккаунт с такой почтой, войдите в этот аккаунт, чтобы подсоединить эту почту!</string>
+
 
 </resources>

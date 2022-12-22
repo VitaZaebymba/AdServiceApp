@@ -33,7 +33,8 @@ class AccountHelper(act:MainActivity) {
                         if (task.exception is FirebaseAuthUserCollisionException){
                             val exception = task.exception as FirebaseAuthUserCollisionException
                             if (exception.errorCode == FirebaseAuthConstants.ERROR_EMAIL_ALREADY_IN_USE){
-                                Toast.makeText(act, FirebaseAuthConstants.ERROR_EMAIL_ALREADY_IN_USE, Toast.LENGTH_LONG).show()
+                                //Toast.makeText(act, FirebaseAuthConstants.ERROR_EMAIL_ALREADY_IN_USE, Toast.LENGTH_LONG).show()
+                                linkEmailToGmail(email, password)
                             }
                         } else if (task.exception is FirebaseAuthInvalidCredentialsException) {
                             val exception = task.exception as FirebaseAuthInvalidCredentialsException
@@ -115,6 +116,19 @@ class AccountHelper(act:MainActivity) {
             } else {
                     Log.d("MyLog", "Google Sign In Exception: ${task.exception}")
                 }
+        }
+    }
+
+    private fun linkEmailToGmail(email: String, password: String) { // функция для соединения почты и гугл аккаунты
+        val credential = EmailAuthProvider.getCredential(email, password)
+        if (act.mAuth.currentUser != null) {
+            act.mAuth.currentUser?.linkWithCredential(credential)?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(act, act.resources.getString(R.string.link_done), Toast.LENGTH_LONG).show()
+                }
+            }
+        } else {
+            Toast.makeText(act, act.resources.getString(R.string.enter_to_gmail), Toast.LENGTH_LONG).show()
         }
     }
 
