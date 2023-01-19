@@ -8,15 +8,14 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.common.api.Api
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.vita_zaebymba.adserviceapp.activity.EditAdAct
 import com.vita_zaebymba.adserviceapp.databinding.ActivityMainBinding
 import com.vita_zaebymba.adserviceapp.dialoghelper.DialogConst
 import com.vita_zaebymba.adserviceapp.dialoghelper.DialogHelper
@@ -36,6 +35,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val view = rootElement.root
         setContentView(view)
         init()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean { // активити нового объявления
+        if(item.itemId == R.id.id_new_ad) {
+            val i = Intent(this, EditAdAct::class.java)
+            startActivity(i)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
