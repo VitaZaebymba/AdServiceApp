@@ -106,6 +106,11 @@ class AccountHelper(act:MainActivity) {
         act.startActivityForResult(intent, GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE) // ожидание результата - аккаунт, откуда берется токен
     }
 
+    fun signOutGoogle(){
+        getSignInClient().signOut()
+
+    }
+
     fun signInFirebaseWithGoogle(token: String){ // вход по гугл аккаунту, из аккаунта берем токен и превращаем его в credential
         val credential = GoogleAuthProvider.getCredential(token, null)
         act.mAuth.signInWithCredential(credential).addOnCompleteListener {
