@@ -1,9 +1,12 @@
 package com.vita_zaebymba.adserviceapp.utils
 
 import android.content.Context
+import com.vita_zaebymba.adserviceapp.R
 import org.json.JSONObject
 import java.io.IOException
 import java.io.InputStream
+import java.util.*
+import kotlin.collections.ArrayList
 
 object CityHelper {
     fun getAllCountries(context: Context): ArrayList<String>{
@@ -29,5 +32,22 @@ object CityHelper {
 
         }
         return tempArray
+    }
+
+    fun filterListData(list: ArrayList<String>, searchText:String?): ArrayList<String>{ //функция выдает массив для поиска, который записываем во временный массив, временный передаем в адаптер
+        val tempList = ArrayList<String>()
+        tempList.clear()
+        if (searchText == null){
+            tempList.add("No result")
+            return tempList
+        }
+
+        for (selection: String in list) { //ищем совпадения
+            if (selection.lowercase(Locale.ROOT).startsWith(searchText.lowercase(Locale.ROOT))){
+                tempList.add(selection)
+            }
+        }
+        if (tempList.size == 0) tempList.add("No result")
+        return tempList
     }
 }

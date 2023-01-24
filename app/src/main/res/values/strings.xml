@@ -34,5 +34,8 @@
     <string name="link_done">Email успешно подключен к Google Account!</string>
     <string name="enter_to_gmail">У вас уже есть аккаунт с такой почтой, войдите в этот аккаунт, чтобы подсоединить эту почту!</string>
 
+    <!-- Filter to countries -->
+    <string name="list_country">No result</string>
+
 
 </resources>
