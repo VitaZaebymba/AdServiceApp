@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.databinding.ActivityEditAdBinding
+import com.vita_zaebymba.adserviceapp.dialogs.DialogSpinnerHelper
 import com.vita_zaebymba.adserviceapp.utils.CityHelper
 
 class EditAdAct : AppCompatActivity() {
@@ -13,9 +14,9 @@ class EditAdAct : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         rootElement = ActivityEditAdBinding.inflate(layoutInflater)
         setContentView(rootElement.root)
+        val listCountry = CityHelper.getAllCountries(this)
+        val dialog = DialogSpinnerHelper()
+        dialog.showSpinnerDialog(this, listCountry)
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, CityHelper.getAllCountries(this))
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        rootElement.spinnerCountry.adapter = adapter
     }
 }
