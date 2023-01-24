@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vita_zaebymba.adserviceapp.R
 
-class RcViewDialogSpinner: RecyclerView.Adapter<RcViewDialogSpinner.SpViewHolder>() {
-    val mainList = ArrayList<String>()
+class RcViewDialogSpinnerAdapter: RecyclerView.Adapter<RcViewDialogSpinnerAdapter.SpViewHolder>() {
+   private val mainList = ArrayList<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpViewHolder { //рисуем элемент
         val view = LayoutInflater.from(parent.context).inflate(R.layout.sp_list_item, parent, false)
@@ -17,7 +17,7 @@ class RcViewDialogSpinner: RecyclerView.Adapter<RcViewDialogSpinner.SpViewHolder
     }
 
     override fun onBindViewHolder(holder: SpViewHolder, position: Int) { //к элементу подключаем текст и т.д.
-        TODO("Not yet implemented")
+        holder.setData(mainList[position])
     }
 
     override fun getItemCount(): Int { //узнаем, сколько элементов рисовать
@@ -25,8 +25,8 @@ class RcViewDialogSpinner: RecyclerView.Adapter<RcViewDialogSpinner.SpViewHolder
     }
 
     class SpViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) { //viewHolder столько, сколько элементов
-        val tvSpItem = itemView.findViewById<TextView>(R.id.tvSpItem) //хранит ссылку на элемент
         fun setData(text: String){
+            val tvSpItem = itemView.findViewById<TextView>(R.id.tvSpItem) //хранит ссылку на элемент
             tvSpItem.text = text
         }
     }
