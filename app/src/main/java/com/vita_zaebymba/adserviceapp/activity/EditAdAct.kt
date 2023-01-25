@@ -10,7 +10,7 @@ import com.vita_zaebymba.adserviceapp.dialogs.DialogSpinnerHelper
 import com.vita_zaebymba.adserviceapp.utils.CityHelper
 
 class EditAdAct : AppCompatActivity() {
-    private lateinit var rootElement: ActivityEditAdBinding
+    lateinit var rootElement: ActivityEditAdBinding
     private val dialog = DialogSpinnerHelper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +22,7 @@ class EditAdAct : AppCompatActivity() {
     }
 
     private fun init(){
-        
+
     }
 
     //OnClicks
