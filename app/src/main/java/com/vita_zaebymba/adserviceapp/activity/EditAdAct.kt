@@ -29,14 +29,17 @@ class EditAdAct : AppCompatActivity() {
     //OnClicks
     fun onClickSelectCountry(view: View){
         val listCountry = CityHelper.getAllCountries(this)
-        dialog.showSpinnerDialog(this, listCountry)
+        dialog.showSpinnerDialog(this, listCountry, rootElement.tvChooseCountry)
+        if (rootElement.tvChooseCity.text.toString() != getString(R.string.choose_city)){
+            rootElement.tvChooseCity.text = getString(R.string.choose_city)
+        }
     }
 
     fun onClickSelectCity(view: View){
         val selectedCountry = rootElement.tvChooseCountry.text.toString()
         if (selectedCountry != getString(R.string.choose_country)){
             val listCity = CityHelper.getAllCities(selectedCountry, this)
-            dialog.showSpinnerDialog(this, listCity)
+            dialog.showSpinnerDialog(this, listCity, rootElement.tvChooseCity)
         } else {
             Toast.makeText(this, R.string.no_country_selected, Toast.LENGTH_LONG).show()
         }

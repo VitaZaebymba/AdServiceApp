@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
 
-class RcViewDialogSpinnerAdapter(var context: Context, var dialog: android.app.AlertDialog): RecyclerView.Adapter<RcViewDialogSpinnerAdapter.SpViewHolder>() {
+class RcViewDialogSpinnerAdapter(var tvSelection: TextView, var dialog: android.app.AlertDialog): RecyclerView.Adapter<RcViewDialogSpinnerAdapter.SpViewHolder>() {
    private val mainList = ArrayList<String>()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpViewHolder { //рисуем элемент
         val view = LayoutInflater.from(parent.context).inflate(R.layout.sp_list_item, parent, false)
-        return SpViewHolder(view, context, dialog)
+        return SpViewHolder(view, tvSelection, dialog)
     }
 
     override fun onBindViewHolder(holder: SpViewHolder, position: Int) { //к элементу подключаем текст и т.д.
@@ -27,7 +27,7 @@ class RcViewDialogSpinnerAdapter(var context: Context, var dialog: android.app.A
         return mainList.size
     }
 
-    class SpViewHolder(itemView: View, var context: Context, var dialog: android.app.AlertDialog) : RecyclerView.ViewHolder(itemView), View.OnClickListener { //viewHolder столько, сколько элементов
+    class SpViewHolder(itemView: View, var tvSelection: TextView, var dialog: android.app.AlertDialog) : RecyclerView.ViewHolder(itemView), View.OnClickListener { //viewHolder столько, сколько элементов
         private var itemText = ""
 
         fun setData(text: String){
@@ -38,7 +38,7 @@ class RcViewDialogSpinnerAdapter(var context: Context, var dialog: android.app.A
         }
 
         override fun onClick(v: View?) {
-            (context as EditAdAct).rootElement.tvChooseCountry.text = itemText // выбор страны
+            tvSelection.text = itemText // выбор страны
             dialog.dismiss()
         }
     }
