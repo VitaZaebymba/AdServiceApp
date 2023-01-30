@@ -13,6 +13,7 @@ import com.fxn.utility.PermUtil
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.databinding.ActivityEditAdBinding
 import com.vita_zaebymba.adserviceapp.dialogs.DialogSpinnerHelper
+import com.vita_zaebymba.adserviceapp.fragments.ImageListFragment
 import com.vita_zaebymba.adserviceapp.utils.CityHelper
 import com.vita_zaebymba.adserviceapp.utils.ImagePicker
 
@@ -86,7 +87,10 @@ class EditAdAct : AppCompatActivity() {
     }
 
     fun onClickGetImages(view: View){
-        ImagePicker.getImages(this)
+        rootElement.scrollViewMain.visibility = View.GONE
+        val fm = supportFragmentManager.beginTransaction()
+        fm.replace(R.id.place_holder, ImageListFragment())
+        fm.commit()
 
     }
 
