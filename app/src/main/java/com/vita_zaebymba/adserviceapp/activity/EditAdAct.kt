@@ -13,11 +13,12 @@ import com.fxn.utility.PermUtil
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.databinding.ActivityEditAdBinding
 import com.vita_zaebymba.adserviceapp.dialogs.DialogSpinnerHelper
+import com.vita_zaebymba.adserviceapp.fragments.FragmentCloseInterface
 import com.vita_zaebymba.adserviceapp.fragments.ImageListFragment
 import com.vita_zaebymba.adserviceapp.utils.CityHelper
 import com.vita_zaebymba.adserviceapp.utils.ImagePicker
 
-class EditAdAct : AppCompatActivity() {
+class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     lateinit var rootElement: ActivityEditAdBinding
     private val dialog = DialogSpinnerHelper()
     private var isImagesPermissionGranted = false
@@ -51,7 +52,7 @@ class EditAdAct : AppCompatActivity() {
             PermUtil.REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS -> {
                 //If request is cancelled, the result arrays are empty
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    ImagePicker.getImages(this)
+                    ImagePicker.getImages(this, 3)
                 } else {
                     isImagesPermissionGranted = false
                     Toast.makeText(this, "Approve permission to open Pix ImagePicker", Toast.LENGTH_LONG).show()
@@ -89,9 +90,13 @@ class EditAdAct : AppCompatActivity() {
     fun onClickGetImages(view: View){
         rootElement.scrollViewMain.visibility = View.GONE
         val fm = supportFragmentManager.beginTransaction()
-        fm.replace(R.id.place_holder, ImageListFragment())
+        fm.replace(R.id.place_holder, ImageListFragment(this)) //интерфейс передадим во фрагмент через конструктор
         fm.commit()
 
+    }
+
+    override fun onFragmentClose() {
+        rootElement.scrollViewMain.visibility = View.VISIBLE
     }
 
 }

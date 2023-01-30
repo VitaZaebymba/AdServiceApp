@@ -6,10 +6,10 @@ import com.fxn.pix.Pix
 
 object ImagePicker { // получаем картинки, чтобы потом показывать в списке и т.д.
     const val REQUEST_CODE_GET_IMAGES = 999
-    fun getImages(context: AppCompatActivity){
+    fun getImages(context: AppCompatActivity, imageCounter: Int){
         val options  = Options.init()
             .setRequestCode(REQUEST_CODE_GET_IMAGES) //Request code for activity results
-            .setCount(3) ////Number of images to restrict selection c
+            .setCount(imageCounter) ////Number of images to restrict selection c
             .setFrontfacing(false) //Front Facing camera on start
             .setSpanCount(4) //Span count for gallery min 1 & max 5
             .setMode(Options.Mode.Picture) //Option to select only pictures or video
