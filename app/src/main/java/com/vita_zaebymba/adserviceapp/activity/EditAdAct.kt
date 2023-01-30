@@ -1,11 +1,13 @@
 package com.vita_zaebymba.adserviceapp.activity
 
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.fxn.pix.Pix
+import com.fxn.utility.PermUtil
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.databinding.ActivityEditAdBinding
 import com.vita_zaebymba.adserviceapp.dialogs.DialogSpinnerHelper
@@ -14,6 +16,7 @@ import com.vita_zaebymba.adserviceapp.utils.CityHelper
 class EditAdAct : AppCompatActivity() {
     lateinit var rootElement: ActivityEditAdBinding
     private val dialog = DialogSpinnerHelper()
+    private var isImagesPermissionGranted = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +25,27 @@ class EditAdAct : AppCompatActivity() {
         init()
 
     }
+
+    override fun onRequestPermissionsResult( // Доступ к памяти и камере
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode){
+            PermUtil.REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS -> {
+                //If request is cancelled, the result arrays are empty
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    isImagesPermissionGranted = true
+                } else {
+                    isImagesPermissionGranted = false
+                    Toast.makeText(this, "Approve permission to open Pix ImagePicker", Toast.LENGTH_LONG).show()
+                }
+                return
+            }
+        }
+    }
+
 
     private fun init(){
 
