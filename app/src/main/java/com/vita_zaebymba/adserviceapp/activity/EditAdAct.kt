@@ -12,6 +12,7 @@ import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.databinding.ActivityEditAdBinding
 import com.vita_zaebymba.adserviceapp.dialogs.DialogSpinnerHelper
 import com.vita_zaebymba.adserviceapp.utils.CityHelper
+import com.vita_zaebymba.adserviceapp.utils.ImagePicker
 
 class EditAdAct : AppCompatActivity() {
     lateinit var rootElement: ActivityEditAdBinding
@@ -36,7 +37,7 @@ class EditAdAct : AppCompatActivity() {
             PermUtil.REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS -> {
                 //If request is cancelled, the result arrays are empty
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    isImagesPermissionGranted = true
+                    ImagePicker.getImages(this)
                 } else {
                     isImagesPermissionGranted = false
                     Toast.makeText(this, "Approve permission to open Pix ImagePicker", Toast.LENGTH_LONG).show()
@@ -68,6 +69,11 @@ class EditAdAct : AppCompatActivity() {
         } else {
             Toast.makeText(this, R.string.no_country_selected, Toast.LENGTH_LONG).show()
         }
+
+    }
+
+    fun onClickGetImages(view: View){
+        ImagePicker.getImages(this)
 
     }
 
