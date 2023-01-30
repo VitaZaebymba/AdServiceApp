@@ -25,6 +25,11 @@
                 android:title="@string/ad_dm"
                 android:id="@+id/id_dm"
                 />
+            <item
+                android:title="@string/ad_witcher"
+                android:id="@+id/id_witcher"
+                />
+
 
         </menu>
     </item>

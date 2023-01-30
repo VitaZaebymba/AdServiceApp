@@ -99,6 +99,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.id_dm -> {
                 Toast.makeText(this, "Pressed to dm", Toast.LENGTH_LONG).show()
             }
+            R.id.id_witcher -> {
+                Toast.makeText(this, "Pressed to witcher", Toast.LENGTH_LONG).show()
+            }
             R.id.id_sign_up -> {
 
                 dialogHelper.createSignDialog(DialogConst.SIGN_UP_STATE) // создание диалогового окна с регистрацией

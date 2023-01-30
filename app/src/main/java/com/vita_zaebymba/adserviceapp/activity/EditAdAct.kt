@@ -1,8 +1,10 @@
 package com.vita_zaebymba.adserviceapp.activity
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -25,6 +27,17 @@ class EditAdAct : AppCompatActivity() {
         setContentView(rootElement.root)
         init()
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == ImagePicker.REQUEST_CODE_GET_IMAGES) {
+            if (data != null){
+                val returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS)
+                Log.d("MyLog", "Image: ${returnValue?.get(0)}")
+            }
+
+        }
     }
 
     override fun onRequestPermissionsResult( // Доступ к памяти и камере
