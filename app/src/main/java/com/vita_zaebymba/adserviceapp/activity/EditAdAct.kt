@@ -36,9 +36,13 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         if (resultCode == RESULT_OK && requestCode == ImagePicker.REQUEST_CODE_GET_IMAGES) {
             if (data != null){
                 val returnValues = data.getStringArrayListExtra(Pix.IMAGE_RESULTS) //если размер > 1, то 2 и больше картинок и отправляем во фрагмент
-                Log.d("MyLog", "Image: ${returnValues?.get(0)}")
-                Log.d("MyLog", "Image: ${returnValues?.get(1)}")
-                Log.d("MyLog", "Image: ${returnValues?.get(2)}")
+                if (returnValues?.size!! > 1){
+                    rootElement.scrollViewMain.visibility = View.GONE
+                    val fm = supportFragmentManager.beginTransaction()
+                    fm.replace(R.id.place_holder, ImageListFragment(this, returnValues)) //интерфейс передадим во фрагмент через конструктор
+                    fm.commit()
+                }
+
             }
 
         }
@@ -54,7 +58,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
             PermUtil.REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS -> {
                 //If request is cancelled, the result arrays are empty
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    ImagePicker.getImages(this, 3)
+                    ImagePicker.getImages(this, 5)
                 } else {
                     isImagesPermissionGranted = false
                     Toast.makeText(this, "Approve permission to open Pix ImagePicker", Toast.LENGTH_LONG).show()
@@ -90,10 +94,11 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     }
 
     fun onClickGetImages(view: View){
-        rootElement.scrollViewMain.visibility = View.GONE
+       /* rootElement.scrollViewMain.visibility = View.GONE
         val fm = supportFragmentManager.beginTransaction()
         fm.replace(R.id.place_holder, ImageListFragment(this)) //интерфейс передадим во фрагмент через конструктор
-        fm.commit()
+        fm.commit()*/
+        ImagePicker.getImages(this, 5)
 
     }
 
