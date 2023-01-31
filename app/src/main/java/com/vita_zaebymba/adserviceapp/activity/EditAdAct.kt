@@ -35,8 +35,10 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == ImagePicker.REQUEST_CODE_GET_IMAGES) {
             if (data != null){
-                val returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS)
-                Log.d("MyLog", "Image: ${returnValue?.get(0)}")
+                val returnValues = data.getStringArrayListExtra(Pix.IMAGE_RESULTS) //если размер > 1, то 2 и больше картинок и отправляем во фрагмент
+                Log.d("MyLog", "Image: ${returnValues?.get(0)}")
+                Log.d("MyLog", "Image: ${returnValues?.get(1)}")
+                Log.d("MyLog", "Image: ${returnValues?.get(2)}")
             }
 
         }

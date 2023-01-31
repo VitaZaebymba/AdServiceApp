@@ -8,7 +8,7 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.vita_zaebymba.adserviceapp.R
 
-class ImageListFragment(val fragCloseInterface: FragmentCloseInterface): Fragment() {
+class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface): Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.list_image_fragment, container, false) //draw fragment
     }
