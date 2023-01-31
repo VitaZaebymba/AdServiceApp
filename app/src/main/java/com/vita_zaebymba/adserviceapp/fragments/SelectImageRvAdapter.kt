@@ -1,13 +1,17 @@
 package com.vita_zaebymba.adserviceapp.fragments
 
+import android.annotation.SuppressLint
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vita_zaebymba.adserviceapp.R
 
 class SelectImageRvAdapter: RecyclerView.Adapter<SelectImageRvAdapter.ImageHolder>() {
-
+    private val mainArray = ArrayList<SelectImageItem> ()//список со всеми item
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.select_image_frag_item, parent, false) // шаблон
@@ -15,17 +19,30 @@ class SelectImageRvAdapter: RecyclerView.Adapter<SelectImageRvAdapter.ImageHolde
     }
 
     override fun onBindViewHolder(holder: ImageHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.setData(mainArray[position])
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return mainArray.size
     }
 
     class ImageHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun setData(){ //передаем ссылку и title
+        lateinit var tvTitle: TextView
+        lateinit var image: ImageView
+        fun setData(item: SelectImageItem){ //передаем ссылку и title
+            tvTitle = itemView.findViewById(R.id.tvTitle)
+            image = itemView.findViewById(R.id.imageContent)
+            tvTitle.text = item.title
+            image.setImageURI(Uri.parse(item.imageUri))
 
         }
 
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateAdapter(newList: List<SelectImageItem>){
+        mainArray.clear()
+        mainArray.addAll(newList)
+        notifyDataSetChanged()
     }
 }
