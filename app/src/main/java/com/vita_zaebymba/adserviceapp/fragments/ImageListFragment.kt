@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vita_zaebymba.adserviceapp.R
 
 class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, private val newList: ArrayList<String>): Fragment() { // этот фрагмент запускает список с картинками
     val adapter = SelectImageRvAdapter()
+    val touchHelper = ItemTouchHelper() //класс, который будет следить за перетаскиванием элементов
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.list_image_fragment, container, false) // draw fragment
@@ -21,6 +23,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         super.onViewCreated(view, savedInstanceState)
         val bBack = view.findViewById<Button>(R.id.bBack)
         val rcView = view.findViewById<RecyclerView>(R.id.rcViewSelectedImage)
+        touchHelper.attachToRecyclerView(rcView)
         rcView.layoutManager = LinearLayoutManager(activity) // указываем, как элементы будут располагаться
         rcView.adapter = adapter // присваиваем адаптер
         val updateList = ArrayList<SelectImageItem>()
