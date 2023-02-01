@@ -21,7 +21,15 @@ class ItemTouchMoveCallback(val adapter: ItemTouchAdapter): ItemTouchHelper.Call
 
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) { // добавим прозрачность элементу
+        if (actionState != ItemTouchHelper.ACTION_STATE_IDLE){
+            viewHolder?.itemView?.alpha = 0.5f
+        }
         super.onSelectedChanged(viewHolder, actionState)
+    }
+
+    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+        viewHolder.itemView.alpha = 1.0f
+        super.clearView(recyclerView, viewHolder)
     }
 
     interface ItemTouchAdapter{
