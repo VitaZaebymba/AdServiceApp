@@ -9,8 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vita_zaebymba.adserviceapp.R
+import com.vita_zaebymba.adserviceapp.utils.ItemTouchMoveCallback
 
-class SelectImageRvAdapter: RecyclerView.Adapter<SelectImageRvAdapter.ImageHolder>() {
+class SelectImageRvAdapter: RecyclerView.Adapter<SelectImageRvAdapter.ImageHolder>(), ItemTouchMoveCallback.ItemTouchAdapter {
     private val mainArray = ArrayList<SelectImageItem> ()//список со всеми item
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
@@ -25,6 +26,16 @@ class SelectImageRvAdapter: RecyclerView.Adapter<SelectImageRvAdapter.ImageHolde
     override fun getItemCount(): Int {
         return mainArray.size
     }
+
+    override fun onMove(startPos: Int, targetPos: Int) {
+       val targetItem = mainArray[targetPos]
+       mainArray[targetPos] = mainArray[startPos]
+       mainArray[startPos] = targetItem
+       notifyItemMoved(startPos, targetPos)
+    }
+
+
+
 
     class ImageHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         lateinit var tvTitle: TextView
@@ -45,4 +56,6 @@ class SelectImageRvAdapter: RecyclerView.Adapter<SelectImageRvAdapter.ImageHolde
         mainArray.addAll(newList)
         notifyDataSetChanged()
     }
+
+
 }
