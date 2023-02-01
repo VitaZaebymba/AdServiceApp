@@ -11,17 +11,21 @@ import android.widget.Toast
 import com.fxn.pix.Pix
 import com.fxn.utility.PermUtil
 import com.vita_zaebymba.adserviceapp.R
+import com.vita_zaebymba.adserviceapp.adapters.ImageAdapter
 import com.vita_zaebymba.adserviceapp.databinding.ActivityEditAdBinding
 import com.vita_zaebymba.adserviceapp.dialogs.DialogSpinnerHelper
 import com.vita_zaebymba.adserviceapp.fragments.FragmentCloseInterface
 import com.vita_zaebymba.adserviceapp.fragments.ImageListFragment
+import com.vita_zaebymba.adserviceapp.fragments.SelectImageItem
 import com.vita_zaebymba.adserviceapp.utils.CityHelper
 import com.vita_zaebymba.adserviceapp.utils.ImagePicker
+import java.util.ArrayList
 
 class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     lateinit var rootElement: ActivityEditAdBinding
     private val dialog = DialogSpinnerHelper()
     private var isImagesPermissionGranted = false
+    private lateinit var imageAdapter: ImageAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +74,8 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
 
     private fun init(){
+        imageAdapter = ImageAdapter()
+        rootElement.vpImages.adapter = imageAdapter
 
     }
 
@@ -102,8 +108,10 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
     }
 
-    override fun onFragmentClose() {
+    override fun onFragmentClose(list: ArrayList<SelectImageItem>) {
         rootElement.scrollViewMain.visibility = View.VISIBLE
+        imageAdapter.update(list)
     }
+
 
 }

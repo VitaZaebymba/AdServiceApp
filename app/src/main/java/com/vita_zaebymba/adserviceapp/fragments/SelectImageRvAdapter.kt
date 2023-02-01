@@ -12,7 +12,7 @@ import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.utils.ItemTouchMoveCallback
 
 class SelectImageRvAdapter: RecyclerView.Adapter<SelectImageRvAdapter.ImageHolder>(), ItemTouchMoveCallback.ItemTouchAdapter {
-    private val mainArray = ArrayList<SelectImageItem> ()//список со всеми item
+    val mainArray = ArrayList<SelectImageItem> ()//список со всеми item
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.select_image_frag_item, parent, false) // шаблон
