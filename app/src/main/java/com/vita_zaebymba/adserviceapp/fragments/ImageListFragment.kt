@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.databinding.ListImageFragmentBinding
+import com.vita_zaebymba.adserviceapp.utils.ImagePicker
 import com.vita_zaebymba.adserviceapp.utils.ItemTouchMoveCallback
 
 class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, private val newList: ArrayList<String>): Fragment() { // этот фрагмент запускает список с картинками
@@ -38,7 +40,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
             updateList.add(SelectImageItem(n.toString(), newList[n]))
         }
 
-        adapter.updateAdapter(updateList)
+        adapter.updateAdapter(updateList, true)
 
     }
 
@@ -57,13 +59,24 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         }
 
         deleteItem.setOnMenuItemClickListener {
-            adapter.updateAdapter(ArrayList())
+            adapter.updateAdapter(ArrayList(), true)
             true
         }
         addImageItem.setOnMenuItemClickListener {
-            Log.d("MyLog", "Add item")
+            val imageCount = ImagePicker.MAX_IMAGE_COUNT - adapter.mainArray.size
+            ImagePicker.getImages(activity as AppCompatActivity, imageCount)
             true
         }
+    }
+
+    fun updateAdapter(newList: ArrayList<String>){
+        val updateList = ArrayList<SelectImageItem>()
+        for (n in adapter.mainArray.size until newList.size + adapter.mainArray.size){
+            updateList.add(SelectImageItem(n.toString(), newList[n - adapter.mainArray.size]))
+        }
+
+        adapter.updateAdapter(updateList, false)
+
     }
 
 }

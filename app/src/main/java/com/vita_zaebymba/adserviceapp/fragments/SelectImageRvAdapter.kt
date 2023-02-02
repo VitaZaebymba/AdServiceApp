@@ -58,8 +58,8 @@ class SelectImageRvAdapter: RecyclerView.Adapter<SelectImageRvAdapter.ImageHolde
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateAdapter(newList: List<SelectImageItem>){
-        mainArray.clear()
+    fun updateAdapter(newList: List<SelectImageItem>, needClear: Boolean){
+        if (needClear) mainArray.clear()
         mainArray.addAll(newList)
         notifyDataSetChanged()
     }

@@ -22,6 +22,7 @@ import com.vita_zaebymba.adserviceapp.utils.ImagePicker
 import java.util.ArrayList
 
 class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
+    private var chooseImageFragment: ImageListFragment? = null
     lateinit var rootElement: ActivityEditAdBinding
     private val dialog = DialogSpinnerHelper()
     private var isImagesPermissionGranted = false
@@ -37,14 +38,23 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         if (resultCode == RESULT_OK && requestCode == ImagePicker.REQUEST_CODE_GET_IMAGES) {
-            if (data != null){
-                val returnValues = data.getStringArrayListExtra(Pix.IMAGE_RESULTS) //если размер > 1, то 2 и больше картинок и отправляем во фрагмент
-                if (returnValues?.size!! > 1){
+
+            if (data != null) {
+
+                val returnValues =
+                    data.getStringArrayListExtra(Pix.IMAGE_RESULTS) //если размер > 1, то 2 и больше картинок и отправляем во фрагмент
+                if (returnValues?.size!! > 1 && chooseImageFragment == null) {
+
+                    chooseImageFragment = ImageListFragment(this, returnValues)
                     rootElement.scrollViewMain.visibility = View.GONE
                     val fm = supportFragmentManager.beginTransaction()
-                    fm.replace(R.id.place_holder, ImageListFragment(this, returnValues)) //интерфейс передадим во фрагмент через конструктор
+                    fm.replace(R.id.place_holder, chooseImageFragment!!) //интерфейс передадим во фрагмент через конструктор
                     fm.commit()
+
+                } else if (chooseImageFragment != null) {
+                    chooseImageFragment?.updateAdapter(returnValues)
                 }
 
             }
@@ -111,6 +121,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     override fun onFragmentClose(list: ArrayList<SelectImageItem>) {
         rootElement.scrollViewMain.visibility = View.VISIBLE
         imageAdapter.update(list)
+        chooseImageFragment = null
     }
 
 
