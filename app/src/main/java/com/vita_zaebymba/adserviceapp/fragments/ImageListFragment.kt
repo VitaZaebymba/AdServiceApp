@@ -1,6 +1,7 @@
 package com.vita_zaebymba.adserviceapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setUpToolbar()
 
         touchHelper.attachToRecyclerView(rootElement.rcViewSelectedImage)
         rootElement.rcViewSelectedImage.layoutManager = LinearLayoutManager(activity) // указываем, как элементы будут располагаться
@@ -38,13 +39,31 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         }
 
         adapter.updateAdapter(updateList)
-            //activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
 
     }
 
     override fun onDetach() {
         super.onDetach()
         fragCloseInterface.onFragmentClose(adapter.mainArray)
+    }
+
+    private fun setUpToolbar(){
+        rootElement.tb.inflateMenu(R.menu.menu_choose_image)
+        val deleteItem = rootElement.tb.menu.findItem(R.id.delete_image)
+        val addImageItem = rootElement.tb.menu.findItem(R.id.id_add_image)
+
+        rootElement.tb.setNavigationOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+        }
+
+        deleteItem.setOnMenuItemClickListener {
+            adapter.updateAdapter(ArrayList())
+            true
+        }
+        addImageItem.setOnMenuItemClickListener {
+            Log.d("MyLog", "Add item")
+            true
+        }
     }
 
 }
