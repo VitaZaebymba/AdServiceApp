@@ -23,7 +23,6 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val bBack = view.findViewById<Button>(R.id.bBack)
         val rcView = view.findViewById<RecyclerView>(R.id.rcViewSelectedImage)
         touchHelper.attachToRecyclerView(rcView)
         rcView.layoutManager = LinearLayoutManager(activity) // указываем, как элементы будут располагаться
@@ -34,9 +33,8 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         }
 
         adapter.updateAdapter(updateList)
-        bBack.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
-        }
+            //activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+
     }
 
     override fun onDetach() {
