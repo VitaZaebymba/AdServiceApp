@@ -103,11 +103,11 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     }
 
     fun onClickGetImages(view: View){
-       /* rootElement.scrollViewMain.visibility = View.GONE
-        val fm = supportFragmentManager.beginTransaction()
-        fm.replace(R.id.place_holder, ImageListFragment(this)) //интерфейс передадим во фрагмент через конструктор
-        fm.commit()*/
-        ImagePicker.getImages(this, 5)
+       if (imageAdapter.mainArray.size < 0){ // если нет фото, открываем выбор картинки, если есть фото, то открываем фрагмент с фото
+           ImagePicker.getImages(this, 5)
+       } else{
+           openChooseImageFragment(imageAdapter.mainArray)
+       }
 
     }
 

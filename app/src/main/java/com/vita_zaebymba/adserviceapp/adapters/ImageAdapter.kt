@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vita_zaebymba.adserviceapp.R
 
 class ImageAdapter: RecyclerView.Adapter<ImageAdapter.ImageHolder>() {
-    private val mainArray = ArrayList<String>() // список с картинками
+    val mainArray = ArrayList<String>() // список с картинками
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
