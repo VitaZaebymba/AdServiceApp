@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vita_zaebymba.adserviceapp.R
 
 class ImageAdapter: RecyclerView.Adapter<ImageAdapter.ImageHolder>() {
-    private val mainArray = ArrayList<SelectImageItem>() // список с картинками
+    private val mainArray = ArrayList<String>() // список с картинками
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
@@ -19,7 +19,7 @@ class ImageAdapter: RecyclerView.Adapter<ImageAdapter.ImageHolder>() {
     }
 
     override fun onBindViewHolder(holder: ImageHolder, position: Int) {
-        holder.setData(mainArray[position].imageUri) // из массива достаем элементы и заполняем holder
+        holder.setData(mainArray[position]) // из массива достаем элементы и заполняем holder
     }
 
     override fun getItemCount(): Int {
@@ -38,7 +38,7 @@ class ImageAdapter: RecyclerView.Adapter<ImageAdapter.ImageHolder>() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun update(newList: ArrayList<SelectImageItem>){
+    fun update(newList: ArrayList<String>){
         mainArray.clear()
         mainArray.addAll(newList)
         notifyDataSetChanged()

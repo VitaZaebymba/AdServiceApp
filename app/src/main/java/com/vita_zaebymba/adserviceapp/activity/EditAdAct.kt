@@ -115,7 +115,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
     }
 
-    override fun onFragmentClose(list: ArrayList<SelectImageItem>) {
+    override fun onFragmentClose(list: ArrayList<String>) {
         rootElement.scrollViewMain.visibility = View.VISIBLE
         imageAdapter.update(list)
         chooseImageFragment = null
