@@ -42,13 +42,9 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
                 val returnValues =
                     data.getStringArrayListExtra(Pix.IMAGE_RESULTS) //если размер > 1, то 2 и больше картинок и отправляем во фрагмент, фрагмент запускает адаптер и адаптер заполняет RecyclerView
-                if (returnValues?.size!! > 1 && chooseImageFragment == null) {
 
-                    chooseImageFragment = ImageListFragment(this, returnValues) // returnValues - ссылки на картинки
-                    rootElement.scrollViewMain.visibility = View.GONE
-                    val fm = supportFragmentManager.beginTransaction()
-                    fm.replace(R.id.place_holder, chooseImageFragment!!) //интерфейс передадим во фрагмент через конструктор
-                    fm.commit()
+                if (returnValues?.size!! > 1 && chooseImageFragment == null) {
+                    openChooseImageFragment(returnValues) // returnValues - ссылки на картинки
 
                 } else if (chooseImageFragment != null) {
                     chooseImageFragment?.updateAdapter(returnValues)
@@ -121,5 +117,12 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         chooseImageFragment = null
     }
 
+    private fun openChooseImageFragment(newList: ArrayList<String>){
+        chooseImageFragment = ImageListFragment(this, newList)
+        rootElement.scrollViewMain.visibility = View.GONE
+        val fm = supportFragmentManager.beginTransaction()
+        fm.replace(R.id.place_holder, chooseImageFragment!!) //интерфейс передадим во фрагмент через конструктор
+        fm.commit()
+    }
 
 }
