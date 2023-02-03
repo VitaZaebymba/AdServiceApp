@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.vita_zaebymba.adserviceapp.R
-import com.vita_zaebymba.adserviceapp.fragments.SelectImageItem
 
 class ImageAdapter: RecyclerView.Adapter<ImageAdapter.ImageHolder>() {
     private val mainArray = ArrayList<SelectImageItem>() // список с картинками
