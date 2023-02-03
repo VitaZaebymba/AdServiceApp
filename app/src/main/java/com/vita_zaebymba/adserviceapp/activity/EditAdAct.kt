@@ -33,7 +33,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) { //запускается при нажатии на кнопку галочку для добавления картинок
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == RESULT_OK && requestCode == ImagePicker.REQUEST_CODE_GET_IMAGES) {
@@ -41,10 +41,10 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
             if (data != null) {
 
                 val returnValues =
-                    data.getStringArrayListExtra(Pix.IMAGE_RESULTS) //если размер > 1, то 2 и больше картинок и отправляем во фрагмент
+                    data.getStringArrayListExtra(Pix.IMAGE_RESULTS) //если размер > 1, то 2 и больше картинок и отправляем во фрагмент, фрагмент запускает адаптер и адаптер заполняет RecyclerView
                 if (returnValues?.size!! > 1 && chooseImageFragment == null) {
 
-                    chooseImageFragment = ImageListFragment(this, returnValues)
+                    chooseImageFragment = ImageListFragment(this, returnValues) // returnValues - ссылки на картинки
                     rootElement.scrollViewMain.visibility = View.GONE
                     val fm = supportFragmentManager.beginTransaction()
                     fm.replace(R.id.place_holder, chooseImageFragment!!) //интерфейс передадим во фрагмент через конструктор
