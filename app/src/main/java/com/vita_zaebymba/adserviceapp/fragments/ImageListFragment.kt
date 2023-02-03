@@ -1,5 +1,6 @@
 package com.vita_zaebymba.adserviceapp.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -60,7 +61,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         }
         addImageItem.setOnMenuItemClickListener {
             val imageCount = ImagePicker.MAX_IMAGE_COUNT - adapter.mainArray.size
-            ImagePicker.getImages(activity as AppCompatActivity, imageCount)
+            ImagePicker.getImages(activity as AppCompatActivity, imageCount, ImagePicker.REQUEST_CODE_GET_IMAGES)
             true
         }
     }
@@ -69,6 +70,12 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
 
         adapter.updateAdapter(newList, false)
 
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setSingleImage(uri: String, position: Int){ //uri - ссылка новой картинки, на которую хоти заменить старое фото
+        adapter.mainArray[position] = uri
+        adapter.notifyDataSetChanged()
     }
 
 }

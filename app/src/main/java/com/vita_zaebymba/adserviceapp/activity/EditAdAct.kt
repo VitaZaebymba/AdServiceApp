@@ -24,6 +24,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     private val dialog = DialogSpinnerHelper()
     private var isImagesPermissionGranted = false
     private lateinit var imageAdapter: ImageAdapter
+    var editImagePosition = 0 //позиция картинки, которую хотим изменить (для редактирования фото)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,18 +41,24 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
             if (data != null) {
 
-                val returnValues =
-                    data.getStringArrayListExtra(Pix.IMAGE_RESULTS) //если размер > 1, то 2 и больше картинок и отправляем во фрагмент, фрагмент запускает адаптер и адаптер заполняет RecyclerView
+                val returnValues = data.getStringArrayListExtra(Pix.IMAGE_RESULTS) //если размер > 1, то 2 и больше картинок и отправляем во фрагмент, фрагмент запускает адаптер и адаптер заполняет RecyclerView
 
                 if (returnValues?.size!! > 1 && chooseImageFragment == null) {
                     openChooseImageFragment(returnValues) // returnValues - ссылки на картинки
 
                 } else if (chooseImageFragment != null) {
+
                     chooseImageFragment?.updateAdapter(returnValues)
                 }
 
             }
 
+        } else if (resultCode == RESULT_OK && requestCode == ImagePicker.REQUEST_CODE_GET_SINGLE_IMAGE){
+            if (data != null) {
+
+                val uris = data.getStringArrayListExtra(Pix.IMAGE_RESULTS)
+                chooseImageFragment?.setSingleImage(uris?.get(0)!!, editImagePosition)
+            }
         }
     }
 
@@ -65,7 +72,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
             PermUtil.REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS -> {
                 //If request is cancelled, the result arrays are empty
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    ImagePicker.getImages(this, 5)
+                    ImagePicker.getImages(this, 5, ImagePicker.REQUEST_CODE_GET_IMAGES)
                 } else {
                     isImagesPermissionGranted = false
                     Toast.makeText(this, "Approve permission to open Pix ImagePicker", Toast.LENGTH_LONG).show()
@@ -104,7 +111,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
     fun onClickGetImages(view: View){
        if (imageAdapter.mainArray.size == 0){ // если нет фото, открываем выбор картинки, если есть фото, то открываем фрагмент с фото
-           ImagePicker.getImages(this, 5)
+           ImagePicker.getImages(this, 5, ImagePicker.REQUEST_CODE_GET_IMAGES)
        } else{
            openChooseImageFragment(imageAdapter.mainArray)
        }

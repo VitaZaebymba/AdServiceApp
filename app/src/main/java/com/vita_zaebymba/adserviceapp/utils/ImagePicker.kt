@@ -8,9 +8,10 @@ object ImagePicker { // получаем картинки, чтобы потом
 
     const val MAX_IMAGE_COUNT = 5
     const val REQUEST_CODE_GET_IMAGES = 999
-    fun getImages(context: AppCompatActivity, imageCounter: Int){
+    const val REQUEST_CODE_GET_SINGLE_IMAGE = 998
+    fun getImages(context: AppCompatActivity, imageCounter: Int, rCode: Int){
         val options  = Options.init()
-            .setRequestCode(REQUEST_CODE_GET_IMAGES) //Request code for activity results
+            .setRequestCode(rCode) //Request code for activity results
             .setCount(imageCounter) ////Number of images to restrict selection c
             .setFrontfacing(false) //Front Facing camera on start
             .setSpanCount(4) //Span count for gallery min 1 & max 5
