@@ -103,7 +103,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     }
 
     fun onClickGetImages(view: View){
-       if (imageAdapter.mainArray.size < 0){ // если нет фото, открываем выбор картинки, если есть фото, то открываем фрагмент с фото
+       if (imageAdapter.mainArray.size == 0){ // если нет фото, открываем выбор картинки, если есть фото, то открываем фрагмент с фото
            ImagePicker.getImages(this, 5)
        } else{
            openChooseImageFragment(imageAdapter.mainArray)
