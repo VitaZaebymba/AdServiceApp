@@ -48,7 +48,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
                 } else if (returnValues.size == 1 && chooseImageFragment == null) { // выбор одной картинки
 
-                    chooseImageFragment?.updateAdapter(returnValues)
+                   imageAdapter.update(returnValues)
 
                 } else if (chooseImageFragment != null) {
 

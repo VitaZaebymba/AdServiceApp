@@ -66,6 +66,9 @@ class SelectImageRvAdapter: RecyclerView.Adapter<SelectImageRvAdapter.ImageHolde
             imDeleteImage.setOnClickListener {
                 adapter.mainArray.removeAt(adapterPosition)
                 adapter.notifyItemRemoved(adapterPosition)
+                for (n in 0 until adapter.mainArray.size) { // чтобы менялся текст в соответствии с позицей фото
+                    adapter.notifyItemChanged(n)
+                }
 
             }
 
