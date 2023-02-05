@@ -20,7 +20,7 @@ class SelectImageRvAdapter: RecyclerView.Adapter<SelectImageRvAdapter.ImageHolde
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.select_image_frag_item, parent, false) // шаблон
-        return ImageHolder(view, parent.context)
+        return ImageHolder(view, parent.context, this)
     }
 
     override fun onBindViewHolder(holder: ImageHolder, position: Int) {
@@ -44,7 +44,7 @@ class SelectImageRvAdapter: RecyclerView.Adapter<SelectImageRvAdapter.ImageHolde
     }
 
 
-    class ImageHolder(itemView: View, val context: Context) : RecyclerView.ViewHolder(itemView) {
+    class ImageHolder(itemView: View, val context: Context, val adapter: SelectImageRvAdapter) : RecyclerView.ViewHolder(itemView) {
         lateinit var tvTitle: TextView
         lateinit var image: ImageView
         lateinit var imEditImage: ImageButton
@@ -64,7 +64,9 @@ class SelectImageRvAdapter: RecyclerView.Adapter<SelectImageRvAdapter.ImageHolde
             }
 
             imDeleteImage.setOnClickListener {
-                
+                adapter.mainArray.removeAt(adapterPosition)
+                adapter.notifyItemRemoved(adapterPosition)
+
             }
 
             tvTitle.text = context.resources.getStringArray(R.array.title_array)[adapterPosition]
