@@ -48,15 +48,23 @@ class SelectImageRvAdapter: RecyclerView.Adapter<SelectImageRvAdapter.ImageHolde
         lateinit var tvTitle: TextView
         lateinit var image: ImageView
         lateinit var imEditImage: ImageButton
+        lateinit var imDeleteImage: ImageButton
 
         fun setData(item: String){ //передаем ссылку и title
             tvTitle = itemView.findViewById(R.id.tvTitle)
             image = itemView.findViewById(R.id.imageContent)
             imEditImage = itemView.findViewById(R.id.imEditImage)
+            imDeleteImage = itemView.findViewById(R.id.imDelete)
+
+
 
             imEditImage.setOnClickListener {
                 ImagePicker.getImages(context as EditAdAct, 1, ImagePicker.REQUEST_CODE_GET_SINGLE_IMAGE)
                 context.editImagePosition = adapterPosition
+            }
+
+            imDeleteImage.setOnClickListener {
+                
             }
 
             tvTitle.text = context.resources.getStringArray(R.array.title_array)[adapterPosition]
