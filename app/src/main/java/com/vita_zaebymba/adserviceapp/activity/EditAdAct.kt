@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.fxn.pix.Pix
@@ -15,6 +16,7 @@ import com.vita_zaebymba.adserviceapp.dialogs.DialogSpinnerHelper
 import com.vita_zaebymba.adserviceapp.fragments.FragmentCloseInterface
 import com.vita_zaebymba.adserviceapp.fragments.ImageListFragment
 import com.vita_zaebymba.adserviceapp.utils.CityHelper
+import com.vita_zaebymba.adserviceapp.utils.ImageManager
 import com.vita_zaebymba.adserviceapp.utils.ImagePicker
 import java.util.ArrayList
 
@@ -48,7 +50,10 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
                 } else if (returnValues.size == 1 && chooseImageFragment == null) { // выбор одной картинки
 
-                   imageAdapter.update(returnValues)
+                   //imageAdapter.update(returnValues)
+                    val tempList = ImageManager.getImageSize(returnValues[0])
+                    Log.d("MyLog", "Image width: ${tempList[0]}")
+                    Log.d("MyLog", "Image height: ${tempList[1]}")
 
                 } else if (chooseImageFragment != null) {
 
