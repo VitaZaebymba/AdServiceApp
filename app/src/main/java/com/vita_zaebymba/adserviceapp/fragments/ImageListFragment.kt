@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.databinding.ListImageFragmentBinding
+import com.vita_zaebymba.adserviceapp.utils.ImageManager
 import com.vita_zaebymba.adserviceapp.utils.ImagePicker
 import com.vita_zaebymba.adserviceapp.utils.ItemTouchMoveCallback
 
@@ -36,8 +37,9 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         touchHelper.attachToRecyclerView(rootElement.rcViewSelectedImage)
         rootElement.rcViewSelectedImage.layoutManager = LinearLayoutManager(activity) // указываем, как элементы будут располагаться
         rootElement.rcViewSelectedImage.adapter = adapter // присваиваем адаптер
+        ImageManager.imageResize(newList)
 
-        adapter.updateAdapter(newList, true)
+        //adapter.updateAdapter(newList, true)
 
     }
 
