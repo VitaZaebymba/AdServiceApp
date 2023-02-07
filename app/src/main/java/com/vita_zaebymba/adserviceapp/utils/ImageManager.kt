@@ -38,7 +38,7 @@ object ImageManager {
         return rotation
     }
 
-    suspend fun imageResize(uris: List<String>) = withContext(Dispatchers.IO){ // функция будет запускаться в фоновом режиме
+    suspend fun imageResize(uris: List<String>):String = withContext(Dispatchers.IO){ // функция будет запускаться в фоновом режиме
         val tempList = ArrayList<List<Int>>() // массив с высотой и шириной
         for (n in uris.indices){
             val size = getImageSize(uris[n])
@@ -63,6 +63,7 @@ object ImageManager {
             }
         }
         delay(10000)
+        return@withContext "Done"
     }
 
 }

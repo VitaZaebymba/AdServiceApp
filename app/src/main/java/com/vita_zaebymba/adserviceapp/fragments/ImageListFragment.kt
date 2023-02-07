@@ -19,6 +19,7 @@ import com.vita_zaebymba.adserviceapp.utils.ImagePicker
 import com.vita_zaebymba.adserviceapp.utils.ItemTouchMoveCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, private val newList: ArrayList<String>): Fragment() { // этот фрагмент запускает список с картинками
@@ -27,6 +28,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
     val adapter = SelectImageRvAdapter()
     val dragCallback = ItemTouchMoveCallback(adapter)
     val touchHelper = ItemTouchHelper(dragCallback) //класс, который будет следить за перетаскиванием элементов
+    private lateinit var job: Job
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootElement = ListImageFragmentBinding.inflate(inflater)
@@ -41,17 +43,19 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         rootElement.rcViewSelectedImage.layoutManager = LinearLayoutManager(activity) // указываем, как элементы будут располагаться
         rootElement.rcViewSelectedImage.adapter = adapter // присваиваем адаптер
 
-        CoroutineScope(Dispatchers.Main).launch { // создание корутины
-            ImageManager.imageResize(newList)
+        job = CoroutineScope(Dispatchers.Main).launch { // создание корутины
+            val text = ImageManager.imageResize(newList)
+            Log.d("MyLog", "Result: $text")
         }
 
-        //adapter.updateAdapter(newList, true)
+    //adapter.updateAdapter(newList, true)
 
     }
 
     override fun onDetach() {
         super.onDetach()
         fragCloseInterface.onFragmentClose(adapter.mainArray)
+        job.cancel()
     }
 
     private fun setUpToolbar(){
