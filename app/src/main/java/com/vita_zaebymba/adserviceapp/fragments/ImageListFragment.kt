@@ -17,6 +17,9 @@ import com.vita_zaebymba.adserviceapp.databinding.ListImageFragmentBinding
 import com.vita_zaebymba.adserviceapp.utils.ImageManager
 import com.vita_zaebymba.adserviceapp.utils.ImagePicker
 import com.vita_zaebymba.adserviceapp.utils.ItemTouchMoveCallback
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, private val newList: ArrayList<String>): Fragment() { // этот фрагмент запускает список с картинками
    lateinit var rootElement: ListImageFragmentBinding
@@ -37,7 +40,10 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         touchHelper.attachToRecyclerView(rootElement.rcViewSelectedImage)
         rootElement.rcViewSelectedImage.layoutManager = LinearLayoutManager(activity) // указываем, как элементы будут располагаться
         rootElement.rcViewSelectedImage.adapter = adapter // присваиваем адаптер
-        ImageManager.imageResize(newList)
+
+        CoroutineScope(Dispatchers.Main).launch { // создание корутины
+            ImageManager.imageResize(newList)
+        }
 
         //adapter.updateAdapter(newList, true)
 
