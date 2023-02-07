@@ -59,7 +59,7 @@ object ImageManager {
 
             }
         }
-        return 
+        return
     }
 
 }
