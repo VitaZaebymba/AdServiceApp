@@ -123,7 +123,8 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
        if (imageAdapter.mainArray.size == 0){ // если нет фото, открываем выбор картинки, если есть фото, то открываем фрагмент с фото
            ImagePicker.getImages(this, 5, ImagePicker.REQUEST_CODE_GET_IMAGES)
        } else{
-           openChooseImageFragment(imageAdapter.mainArray)
+           openChooseImageFragment(null)
+           chooseImageFragment?.updateAdapterFromEdit(imageAdapter.mainArray)
        }
 
     }
@@ -134,7 +135,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         chooseImageFragment = null
     }
 
-    private fun openChooseImageFragment(newList: ArrayList<String>){
+    private fun openChooseImageFragment(newList: ArrayList<String>?){
         chooseImageFragment = ImageListFragment(this, newList)
         rootElement.scrollViewMain.visibility = View.GONE
         val fm = supportFragmentManager.beginTransaction()

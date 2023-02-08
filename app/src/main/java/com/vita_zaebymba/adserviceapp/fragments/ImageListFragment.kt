@@ -1,6 +1,7 @@
 package com.vita_zaebymba.adserviceapp.fragments
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -22,13 +23,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, private val newList: ArrayList<String>): Fragment() { // этот фрагмент запускает список с картинками
+class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, private val newList: ArrayList<String>?): Fragment() { // этот фрагмент запускает список с картинками
    lateinit var rootElement: ListImageFragmentBinding
 
     val adapter = SelectImageRvAdapter()
     val dragCallback = ItemTouchMoveCallback(adapter)
     val touchHelper = ItemTouchHelper(dragCallback) //класс, который будет следить за перетаскиванием элементов
-    private lateinit var job: Job
+    private var job: Job? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootElement = ListImageFragmentBinding.inflate(inflater)
@@ -43,18 +44,24 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         rootElement.rcViewSelectedImage.layoutManager = LinearLayoutManager(activity) // указываем, как элементы будут располагаться
         rootElement.rcViewSelectedImage.adapter = adapter // присваиваем адаптер
 
-        job = CoroutineScope(Dispatchers.Main).launch { // создание корутины
-            val bitmapList = ImageManager.imageResize(newList)
-            adapter.updateAdapter(bitmapList, true)
+        if (newList != null){
+            job = CoroutineScope(Dispatchers.Main).launch { // создание корутины
+                val bitmapList = ImageManager.imageResize(newList)
+                adapter.updateAdapter(bitmapList, true)
+            }
+
         }
 
+    }
 
+    fun updateAdapterFromEdit(bitmapList: List<Bitmap>){ // обновление адаптера, если картинки уже есть
+        adapter.updateAdapter(bitmapList, true)
     }
 
     override fun onDetach() {
         super.onDetach()
         fragCloseInterface.onFragmentClose(adapter.mainArray)
-        job.cancel()
+        job?.cancel()
     }
 
     private fun setUpToolbar(){
@@ -78,6 +85,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
     }
 
     fun updateAdapter(newList: ArrayList<String>){ // к имеющимся картинкам добавляем еще картинки
+
         job = CoroutineScope(Dispatchers.Main).launch {
             val bitmapList = ImageManager.imageResize(newList) // уменьшаем картинки и выдаем bitmapList
             adapter.updateAdapter(bitmapList, false) // bitmapList Передаем в адаптер и добавляем эту картинку
@@ -87,8 +95,13 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
 
     @SuppressLint("NotifyDataSetChanged")
     fun setSingleImage(uri: String, position: Int){ //uri - ссылка новой картинки, на которую хоти заменить старое фото
-        adapter.mainArray[position] = uri
-        adapter.notifyDataSetChanged()
+
+        job = CoroutineScope(Dispatchers.Main).launch {
+            val bitmapList = ImageManager.imageResize(listOf(uri))
+            adapter.mainArray[position] = bitmapList[0]
+            adapter.notifyDataSetChanged()
+        }
+
     }
 
 }
