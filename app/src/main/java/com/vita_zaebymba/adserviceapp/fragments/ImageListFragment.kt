@@ -44,11 +44,10 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         rootElement.rcViewSelectedImage.adapter = adapter // присваиваем адаптер
 
         job = CoroutineScope(Dispatchers.Main).launch { // создание корутины
-            val text = ImageManager.imageResize(newList)
-            Log.d("MyLog", "Result: $text")
+            val bitmapList = ImageManager.imageResize(newList)
+            adapter.updateAdapter(bitmapList, true)
         }
 
-    //adapter.updateAdapter(newList, true)
 
     }
 
@@ -78,9 +77,11 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         }
     }
 
-    fun updateAdapter(newList: ArrayList<String>){
-
-        adapter.updateAdapter(newList, false)
+    fun updateAdapter(newList: ArrayList<String>){ // к имеющимся картинкам добавляем еще картинки
+        job = CoroutineScope(Dispatchers.Main).launch {
+            val bitmapList = ImageManager.imageResize(newList) // уменьшаем картинки и выдаем bitmapList
+            adapter.updateAdapter(bitmapList, false) // bitmapList Передаем в адаптер и добавляем эту картинку
+        }
 
     }
 

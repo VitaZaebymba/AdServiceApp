@@ -2,6 +2,7 @@ package com.vita_zaebymba.adserviceapp.activity
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -127,7 +128,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
     }
 
-    override fun onFragmentClose(list: ArrayList<String>) {
+    override fun onFragmentClose(list: ArrayList<Bitmap>) {
         rootElement.scrollViewMain.visibility = View.VISIBLE
         imageAdapter.update(list)
         chooseImageFragment = null

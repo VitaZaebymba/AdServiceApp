@@ -2,6 +2,7 @@ package com.vita_zaebymba.adserviceapp.fragments
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +17,7 @@ import com.vita_zaebymba.adserviceapp.utils.ImagePicker
 import com.vita_zaebymba.adserviceapp.utils.ItemTouchMoveCallback
 
 class SelectImageRvAdapter: RecyclerView.Adapter<SelectImageRvAdapter.ImageHolder>(), ItemTouchMoveCallback.ItemTouchAdapter {
-    val mainArray = ArrayList<String> ()//список со всеми item
+    val mainArray = ArrayList<Bitmap> ()//список со всеми item
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.select_image_frag_item, parent, false) // шаблон
@@ -50,7 +51,7 @@ class SelectImageRvAdapter: RecyclerView.Adapter<SelectImageRvAdapter.ImageHolde
         lateinit var imEditImage: ImageButton
         lateinit var imDeleteImage: ImageButton
 
-        fun setData(item: String){ //передаем ссылку и title
+        fun setData(bitMap: Bitmap){ //передаем ссылку и title
             tvTitle = itemView.findViewById(R.id.tvTitle)
             image = itemView.findViewById(R.id.imageContent)
             imEditImage = itemView.findViewById(R.id.imEditImage)
@@ -73,14 +74,14 @@ class SelectImageRvAdapter: RecyclerView.Adapter<SelectImageRvAdapter.ImageHolde
             }
 
             tvTitle.text = context.resources.getStringArray(R.array.title_array)[adapterPosition]
-            image.setImageURI(Uri.parse(item))//передаем картинку
+            image.setImageBitmap(bitMap)//передаем картинку
 
         }
 
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateAdapter(newList: List<String>, needClear: Boolean){
+    fun updateAdapter(newList: List<Bitmap>, needClear: Boolean){
         if (needClear) mainArray.clear()
         mainArray.addAll(newList)
         notifyDataSetChanged()
