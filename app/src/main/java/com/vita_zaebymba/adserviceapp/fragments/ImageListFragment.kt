@@ -97,13 +97,13 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         resizeSelectedImages(newList, false)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+    
     fun setSingleImage(uri: String, position: Int){ //uri - ссылка новой картинки, на которую хоти заменить старое фото
 
         job = CoroutineScope(Dispatchers.Main).launch {
             val bitmapList = ImageManager.imageResize(listOf(uri))
             adapter.mainArray[position] = bitmapList[0]
-            adapter.notifyDataSetChanged()
+            adapter.notifyItemChanged(position)
         }
 
     }
