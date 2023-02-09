@@ -8,11 +8,11 @@
         app:showAsAction="ifRoom"
         />
 
-    <item android:title="Add"
+    <item
         android:id="@+id/id_add_image"
-        android:icon="@drawable/ic_add_image"
+        android:icon="@drawable/ic_add_photo"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom"
-        />
+        android:title="Add"
+        app:showAsAction="ifRoom" />
 
 </menu>
