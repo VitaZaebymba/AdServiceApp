@@ -6,7 +6,7 @@ import com.vita_zaebymba.adserviceapp.databinding.ProgressDialogLayoutBinding
 import com.vita_zaebymba.adserviceapp.databinding.SignDialogBinding
 
 object ProgressDialog {
-    fun createProgressDialog(act: Activity){
+    fun createProgressDialog(act: Activity): AlertDialog{
 
         val builder = AlertDialog.Builder(act)
         val rootDialogElement = ProgressDialogLayoutBinding.inflate(act.layoutInflater)
@@ -16,5 +16,6 @@ object ProgressDialog {
         dialog.setCancelable(false) // чтобы диалог нельзя было закрыть, пока выполянется задача
 
         dialog.show()
+        return dialog
     }
 }

@@ -49,8 +49,9 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         if (newList != null){
             job = CoroutineScope(Dispatchers.Main).launch { // создание корутины
 
-                ProgressDialog.createProgressDialog(activity as Activity)
+                val dialog = ProgressDialog.createProgressDialog(activity as Activity)
                 val bitmapList = ImageManager.imageResize(newList)
+                dialog.dismiss()
                 adapter.updateAdapter(bitmapList, true)
             }
 
