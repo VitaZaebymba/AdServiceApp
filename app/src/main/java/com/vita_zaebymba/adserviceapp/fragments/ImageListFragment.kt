@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -97,11 +99,14 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         resizeSelectedImages(newList, false)
     }
 
-    
+
     fun setSingleImage(uri: String, position: Int){ //uri - ссылка новой картинки, на которую хоти заменить старое фото
 
+        val pBar = rootElement.rcViewSelectedImage[position].findViewById<ProgressBar>(R.id.pBar)
         job = CoroutineScope(Dispatchers.Main).launch {
+            pBar.visibility = View.VISIBLE
             val bitmapList = ImageManager.imageResize(listOf(uri))
+            pBar.visibility = View.GONE
             adapter.mainArray[position] = bitmapList[0]
             adapter.notifyItemChanged(position)
         }
