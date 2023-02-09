@@ -1,6 +1,7 @@
 package com.vita_zaebymba.adserviceapp.fragments
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.databinding.ListImageFragmentBinding
+import com.vita_zaebymba.adserviceapp.dialoghelper.ProgressDialog
 import com.vita_zaebymba.adserviceapp.utils.ImageManager
 import com.vita_zaebymba.adserviceapp.utils.ImagePicker
 import com.vita_zaebymba.adserviceapp.utils.ItemTouchMoveCallback
@@ -46,6 +48,8 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
 
         if (newList != null){
             job = CoroutineScope(Dispatchers.Main).launch { // создание корутины
+
+                ProgressDialog.createProgressDialog(activity as Activity)
                 val bitmapList = ImageManager.imageResize(newList)
                 adapter.updateAdapter(bitmapList, true)
             }
