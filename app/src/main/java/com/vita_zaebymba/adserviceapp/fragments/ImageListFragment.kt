@@ -47,14 +47,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         rootElement.rcViewSelectedImage.adapter = adapter // присваиваем адаптер
 
         if (newList != null){
-            job = CoroutineScope(Dispatchers.Main).launch { // создание корутины
-
-                val dialog = ProgressDialog.createProgressDialog(activity as Activity)
-                val bitmapList = ImageManager.imageResize(newList)
-                dialog.dismiss()
-                adapter.updateAdapter(bitmapList, true)
-            }
-
+            resizeSelectedImages(newList, true)
         }
 
     }
@@ -68,6 +61,17 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         fragCloseInterface.onFragmentClose(adapter.mainArray)
         job?.cancel()
     }
+
+    private fun resizeSelectedImages(newList: ArrayList<String>, needClear: Boolean){
+        job = CoroutineScope(Dispatchers.Main).launch { // создание корутины
+
+            val dialog = ProgressDialog.createProgressDialog(activity as Activity)
+            val bitmapList = ImageManager.imageResize(newList) // уменьшаем картинки и выдаем bitmapList
+            dialog.dismiss()
+            adapter.updateAdapter(bitmapList, needClear) // bitmapList Передаем в адаптер и добавляем эту картинку
+        }
+    }
+
 
     private fun setUpToolbar(){
         rootElement.tb.inflateMenu(R.menu.menu_choose_image)
@@ -90,12 +94,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
     }
 
     fun updateAdapter(newList: ArrayList<String>){ // к имеющимся картинкам добавляем еще картинки
-
-        job = CoroutineScope(Dispatchers.Main).launch {
-            val bitmapList = ImageManager.imageResize(newList) // уменьшаем картинки и выдаем bitmapList
-            adapter.updateAdapter(bitmapList, false) // bitmapList Передаем в адаптер и добавляем эту картинку
-        }
-
+        resizeSelectedImages(newList, false)
     }
 
     @SuppressLint("NotifyDataSetChanged")
