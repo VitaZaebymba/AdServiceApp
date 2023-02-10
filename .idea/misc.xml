@@ -5,7 +5,11 @@
       <map>
         <entry key="..\:/Users/GANSOR/.gradle/caches/transforms-3/a58a0e88219f78dada4bff9fa2f9267a/transformed/pix-1.5.6/res/layout/activity_main_lib.xml" value="0.5" />
         <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3635" />
+        <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/drawable/ic_add_photo.xml" value="0.318" />
         <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/drawable/ic_baseline_tag_faces_24.xml" value="0.3635" />
+        <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/drawable/ic_delete_image.xml" value="0.1" />
+        <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/drawable/ic_drag.xml" value="0.1" />
+        <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/drawable/ic_edit.xml" value="0.1" />
         <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3635" />
         <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/layout/activity_edit_ad.xml" value="0.33" />
         <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/layout/activity_edit_ads.xml" value="0.88" />
