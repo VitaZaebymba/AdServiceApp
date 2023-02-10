@@ -1,11 +1,15 @@
 package com.vita_zaebymba.adserviceapp.utils
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.fxn.pix.Options
 import com.fxn.pix.Pix
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 object ImagePicker { // получаем картинки, чтобы потом показывать в списке и т.д.
 
@@ -33,17 +37,19 @@ object ImagePicker { // получаем картинки, чтобы потом
 
                 val returnValues = data.getStringArrayListExtra(Pix.IMAGE_RESULTS) //если размер > 1, то 2 и больше картинок и отправляем во фрагмент, фрагмент запускает адаптер и адаптер заполняет RecyclerView
 
-                if (returnValues?.size!! > 1 && edAct.chooseImageFragment == null) {
+                if (returnValues?.size!! > 1 && edAct.chooseImageFragment == null) { // в первый раз выбираем картинки
+
                     edAct.openChooseImageFragment(returnValues) // returnValues - ссылки на картинки
 
                 } else if (returnValues.size == 1 && edAct.chooseImageFragment == null) { // выбор одной картинки
 
-                    //imageAdapter.update(returnValues)
-                    val tempList = ImageManager.getImageSize(returnValues[0])
-                    Log.d("MyLog", "Image width: ${tempList[0]}")
-                    Log.d("MyLog", "Image height: ${tempList[1]}")
+                    CoroutineScope(Dispatchers.Main).launch{
+                        val bitMapArray = ImageManager.imageResize(returnValues) as ArrayList<Bitmap>
+                        edAct.imageAdapter.update(bitMapArray)
+                    }
 
-                } else if (edAct.chooseImageFragment != null) {
+
+                } else if (edAct.chooseImageFragment != null) { // пользователь выбирал картинки раньше
 
                     edAct.chooseImageFragment?.updateAdapter(returnValues)
                 }
