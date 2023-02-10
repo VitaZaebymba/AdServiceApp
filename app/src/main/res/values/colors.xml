@@ -10,4 +10,5 @@
 
     <color name="green_main">#015e53</color>
     <color name="gray_main">#EEEEEE</color>
+    <color name="gray_list">#DADADA</color>
 </resources>
