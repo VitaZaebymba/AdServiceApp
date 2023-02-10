@@ -3,6 +3,7 @@ package com.vita_zaebymba.adserviceapp.utils
 import android.content.Intent
 import android.graphics.Bitmap
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.fxn.pix.Options
 import com.fxn.pix.Pix
@@ -44,7 +45,10 @@ object ImagePicker { // получаем картинки, чтобы потом
                 } else if (returnValues.size == 1 && edAct.chooseImageFragment == null) { // выбор одной картинки
 
                     CoroutineScope(Dispatchers.Main).launch{
+
+                        edAct.rootElement.pBarLoad.visibility = View.VISIBLE
                         val bitMapArray = ImageManager.imageResize(returnValues) as ArrayList<Bitmap>
+                        edAct.rootElement.pBarLoad.visibility = View.GONE
                         edAct.imageAdapter.update(bitMapArray)
                     }
 
