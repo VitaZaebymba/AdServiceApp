@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, private val newList: ArrayList<String>?): Fragment(), AdapterCallback{ // этот фрагмент запускает список с картинками
    lateinit var rootElement: ListImageFragmentBinding
 
-    val adapter = SelectImageRvAdapter()
+    val adapter = SelectImageRvAdapter(this)
     val dragCallback = ItemTouchMoveCallback(adapter)
     val touchHelper = ItemTouchHelper(dragCallback) //класс, который будет следить за перетаскиванием элементов
     private var job: Job? = null
@@ -56,6 +56,12 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         }
 
     }
+
+    override fun onItemDelete() {
+        TODO("Not yet implemented")
+    }
+
+
 
     fun updateAdapterFromEdit(bitmapList: List<Bitmap>){ // обновление адаптера, если картинки уже есть
         adapter.updateAdapter(bitmapList, true)
@@ -119,8 +125,6 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
 
     }
 
-    override fun onItemDelete() {
-        TODO("Not yet implemented")
-    }
+
 
 }

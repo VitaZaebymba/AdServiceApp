@@ -14,10 +14,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
+import com.vita_zaebymba.adserviceapp.utils.AdapterCallback
 import com.vita_zaebymba.adserviceapp.utils.ImagePicker
 import com.vita_zaebymba.adserviceapp.utils.ItemTouchMoveCallback
 
-class SelectImageRvAdapter: RecyclerView.Adapter<SelectImageRvAdapter.ImageHolder>(), ItemTouchMoveCallback.ItemTouchAdapter {
+class SelectImageRvAdapter(val adapterCallback: AdapterCallback): RecyclerView.Adapter<SelectImageRvAdapter.ImageHolder>(), ItemTouchMoveCallback.ItemTouchAdapter {
     val mainArray = ArrayList<Bitmap> ()//список со всеми item
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
