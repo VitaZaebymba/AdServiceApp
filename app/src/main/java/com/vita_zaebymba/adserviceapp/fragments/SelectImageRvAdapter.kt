@@ -13,6 +13,7 @@ import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
 import com.vita_zaebymba.adserviceapp.databinding.SelectImageFragItemBinding
 import com.vita_zaebymba.adserviceapp.utils.AdapterCallback
+import com.vita_zaebymba.adserviceapp.utils.ImageManager
 import com.vita_zaebymba.adserviceapp.utils.ImagePicker
 import com.vita_zaebymba.adserviceapp.utils.ItemTouchMoveCallback
 
@@ -68,6 +69,7 @@ class SelectImageRvAdapter(val adapterCallback: AdapterCallback): RecyclerView.A
             }
 
             viewBinding.tvTitle.text = context.resources.getStringArray(R.array.title_array)[adapterPosition]
+            ImageManager.chooseScaleType(viewBinding.imageContent, bitMap)
             viewBinding.imageContent.setImageBitmap(bitMap)//передаем картинку
 
         }
