@@ -76,6 +76,7 @@ class SelectImageRvAdapter(val adapterCallback: AdapterCallback): RecyclerView.A
                 for (n in 0 until adapter.mainArray.size) { // чтобы менялся текст в соответствии с позицей фото
                     adapter.notifyItemChanged(n)
                 }
+                adapter.adapterCallback.onItemDelete()
 
             }
 

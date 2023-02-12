@@ -58,7 +58,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
     }
 
     override fun onItemDelete() {
-        TODO("Not yet implemented")
+        addImageItem?.isVisible = true
     }
 
 
