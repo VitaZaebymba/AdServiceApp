@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.databinding.ListImageFragmentBinding
 import com.vita_zaebymba.adserviceapp.dialoghelper.ProgressDialog
+import com.vita_zaebymba.adserviceapp.utils.AdapterCallback
 import com.vita_zaebymba.adserviceapp.utils.ImageManager
 import com.vita_zaebymba.adserviceapp.utils.ImagePicker
 import com.vita_zaebymba.adserviceapp.utils.ItemTouchMoveCallback
@@ -28,7 +29,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, private val newList: ArrayList<String>?): Fragment() { // этот фрагмент запускает список с картинками
+class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, private val newList: ArrayList<String>?): Fragment(), AdapterCallback{ // этот фрагмент запускает список с картинками
    lateinit var rootElement: ListImageFragmentBinding
 
     val adapter = SelectImageRvAdapter()
@@ -116,6 +117,10 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
             adapter.notifyItemChanged(position)
         }
 
+    }
+
+    override fun onItemDelete() {
+        TODO("Not yet implemented")
     }
 
 }
