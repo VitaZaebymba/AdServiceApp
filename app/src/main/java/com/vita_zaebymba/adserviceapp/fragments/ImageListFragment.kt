@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -34,6 +35,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
     val dragCallback = ItemTouchMoveCallback(adapter)
     val touchHelper = ItemTouchHelper(dragCallback) //класс, который будет следить за перетаскиванием элементов
     private var job: Job? = null
+    private var addImageItem: MenuItem? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootElement = ListImageFragmentBinding.inflate(inflater)
@@ -71,6 +73,8 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
             val bitmapList = ImageManager.imageResize(newList) // уменьшаем картинки и выдаем bitmapList
             dialog.dismiss()
             adapter.updateAdapter(bitmapList, needClear) // bitmapList Передаем в адаптер и добавляем эту картинку
+
+            if (adapter.mainArray.size > 4) addImageItem?.isVisible = false
         }
     }
 
@@ -78,7 +82,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
     private fun setUpToolbar(){
         rootElement.tb.inflateMenu(R.menu.menu_choose_image)
         val deleteItem = rootElement.tb.menu.findItem(R.id.delete_image)
-        val addImageItem = rootElement.tb.menu.findItem(R.id.id_add_image)
+        addImageItem = rootElement.tb.menu.findItem(R.id.id_add_image)
 
         rootElement.tb.setNavigationOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
@@ -86,9 +90,10 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
 
         deleteItem.setOnMenuItemClickListener {
             adapter.updateAdapter(ArrayList(), true)
+            addImageItem?.isVisible = true
             true
         }
-        addImageItem.setOnMenuItemClickListener {
+        addImageItem?.setOnMenuItemClickListener {
             val imageCount = ImagePicker.MAX_IMAGE_COUNT - adapter.mainArray.size
             ImagePicker.getImages(activity as AppCompatActivity, imageCount, ImagePicker.REQUEST_CODE_GET_IMAGES)
             true
