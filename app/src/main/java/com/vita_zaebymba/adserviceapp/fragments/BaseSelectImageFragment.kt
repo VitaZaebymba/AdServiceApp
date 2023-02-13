@@ -30,12 +30,12 @@ open class BaseSelectImageFragment: Fragment() {
 
     override fun onPause() {
         super.onPause()
-        binding.adView.resume()
+        binding.adView.pause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        binding.adView.resume()
+        binding.adView.destroy()
     }
 
     private fun initAds(){
