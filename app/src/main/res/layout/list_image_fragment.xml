@@ -13,7 +13,7 @@
         app:adUnitId="@string/ad_id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tb" />
+        app:layout_constraintTop_toBottomOf="@id/tb"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcViewSelectedImage"
