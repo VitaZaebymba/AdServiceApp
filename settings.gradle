@@ -12,6 +12,11 @@ dependencyResolutionManagement {
         mavenCentral()
         jcenter()
     }
+
 }
+
+
+
+
 rootProject.name = "AdServiceApp"
 include ':app'
