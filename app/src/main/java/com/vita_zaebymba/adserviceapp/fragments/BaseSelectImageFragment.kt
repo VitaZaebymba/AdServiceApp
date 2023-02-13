@@ -2,6 +2,7 @@ package com.vita_zaebymba.adserviceapp.fragments
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,7 @@ open class BaseSelectImageFragment: Fragment() {
     override fun onPause() {
         super.onPause()
         binding.adView.pause()
+        Log.d("MyLog", "Pause banner")
     }
 
     override fun onDestroy() {
