@@ -29,8 +29,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, private val newList: ArrayList<String>?): Fragment(), AdapterCallback{ // этот фрагмент запускает список с картинками
-   lateinit var rootElement: ListImageFragmentBinding
+class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, private val newList: ArrayList<String>?): BaseSelectImageFragment(), AdapterCallback{ // этот фрагмент запускает список с картинками
 
     val adapter = SelectImageRvAdapter(this)
     val dragCallback = ItemTouchMoveCallback(adapter)
@@ -38,21 +37,18 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
     private var job: Job? = null
     private var addImageItem: MenuItem? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootElement = ListImageFragmentBinding.inflate(inflater)
-        return rootElement.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpToolbar()
+        binding.apply{
+            touchHelper.attachToRecyclerView(rcViewSelectedImage)
+            rcViewSelectedImage.layoutManager = LinearLayoutManager(activity) // указываем, как элементы будут располагаться
+            rcViewSelectedImage.adapter = adapter // присваиваем адаптер
 
-        touchHelper.attachToRecyclerView(rootElement.rcViewSelectedImage)
-        rootElement.rcViewSelectedImage.layoutManager = LinearLayoutManager(activity) // указываем, как элементы будут располагаться
-        rootElement.rcViewSelectedImage.adapter = adapter // присваиваем адаптер
-
-        if (newList != null){
-            resizeSelectedImages(newList, true)
+            if (newList != null) {
+                resizeSelectedImages(newList, true)
+            }
         }
 
     }
@@ -87,23 +83,30 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
 
 
     private fun setUpToolbar(){
-        rootElement.tb.inflateMenu(R.menu.menu_choose_image)
-        val deleteItem = rootElement.tb.menu.findItem(R.id.delete_image)
-        addImageItem = rootElement.tb.menu.findItem(R.id.id_add_image)
 
-        rootElement.tb.setNavigationOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
-        }
+        binding.apply {
+            tb.inflateMenu(R.menu.menu_choose_image)
+            val deleteItem = tb.menu.findItem(R.id.delete_image)
+            addImageItem = tb.menu.findItem(R.id.id_add_image)
 
-        deleteItem.setOnMenuItemClickListener {
-            adapter.updateAdapter(ArrayList(), true)
-            addImageItem?.isVisible = true
-            true
-        }
-        addImageItem?.setOnMenuItemClickListener {
-            val imageCount = ImagePicker.MAX_IMAGE_COUNT - adapter.mainArray.size
-            ImagePicker.getImages(activity as AppCompatActivity, imageCount, ImagePicker.REQUEST_CODE_GET_IMAGES)
-            true
+            tb.setNavigationOnClickListener {
+                activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+            }
+
+            deleteItem.setOnMenuItemClickListener {
+                adapter.updateAdapter(ArrayList(), true)
+                addImageItem?.isVisible = true
+                true
+            }
+            addImageItem?.setOnMenuItemClickListener {
+                val imageCount = ImagePicker.MAX_IMAGE_COUNT - adapter.mainArray.size
+                ImagePicker.getImages(
+                    activity as AppCompatActivity,
+                    imageCount,
+                    ImagePicker.REQUEST_CODE_GET_IMAGES
+                )
+                true
+            }
         }
     }
 
@@ -114,7 +117,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
 
     fun setSingleImage(uri: String, position: Int){ //uri - ссылка новой картинки, на которую хоти заменить старое фото
 
-        val pBar = rootElement.rcViewSelectedImage[position].findViewById<ProgressBar>(R.id.pBar)
+        val pBar = binding.rcViewSelectedImage[position].findViewById<ProgressBar>(R.id.pBar)
         job = CoroutineScope(Dispatchers.Main).launch {
             pBar.visibility = View.VISIBLE
             val bitmapList = ImageManager.imageResize(listOf(uri))
