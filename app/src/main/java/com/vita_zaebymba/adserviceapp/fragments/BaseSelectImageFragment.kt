@@ -1,10 +1,13 @@
 package com.vita_zaebymba.adserviceapp.fragments
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.vita_zaebymba.adserviceapp.databinding.ListImageFragmentBinding
 
 open class BaseSelectImageFragment: Fragment() {
@@ -14,4 +17,31 @@ open class BaseSelectImageFragment: Fragment() {
         binding = ListImageFragmentBinding.inflate(layoutInflater)
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initAds()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.adView.resume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.adView.resume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.adView.resume()
+    }
+
+    private fun initAds(){
+        MobileAds.initialize(activity as Activity)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
+    }
+
 }

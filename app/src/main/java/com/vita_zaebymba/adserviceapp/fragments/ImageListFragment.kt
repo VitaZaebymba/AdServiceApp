@@ -90,7 +90,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
             addImageItem = tb.menu.findItem(R.id.id_add_image)
 
             tb.setNavigationOnClickListener {
-                activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+                activity?.supportFragmentManager?.beginTransaction()?.remove(this@ImageListFragment)?.commit()
             }
 
             deleteItem.setOnMenuItemClickListener {
