@@ -36,6 +36,13 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
     val touchHelper = ItemTouchHelper(dragCallback) //класс, который будет следить за перетаскиванием элементов
     private var job: Job? = null
     private var addImageItem: MenuItem? = null
+    lateinit var binding: ListImageFragmentBinding
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = ListImageFragmentBinding.inflate(layoutInflater)
+        adView = binding.adView
+        return binding.root
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

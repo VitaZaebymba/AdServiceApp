@@ -8,16 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.vita_zaebymba.adserviceapp.databinding.ListImageFragmentBinding
 
-open class BaseSelectImageFragment: Fragment() {
-    lateinit var binding: ListImageFragmentBinding
+open class BaseSelectImageFragment: Fragment() { // класс для показа рекламного баннера
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = ListImageFragmentBinding.inflate(layoutInflater)
-        return binding.root
-    }
+    lateinit var adView: AdView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,23 +23,23 @@ open class BaseSelectImageFragment: Fragment() {
 
     override fun onResume() {
         super.onResume()
-        binding.adView.resume()
+        adView.resume()
     }
 
     override fun onPause() {
         super.onPause()
-        binding.adView.pause()
+        adView.pause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        binding.adView.destroy()
+        adView.destroy()
     }
 
     private fun initAds(){
         MobileAds.initialize(activity as Activity)
         val adRequest = AdRequest.Builder().build()
-        binding.adView.loadAd(adRequest)
+        adView.loadAd(adRequest)
     }
 
 }
