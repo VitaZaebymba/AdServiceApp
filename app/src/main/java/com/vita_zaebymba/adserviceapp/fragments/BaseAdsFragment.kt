@@ -7,10 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.FullScreenContentCallback
-import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.vita_zaebymba.adserviceapp.R
@@ -26,7 +23,7 @@ open class BaseAdsFragment: Fragment(), InterAdsClose { // класс для п�
         initAds()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) { // открываем фрагмент
         super.onCreate(savedInstanceState)
         loadInterAd()
     }
@@ -52,16 +49,15 @@ open class BaseAdsFragment: Fragment(), InterAdsClose { // класс для п�
         adView.loadAd(adRequest)
     }
 
-    private fun loadInterAd(){
+    private fun loadInterAd(){ // загрузка рекламы
         val adRequest = AdRequest.Builder().build()
-        context?.let {
-            InterstitialAd.load(it, getString(R.string.inter_id), adRequest, object : InterstitialAdLoadCallback(){
+        InterstitialAd.load(context as Activity, getString(R.string.inter_id), adRequest, object : InterstitialAdLoadCallback(){
 
                 override fun onAdLoaded(ad: InterstitialAd) {
                     interAd = ad //загруженная реклама
                 }
             })
-        }
+
     }
 
     fun showInterAd(){
@@ -72,7 +68,16 @@ open class BaseAdsFragment: Fragment(), InterAdsClose { // класс для п�
                     onClose()
                 }
 
+                override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                    onClose()
+                }
+
             }
+
+            interAd?.show(activity as Activity)
+
+        } else {
+            onClose()
         }
 
     }

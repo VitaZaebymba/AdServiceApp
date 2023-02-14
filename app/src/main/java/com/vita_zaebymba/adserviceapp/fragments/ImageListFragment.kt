@@ -71,6 +71,11 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         job?.cancel()
     }
 
+    override fun onClose() {
+        super.onClose()
+        activity?.supportFragmentManager?.beginTransaction()?.remove(this@ImageListFragment)?.commit() // удаляем фрагмент, остается активити
+    }
+
     private fun resizeSelectedImages(newList: ArrayList<String>, needClear: Boolean){
         job = CoroutineScope(Dispatchers.Main).launch { // создание корутины
 
@@ -92,7 +97,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
             addImageItem = tb.menu.findItem(R.id.id_add_image)
 
             tb.setNavigationOnClickListener {
-                activity?.supportFragmentManager?.beginTransaction()?.remove(this@ImageListFragment)?.commit()
+                showInterAd()
             }
 
             deleteItem.setOnMenuItemClickListener {
