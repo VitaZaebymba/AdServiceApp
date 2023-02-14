@@ -32,7 +32,6 @@ open class BaseSelectImageFragment: Fragment() {
     override fun onPause() {
         super.onPause()
         binding.adView.pause()
-        Log.d("MyLog", "Pause banner")
     }
 
     override fun onDestroy() {
