@@ -88,6 +88,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+
                     <TextView
                         android:id="@+id/tvTitleCountry"
                         android:layout_width="wrap_content"
@@ -195,11 +196,12 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:ems="10"
-                        android:hint="@string/index"
+                        android:hint="@string/index_write"
                         android:inputType="number"
                         android:padding="10dp"
                         android:textColorHint="@color/gray_pressed_edit_button"
                         android:textSize="14sp" />
+
 
                     <LinearLayout
                         android:id="@+id/line4"
@@ -209,7 +211,35 @@
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="5dp"
                         android:background="@color/green_main"
-                        android:orientation="horizontal"></LinearLayout>
+                        android:orientation="horizontal"/>
+
+                    <TextView
+                        android:id="@+id/tvTitleIndex2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/delivery_send"
+                        android:textColor="@color/green_main"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxWithSend"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="@string/delivery" />
+
+                    <LinearLayout
+                        android:id="@+id/line5"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/green_main"
+                        android:orientation="horizontal" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -306,7 +336,7 @@
                         android:background="@null"
                         android:ems="10"
                         android:hint="@string/description_hint"
-                        android:inputType="number"
+                        android:inputType="textMultiLine"
                         android:padding="10dp"
                         android:textColorHint="@color/gray_pressed_edit_button"
                         android:textSize="14sp" />
@@ -322,6 +352,13 @@
                         android:orientation="horizontal"></LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/btPublish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/green_main"
+                android:text="@string/publish" />
 
         </LinearLayout>
     </ScrollView>
