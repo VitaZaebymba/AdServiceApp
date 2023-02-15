@@ -42,6 +42,11 @@
     <string name="choose_country">*Выберите страну</string>
     <string name="choose_city">*Выберите город</string>
     <string name="no_country_selected">Выберите страну</string>
+    <string name="country">Страна</string>
+    <string name="city">Город</string>
+    <string name="index">Индекс</string>
+    <string name="tel">Телефон</string>
+    <string name="tel_number">Номер телефона</string>
 
 
 </resources>
