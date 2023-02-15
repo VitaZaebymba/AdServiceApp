@@ -90,6 +90,12 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
     }
 
+    fun onClickSelectCategory(view: View){
+
+        //val listCity = dialog.showSpinnerDialog(this, listCity, rootElement.tvCategory)
+    }
+
+
     fun onClickGetImages(view: View){
        if (imageAdapter.mainArray.size == 0){ // если нет фото, открываем выбор картинки, если есть фото, то открываем фрагмент с фото
            ImagePicker.getImages(this, 5, ImagePicker.REQUEST_CODE_GET_IMAGES)
