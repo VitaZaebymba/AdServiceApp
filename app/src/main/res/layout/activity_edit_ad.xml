@@ -241,7 +241,7 @@
                         android:id="@+id/tvCategory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:onClick="onClickSelectCountry"
+                        android:onClick="onClickSelectCategory"
                         android:padding="10dp"
                         android:text="@string/select_category"
                         android:textColor="@color/black" />

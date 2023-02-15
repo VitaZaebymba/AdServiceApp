@@ -91,8 +91,8 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     }
 
     fun onClickSelectCategory(view: View){
-
-        //val listCity = dialog.showSpinnerDialog(this, listCity, rootElement.tvCategory)
+        val listCity = resources.getStringArray(R.array.category).toMutableList() as ArrayList
+        dialog.showSpinnerDialog(this, listCity, rootElement.tvCategory)
     }
 
 
