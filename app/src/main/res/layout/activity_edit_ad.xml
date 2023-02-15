@@ -53,7 +53,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
-                        android:background="@drawable/edit_image_bg_normal"
+                        android:background="@drawable/edit_image_button_selector"
                         android:onClick="onClickGetImages"
                         android:padding="5dp"
                         app:layout_constraintEnd_toEndOf="@+id/vpImages"
