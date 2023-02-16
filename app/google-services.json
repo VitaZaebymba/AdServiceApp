@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "237598412586",
+    "firebase_url": "https://adservicekotlin-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "adservicekotlin",
     "storage_bucket": "adservicekotlin.appspot.com"
   },

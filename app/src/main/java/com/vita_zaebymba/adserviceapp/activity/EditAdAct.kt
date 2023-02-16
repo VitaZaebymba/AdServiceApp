@@ -12,6 +12,7 @@ import com.fxn.pix.Pix
 import com.fxn.utility.PermUtil
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.adapters.ImageAdapter
+import com.vita_zaebymba.adserviceapp.database.DatabaseManager
 import com.vita_zaebymba.adserviceapp.databinding.ActivityEditAdBinding
 import com.vita_zaebymba.adserviceapp.dialogs.DialogSpinnerHelper
 import com.vita_zaebymba.adserviceapp.fragments.FragmentCloseInterface
@@ -105,6 +106,12 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
        }
 
     }
+
+    fun onClickPublish(view: View){
+        val dbManager = DatabaseManager()
+        dbManager.publishAd()
+    }
+
 
     override fun onFragmentClose(list: ArrayList<Bitmap>) {
         rootElement.scrollViewMain.visibility = View.VISIBLE
