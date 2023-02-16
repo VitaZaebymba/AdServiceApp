@@ -12,6 +12,7 @@ import com.fxn.pix.Pix
 import com.fxn.utility.PermUtil
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.adapters.ImageAdapter
+import com.vita_zaebymba.adserviceapp.data.AdClass
 import com.vita_zaebymba.adserviceapp.database.DatabaseManager
 import com.vita_zaebymba.adserviceapp.databinding.ActivityEditAdBinding
 import com.vita_zaebymba.adserviceapp.dialogs.DialogSpinnerHelper
@@ -29,6 +30,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     private var isImagesPermissionGranted = false
     lateinit var imageAdapter: ImageAdapter
     var editImagePosition = 0 //позиция картинки, которую хотим изменить (для редактирования фото)
+    private val dbManager = DatabaseManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,8 +110,23 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     }
 
     fun onClickPublish(view: View){
-        val dbManager = DatabaseManager()
         dbManager.publishAd()
+    }
+
+    private fun fillAd(){
+        val ad: AdClass
+        rootElement.apply {
+            ad = AdClass(tvChooseCountry.text.toString(),
+                tvChooseCity.text.toString(),
+                editTel.text.toString(),
+                editIndex.text.toString(),
+                checkBoxWithSend.isChecked.toString(),
+                tvCategory.text.toString(),
+                editPrice.text.toString(),
+                editTextDescription.text.toString(),
+                
+                )
+        }
     }
 
 
