@@ -16,6 +16,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
+import com.vita_zaebymba.adserviceapp.database.DatabaseManager
 import com.vita_zaebymba.adserviceapp.databinding.ActivityMainBinding
 import com.vita_zaebymba.adserviceapp.dialoghelper.DialogConst
 import com.vita_zaebymba.adserviceapp.dialoghelper.DialogHelper
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var rootElement: ActivityMainBinding
     private val dialogHelper = DialogHelper(this)
     val mAuth = FirebaseAuth.getInstance()
+    val dbManager = DatabaseManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val view = rootElement.root
         setContentView(view)
         init()
+        dbManager.readDataFromDb()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean { // активити нового объявления
