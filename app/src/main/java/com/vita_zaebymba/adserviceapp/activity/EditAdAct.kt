@@ -5,21 +5,18 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import com.fxn.pix.Pix
 import com.fxn.utility.PermUtil
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.adapters.ImageAdapter
-import com.vita_zaebymba.adserviceapp.data.AdClass
+import com.vita_zaebymba.adserviceapp.data.Ad
 import com.vita_zaebymba.adserviceapp.database.DatabaseManager
 import com.vita_zaebymba.adserviceapp.databinding.ActivityEditAdBinding
 import com.vita_zaebymba.adserviceapp.dialogs.DialogSpinnerHelper
 import com.vita_zaebymba.adserviceapp.fragments.FragmentCloseInterface
 import com.vita_zaebymba.adserviceapp.fragments.ImageListFragment
 import com.vita_zaebymba.adserviceapp.utils.CityHelper
-import com.vita_zaebymba.adserviceapp.utils.ImageManager
 import com.vita_zaebymba.adserviceapp.utils.ImagePicker
 import java.util.ArrayList
 
@@ -110,13 +107,13 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     }
 
     fun onClickPublish(view: View){
-        dbManager.publishAd()
+        dbManager.publishAd(fillAd())
     }
 
-    private fun fillAd(){
-        val ad: AdClass
+    private fun fillAd(): Ad{
+        val ad: Ad
         rootElement.apply {
-            ad = AdClass(tvChooseCountry.text.toString(),
+            ad = Ad(tvChooseCountry.text.toString(),
                 tvChooseCity.text.toString(),
                 editTel.text.toString(),
                 editIndex.text.toString(),
@@ -124,9 +121,10 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
                 tvCategory.text.toString(),
                 editPrice.text.toString(),
                 editTextDescription.text.toString(),
-                
+                dbManager.db.push().key //генарация уникального ключа для пути
                 )
         }
+        return ad
     }
 
 

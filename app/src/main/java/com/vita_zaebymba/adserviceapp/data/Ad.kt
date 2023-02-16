@@ -1,6 +1,6 @@
 package com.vita_zaebymba.adserviceapp.data
 
-data class AdClass( // бд поместит сразу все значения
+data class Ad( // бд поместит сразу все значения
     val country: String? = null,
     val city: String? = null,
     val tel: String? = null,
