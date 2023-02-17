@@ -19,7 +19,7 @@ class DatabaseManager {
         }
 
     }
-    fun readDataFromDb(){
+    fun readDataFromDb(){ // читаем данные из бд
         db.addListenerForSingleValueEvent(object: ValueEventListener{
 
             override fun onDataChange(snapshot: DataSnapshot) {
