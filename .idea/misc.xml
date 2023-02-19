@@ -11,15 +11,19 @@
         <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/drawable/edit_image_button_selector.xml" value="0.17" />
         <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/drawable/ic_add_photo.xml" value="0.318" />
         <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/drawable/ic_baseline_tag_faces_24.xml" value="0.3635" />
+        <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/drawable/ic_delete_ad_list.xml" value="0.1255" />
         <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/drawable/ic_delete_image.xml" value="0.1" />
         <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/drawable/ic_drag.xml" value="0.1" />
         <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/drawable/ic_edit.xml" value="0.1" />
         <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/drawable/ic_edit_ad_list.xml" value="0.17" />
+        <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/drawable/ic_eye.xml" value="0.1255" />
+        <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/drawable/ic_fav_normal.xml" value="0.1255" />
+        <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/drawable/ic_fav_pressed.xml" value="0.1255" />
         <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3635" />
         <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/layout/activity_edit_ad.xml" value="0.33" />
         <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/layout/activity_edit_ads.xml" value="0.88" />
         <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/layout/activity_main.xml" value="0.5" />
-        <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/layout/ad_list_item.xml" value="0.33" />
+        <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/layout/ad_list_item.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/layout/image_adapter_item.xml" value="0.33" />
         <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/layout/list_image_fragment.xml" value="0.33" />
         <entry key="..\:/Users/GANSOR/Desktop/Kotlin_Android/AdServiceApp/app/src/main/res/layout/main_content.xml" value="0.33" />
