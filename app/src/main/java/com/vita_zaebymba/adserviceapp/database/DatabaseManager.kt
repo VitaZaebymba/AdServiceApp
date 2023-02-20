@@ -32,7 +32,6 @@ class DatabaseManager {
             }
 
             override fun onCancelled(error: DatabaseError) {
-
             }
 
         })
