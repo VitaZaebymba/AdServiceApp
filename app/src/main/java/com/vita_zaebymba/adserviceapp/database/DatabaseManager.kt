@@ -21,12 +21,14 @@ class DatabaseManager {
     }
     fun readDataFromDb(){ // читаем данные из бд
         db.addListenerForSingleValueEvent(object: ValueEventListener{
+            val adArray = ArrayList<Ad>()
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 for (item in snapshot.children) {
                     val ad = item.children.iterator().next().child("ad").getValue(Ad::class.java)
-                    Log.d("MyLog", "Data:${ad}")
+                    if (ad != null ) adArray.add(ad)
+
                 }
 
             }

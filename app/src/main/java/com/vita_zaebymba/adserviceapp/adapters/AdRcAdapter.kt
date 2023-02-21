@@ -1,5 +1,6 @@
 package com.vita_zaebymba.adserviceapp.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -18,11 +19,18 @@ class AdRcAdapter: RecyclerView.Adapter<AdRcAdapter.AdHolder>() {
     }
 
     override fun onBindViewHolder(holder: AdHolder, position: Int) {
-        holder.setData()
+        holder.setData(adArray[position])
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return adArray.size
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateAdapter(newList: List<Ad>){
+        adArray.clear()
+        adArray.addAll(newList)
+        notifyDataSetChanged()
     }
 
 
