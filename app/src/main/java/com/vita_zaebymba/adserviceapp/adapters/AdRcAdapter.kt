@@ -9,7 +9,7 @@ import com.vita_zaebymba.adserviceapp.databinding.SignDialogBinding
 
 class AdRcAdapter: RecyclerView.Adapter<AdRcAdapter.AdHolder>() {
 
-
+    val adArray = ArrayList<Ad>()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdHolder {
@@ -18,7 +18,7 @@ class AdRcAdapter: RecyclerView.Adapter<AdRcAdapter.AdHolder>() {
     }
 
     override fun onBindViewHolder(holder: AdHolder, position: Int) {
-        
+        holder.setData()
     }
 
     override fun getItemCount(): Int {
@@ -26,10 +26,13 @@ class AdRcAdapter: RecyclerView.Adapter<AdRcAdapter.AdHolder>() {
     }
 
 
-    class AdHolder(binding: AdListItemBinding): RecyclerView.ViewHolder(binding.root) { // переиспользуем элементы
+    class AdHolder(val binding: AdListItemBinding): RecyclerView.ViewHolder(binding.root) { // переиспользуем элементы
 
         fun setData(ad: Ad){
-
+            binding.apply {
+                tvDiscription.text = ad.description
+                tvPrice.text = ad.price
+            }
         }
 
 
