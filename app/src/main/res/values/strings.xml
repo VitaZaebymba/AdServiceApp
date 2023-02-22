@@ -40,6 +40,8 @@
 
     <!-- Filter to countries -->
     <string name="list_country">No result</string>
+    <string name="title">Заголовок</string>
+    <string name="title_write">*Заголовок</string>
     <string name="choose_country">*Выберите страну</string>
     <string name="choose_city">*Выберите город</string>
     <string name="no_country_selected">Выберите страну</string>

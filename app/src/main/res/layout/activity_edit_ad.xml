@@ -88,6 +88,38 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/title"
+                        android:textColor="@color/green_main"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/tvTitleWrite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:ems="10"
+                        android:hint="@string/title_write"
+                        android:inputType="textMultiLine"
+                        android:padding="10dp"
+                        android:textColorHint="@color/gray_pressed_edit_button"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:id="@+id/line0"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@color/green_main"
+                        android:orientation="horizontal"></LinearLayout>
+
 
                     <TextView
                         android:id="@+id/tvTitleCountry"
