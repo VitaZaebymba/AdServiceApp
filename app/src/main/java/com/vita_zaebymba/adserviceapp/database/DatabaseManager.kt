@@ -9,7 +9,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.vita_zaebymba.adserviceapp.data.Ad
 
-class DatabaseManager {
+class DatabaseManager(val readDataCallback: ReadDataCallback) {
     val db = Firebase.database.getReference("main") // получение инстанции бд
     val auth = Firebase.auth
 
@@ -30,6 +30,7 @@ class DatabaseManager {
                     if (ad != null ) adArray.add(ad) // заполняем массив объявлениеями
 
                 }
+                readDataCallback.readData(adArray)
 
             }
 

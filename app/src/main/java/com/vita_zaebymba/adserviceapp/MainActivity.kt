@@ -18,14 +18,16 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
 import com.vita_zaebymba.adserviceapp.adapters.AdRcAdapter
+import com.vita_zaebymba.adserviceapp.data.Ad
 import com.vita_zaebymba.adserviceapp.database.DatabaseManager
+import com.vita_zaebymba.adserviceapp.database.ReadDataCallback
 import com.vita_zaebymba.adserviceapp.databinding.ActivityMainBinding
 import com.vita_zaebymba.adserviceapp.dialoghelper.DialogConst
 import com.vita_zaebymba.adserviceapp.dialoghelper.DialogHelper
 import com.vita_zaebymba.adserviceapp.dialoghelper.GoogleAccConst
 
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, ReadDataCallback {
     private lateinit var tvAccount: TextView
 
     private lateinit var rootElement: ActivityMainBinding
@@ -149,6 +151,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         } else {
             user.email
         }
+
+    }
+
+    override fun readData(list: List<Ad>) {
 
     }
 
