@@ -10,12 +10,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
+import com.vita_zaebymba.adserviceapp.adapters.AdRcAdapter
 import com.vita_zaebymba.adserviceapp.database.DatabaseManager
 import com.vita_zaebymba.adserviceapp.databinding.ActivityMainBinding
 import com.vita_zaebymba.adserviceapp.dialoghelper.DialogConst
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val dialogHelper = DialogHelper(this)
     val mAuth = FirebaseAuth.getInstance()
     val dbManager = DatabaseManager()
+    val adapter = AdRcAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +40,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val view = rootElement.root
         setContentView(view)
         init()
+        initRecyclerView()
         dbManager.readDataFromDb()
     }
 
@@ -83,6 +87,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         rootElement.navView.setNavigationItemSelectedListener(this) //navigation view будет передавать нажатия на кнопки меню
         tvAccount = rootElement.navView.getHeaderView(0).findViewById(R.id.tvAccountEmail) //отображение текста в header
     }
+
+
+    private fun initRecyclerView(){ // показ объявлений на главное странице
+        rootElement.apply {
+            toolbarMainContent.rcView.layoutManager = LinearLayoutManager(this@MainActivity)
+            toolbarMainContent.rcView.adapter = adapter
+        }
+    }
+
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 

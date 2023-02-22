@@ -21,13 +21,13 @@ class DatabaseManager {
     }
     fun readDataFromDb(){ // читаем данные из бд
         db.addListenerForSingleValueEvent(object: ValueEventListener{
-            val adArray = ArrayList<Ad>()
+
 
             override fun onDataChange(snapshot: DataSnapshot) {
-
+                val adArray = ArrayList<Ad>()
                 for (item in snapshot.children) {
                     val ad = item.children.iterator().next().child("ad").getValue(Ad::class.java)
-                    if (ad != null ) adArray.add(ad)
+                    if (ad != null ) adArray.add(ad) // заполняем массив объявлениеями
 
                 }
 
