@@ -113,7 +113,8 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     private fun fillAd(): Ad{
         val ad: Ad
         rootElement.apply {
-            ad = Ad(tvChooseCountry.text.toString(),
+            ad = Ad(tvTitleWrite.text.toString(),
+                tvChooseCountry.text.toString(),
                 tvChooseCity.text.toString(),
                 editTel.text.toString(),
                 editIndex.text.toString(),

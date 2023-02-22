@@ -38,6 +38,7 @@ class AdRcAdapter: RecyclerView.Adapter<AdRcAdapter.AdHolder>() {
 
         fun setData(ad: Ad){
             binding.apply {
+                tvTitleAdList.text = ad.title
                 tvDiscription.text = ad.description
                 tvPrice.text = ad.price
             }
