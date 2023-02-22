@@ -27,7 +27,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     private var isImagesPermissionGranted = false
     lateinit var imageAdapter: ImageAdapter
     var editImagePosition = 0 //позиция картинки, которую хотим изменить (для редактирования фото)
-    private val dbManager = DatabaseManager()
+    private val dbManager = DatabaseManager(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

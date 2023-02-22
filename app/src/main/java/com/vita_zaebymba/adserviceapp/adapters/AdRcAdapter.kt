@@ -14,7 +14,7 @@ class AdRcAdapter: RecyclerView.Adapter<AdRcAdapter.AdHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdHolder {
-        val binding = AdListItemBinding.inflate(LayoutInflater.from(parent.context))
+        val binding = AdListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return AdHolder(binding) // хранит ссылки на все view
     }
 

@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var rootElement: ActivityMainBinding
     private val dialogHelper = DialogHelper(this)
     val mAuth = FirebaseAuth.getInstance()
-    val dbManager = DatabaseManager()
+    val dbManager = DatabaseManager(this)
     val adapter = AdRcAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -155,7 +155,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun readData(list: List<Ad>) {
-
+            adapter.updateAdapter(list)
     }
 
 }
