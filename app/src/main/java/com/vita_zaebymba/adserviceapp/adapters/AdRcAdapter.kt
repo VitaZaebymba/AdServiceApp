@@ -45,5 +45,6 @@ class AdRcAdapter: RecyclerView.Adapter<AdRcAdapter.AdHolder>() {
 
 
     }
+    //ПРОИЗОШЛА ЖЕСТЬ
 
 }
