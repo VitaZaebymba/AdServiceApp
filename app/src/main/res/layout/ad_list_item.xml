@@ -23,7 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="5dp">
 
 
             <ImageView
@@ -94,12 +95,14 @@
                         android:id="@+id/tvViewCounter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:layout_marginStart="5dp"
+                        android:text="1200" />
 
                     <ImageButton
                         android:id="@+id/ibFavorite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
                         android:background="@android:color/transparent"
                         app:srcCompat="@drawable/ic_fav_normal" />
 
@@ -107,7 +110,8 @@
                         android:id="@+id/tvFavoriteCounter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:layout_marginStart="5dp"
+                        android:text="200" />
                 </LinearLayout>
 
                 <LinearLayout
