@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/gray_pressed_edit_button">
+    android:background="@color/pickled_bluewood">
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
@@ -34,7 +34,7 @@
                 android:id="@+id/mainImage"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="@color/gray_main_ad"
+                android:background="@color/gray_main_image"
                 android:paddingTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
