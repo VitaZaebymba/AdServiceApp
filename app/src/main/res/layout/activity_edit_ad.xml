@@ -5,14 +5,16 @@
     android:id="@+id/place_holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/pickled_bluewood">
+    android:background="@color/gray_list">
 
     <ScrollView
         android:id="@+id/scrollViewMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:onClick="onClickSelectCountry"
-        android:padding="10dp"
+        android:paddingStart="10dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
