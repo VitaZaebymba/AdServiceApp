@@ -99,7 +99,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:text="@string/title"
-                        android:textColor="@color/green_main"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -121,7 +121,7 @@
                         android:layout_height="1dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
-                        android:background="@color/green_main"
+                        android:background="@color/vivid_cerulean"
                         android:orientation="horizontal"></LinearLayout>
 
 
@@ -132,7 +132,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:text="@string/country"
-                        android:textColor="@color/green_main"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -151,7 +151,7 @@
                         android:layout_height="1dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
-                        android:background="@color/green_main"
+                        android:background="@color/vivid_cerulean"
                         android:orientation="horizontal"></LinearLayout>
 
                     <TextView
@@ -161,7 +161,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:text="@string/city"
-                        android:textColor="@color/green_main"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -180,7 +180,7 @@
                         android:layout_height="1dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
-                        android:background="@color/green_main"
+                        android:background="@color/vivid_cerulean"
                         android:orientation="horizontal"></LinearLayout>
 
                     <TextView
@@ -190,7 +190,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:text="@string/tel"
-                        android:textColor="@color/green_main"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -212,7 +212,7 @@
                         android:layout_height="1dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
-                        android:background="@color/green_main"
+                        android:background="@color/vivid_cerulean"
                         android:orientation="horizontal"></LinearLayout>
 
                     <TextView
@@ -222,7 +222,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:text="@string/index"
-                        android:textColor="@color/green_main"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -246,7 +246,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@color/green_main"
+                        android:background="@color/vivid_cerulean"
                         android:orientation="horizontal" />
 
                     <TextView
@@ -256,7 +256,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:text="@string/delivery_send"
-                        android:textColor="@color/green_main"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -274,7 +274,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@color/green_main"
+                        android:background="@color/vivid_cerulean"
                         android:orientation="horizontal" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -299,7 +299,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:text="@string/category"
-                        android:textColor="@color/green_main"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -318,7 +318,7 @@
                         android:layout_height="1dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
-                        android:background="@color/green_main"
+                        android:background="@color/vivid_cerulean"
                         android:orientation="horizontal"></LinearLayout>
 
 
@@ -329,7 +329,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:text="@string/price"
-                        android:textColor="@color/green_main"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -351,7 +351,7 @@
                         android:layout_height="1dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
-                        android:background="@color/green_main"
+                        android:background="@color/vivid_cerulean"
                         android:orientation="horizontal"></LinearLayout>
 
                     <TextView
@@ -361,7 +361,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:text="@string/description"
-                        android:textColor="@color/green_main"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -384,7 +384,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@color/green_main"
+                        android:background="@color/vivid_cerulean"
                         android:orientation="horizontal"></LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -393,7 +393,7 @@
                 android:id="@+id/btPublish"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/green_main"
+                android:backgroundTint="@color/vivid_cerulean"
                 android:onClick="onClickPublish"
                 android:text="@string/publish" />
 

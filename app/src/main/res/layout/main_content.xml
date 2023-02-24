@@ -17,6 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="Ведьмачье снаряжение"
+        app:titleMargin="4dp"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Medium"
         app:titleTextColor="#000000" />
 
     <androidx.recyclerview.widget.RecyclerView
