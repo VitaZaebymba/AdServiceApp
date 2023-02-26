@@ -28,7 +28,7 @@
     </style>
 
     <style name="ToolbarMainStyle" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorControlNormal">@color/vivid_cerulean</item>
+        <item name="colorControlNormal">@color/shark</item>
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:textSize">12dp</item>
     </style>

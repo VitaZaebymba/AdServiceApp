@@ -135,7 +135,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
                         android:background="@android:color/transparent"
-                        app:srcCompat="@drawable/ic_edit_ad_list" />
+                        app:srcCompat="@drawable/ic_edit_green" />
 
                     <ImageButton
                         android:id="@+id/ibDeleteAd"

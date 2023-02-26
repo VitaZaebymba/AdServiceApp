@@ -63,7 +63,7 @@
                         android:padding="5dp"
                         app:layout_constraintEnd_toEndOf="@+id/vpImages"
                         app:layout_constraintTop_toTopOf="@+id/vpImages"
-                        app:srcCompat="@drawable/ic_edit" />
+                        app:srcCompat="@drawable/ic_edit_blue" />
 
                     <ProgressBar
                         android:id="@+id/pBarLoad"
