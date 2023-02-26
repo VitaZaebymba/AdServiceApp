@@ -41,4 +41,3 @@ class DatabaseManager(val readDataCallback: ReadDataCallback?) {
     }
 
 }
-//test
