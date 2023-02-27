@@ -4,6 +4,9 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.util.Log
 import android.view.View
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.fxn.pix.Options
 import com.fxn.pix.Pix
@@ -31,36 +34,46 @@ object ImagePicker { // получаем картинки, чтобы потом
             Pix.start(context, options)
     }
 
-    fun showSelectedImages(resultCode: Int, requestCode: Int, data: Intent?, edAct: EditAdAct){
-        if (resultCode == AppCompatActivity.RESULT_OK && requestCode == REQUEST_CODE_GET_IMAGES) {
 
-            if (data != null) {
+    fun getLauncherForMultiImages(edAct: EditAdAct): ActivityResultLauncher<Intent>{ //лаунчер для получения нескольких картинок
+        return edAct.registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            result: ActivityResult ->
 
-                val returnValues = data.getStringArrayListExtra(Pix.IMAGE_RESULTS) //если размер > 1, то 2 и больше картинок и отправляем во фрагмент, фрагмент запускает адаптер и адаптер заполняет RecyclerView
+            if (result.resultCode == AppCompatActivity.RESULT_OK) {
 
-                if (returnValues?.size!! > 1 && edAct.chooseImageFragment == null) { // в первый раз выбираем картинки
+                if (result.data != null) {
 
-                    edAct.openChooseImageFragment(returnValues) // returnValues - ссылки на картинки
+                    val returnValues = result.data?.getStringArrayListExtra(Pix.IMAGE_RESULTS) //если размер > 1, то 2 и больше картинок и отправляем во фрагмент, фрагмент запускает адаптер и адаптер заполняет RecyclerView
 
-                } else if (returnValues.size == 1 && edAct.chooseImageFragment == null) { // выбор одной картинки
+                    if (returnValues?.size!! > 1 && edAct.chooseImageFragment == null) { // в первый раз выбираем картинки
 
-                    CoroutineScope(Dispatchers.Main).launch{
+                        edAct.openChooseImageFragment(returnValues) // returnValues - ссылки на картинки
 
-                        edAct.rootElement.pBarLoad.visibility = View.VISIBLE
-                        val bitMapArray = ImageManager.imageResize(returnValues) as ArrayList<Bitmap>
-                        edAct.rootElement.pBarLoad.visibility = View.GONE
-                        edAct.imageAdapter.update(bitMapArray)
+                    } else if (returnValues.size == 1 && edAct.chooseImageFragment == null) { // выбор одной картинки
+
+                        CoroutineScope(Dispatchers.Main).launch{
+
+                            edAct.rootElement.pBarLoad.visibility = View.VISIBLE
+                            val bitMapArray = ImageManager.imageResize(returnValues) as ArrayList<Bitmap>
+                            edAct.rootElement.pBarLoad.visibility = View.GONE
+                            edAct.imageAdapter.update(bitMapArray)
+                        }
+
+
+                    } else if (edAct.chooseImageFragment != null) { // пользователь выбирал картинки раньше
+
+                        edAct.chooseImageFragment?.updateAdapter(returnValues)
                     }
 
-
-                } else if (edAct.chooseImageFragment != null) { // пользователь выбирал картинки раньше
-
-                    edAct.chooseImageFragment?.updateAdapter(returnValues)
                 }
 
             }
+        }
+    }
 
-        } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == REQUEST_CODE_GET_SINGLE_IMAGE){
+
+    fun showSelectedImages(resultCode: Int, requestCode: Int, data: Intent?, edAct: EditAdAct){
+         else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == REQUEST_CODE_GET_SINGLE_IMAGE){
             if (data != null) {
 
                 val uris = data.getStringArrayListExtra(Pix.IMAGE_RESULTS)
