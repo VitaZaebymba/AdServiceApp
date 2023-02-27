@@ -54,8 +54,8 @@ class SelectImageRvAdapter(val adapterCallback: AdapterCallback): RecyclerView.A
             viewBinding.imEditImage.setOnClickListener {
 
                 //pBar.visibility = View.VISIBLE
-                ImagePicker.getImages(context as EditAdAct, 1, ImagePicker.REQUEST_CODE_GET_SINGLE_IMAGE) // выбор картинки
-                context.editImagePosition = adapterPosition
+                //ImagePicker.getImages(context as EditAdAct, 1, ImagePicker.REQUEST_CODE_GET_SINGLE_IMAGE) // выбор картинки
+                //context.editImagePosition = adapterPosition
             }
 
             viewBinding.imDelete.setOnClickListener {

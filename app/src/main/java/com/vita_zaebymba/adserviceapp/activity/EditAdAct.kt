@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import com.fxn.utility.PermUtil
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.adapters.ImageAdapter
@@ -28,6 +29,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     lateinit var imageAdapter: ImageAdapter
     var editImagePosition = 0 //позиция картинки, которую хотим изменить (для редактирования фото)
     private val dbManager = DatabaseManager(null)
+    var launcherMultiSelectImage: ActivityResultLauncher<Intent>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +38,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         init()
 
     }
-    
+
 
     override fun onRequestPermissionsResult( // Доступ к памяти и камере
         requestCode: Int,
@@ -48,7 +50,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
             PermUtil.REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS -> {
                 //If request is cancelled, the result arrays are empty
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    ImagePicker.getImages(this, 5, ImagePicker.REQUEST_CODE_GET_IMAGES)
+                    //ImagePicker.getImages(this, 5, ImagePicker.REQUEST_CODE_GET_IMAGES)
                 } else {
                     isImagesPermissionGranted = false
                     Toast.makeText(this, "Approve permission to open Pix ImagePicker", Toast.LENGTH_LONG).show()
@@ -62,6 +64,8 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     private fun init(){
         imageAdapter = ImageAdapter()
         rootElement.vpImages.adapter = imageAdapter
+
+        launcherMultiSelectImage = ImagePicker.getLauncherForMultiImages(this) // ссылку на созданный коллбак сохраняем в переменной
 
     }
 
@@ -93,7 +97,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
     fun onClickGetImages(view: View){
        if (imageAdapter.mainArray.size == 0){ // если нет фото, открываем выбор картинки, если есть фото, то открываем фрагмент с фото
-           ImagePicker.getImages(this, 5, ImagePicker.REQUEST_CODE_GET_IMAGES)
+           ImagePicker.launchMultiSelectedImages(this, launcherMultiSelectImage) // результат будет приходить в getLauncherForMultiImages
        } else{
            openChooseImageFragment(null)
            chooseImageFragment?.updateAdapterFromEdit(imageAdapter.mainArray)

@@ -34,18 +34,18 @@ object ImagePicker { // получаем картинки, чтобы потом
         return options
     }
 
-    fun launchMultiSelectedImages(edAct: EditAdAct, launcher: ActivityResultLauncher<Intent>){
+    fun launchMultiSelectedImages(edAct: EditAdAct, launcher: ActivityResultLauncher<Intent>?){
         PermUtil.checkForCamaraWritePermissions(edAct){
-            val intent = Intent(edAct, Pix::class.java).apply {
+            val intent = Intent(edAct, Pix::class.java).apply { // запуск библиотеки Pix
                 putExtra("options", getOptions(5))
             }
-            launcher.launch(intent)
+            launcher?.launch(intent) // слушатель getLauncherForMultiImages выдает лаунчер
         }
 
     }
 
 
-    fun getLauncherForMultiImages(edAct: EditAdAct): ActivityResultLauncher<Intent>{ //лаунчер для получения нескольких картинок
+    fun getLauncherForMultiImages(edAct: EditAdAct): ActivityResultLauncher<Intent>{ //лаунчер для получения нескольких картинок. Слушатель, который следит за результатом, полученный из активити
         return edAct.registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result: ActivityResult ->
 
