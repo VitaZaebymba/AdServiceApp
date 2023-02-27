@@ -52,10 +52,8 @@ class SelectImageRvAdapter(val adapterCallback: AdapterCallback): RecyclerView.A
         fun setData(bitMap: Bitmap){ //передаем ссылку и title
 
             viewBinding.imEditImage.setOnClickListener {
-
-                //pBar.visibility = View.VISIBLE
-                //ImagePicker.getImages(context as EditAdAct, 1, ImagePicker.REQUEST_CODE_GET_SINGLE_IMAGE) // выбор картинки
-                //context.editImagePosition = adapterPosition
+                ImagePicker.launcher(context as EditAdAct, context.launcherSingleSelectImage, 1)
+                context.editImagePosition = adapterPosition
             }
 
             viewBinding.imDelete.setOnClickListener {

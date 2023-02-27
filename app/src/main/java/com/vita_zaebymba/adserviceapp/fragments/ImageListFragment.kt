@@ -8,11 +8,11 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vita_zaebymba.adserviceapp.R
+import com.vita_zaebymba.adserviceapp.activity.EditAdAct
 import com.vita_zaebymba.adserviceapp.databinding.ListImageFragmentBinding
 import com.vita_zaebymba.adserviceapp.dialoghelper.ProgressDialog
 import com.vita_zaebymba.adserviceapp.utils.AdapterCallback
@@ -107,11 +107,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
             }
             addImageItem?.setOnMenuItemClickListener {
                 val imageCount = ImagePicker.MAX_IMAGE_COUNT - adapter.mainArray.size
-                /*ImagePicker.getImages(
-                    activity as AppCompatActivity,
-                    imageCount,
-                    ImagePicker.REQUEST_CODE_GET_IMAGES
-                )*/
+                ImagePicker.launcher(activity as EditAdAct, (activity as EditAdAct).launcherMultiSelectImage, imageCount)
                 true
             }
         }

@@ -25,7 +25,6 @@ object ImagePicker { // получаем картинки, чтобы потом
         val options  = Options.init()
             .setCount(imageCounter) ////Number of images to restrict selection c
             .setFrontfacing(false) //Front Facing camera on start
-            //.setSpanCount(4) //Span count for gallery min 1 & max 5
             .setMode(Options.Mode.Picture) //Option to select only pictures or video
             .setVideoDurationLimitinSeconds(30) //Duration for video recording
             .setScreenOrientation(Options.SCREEN_ORIENTATION_PORTRAIT) //Orientation
@@ -34,10 +33,10 @@ object ImagePicker { // получаем картинки, чтобы потом
         return options
     }
 
-    fun launchMultiSelectedImages(edAct: EditAdAct, launcher: ActivityResultLauncher<Intent>?){
+    fun launcher(edAct: EditAdAct, launcher: ActivityResultLauncher<Intent>?, imageCounter: Int){
         PermUtil.checkForCamaraWritePermissions(edAct){
             val intent = Intent(edAct, Pix::class.java).apply { // запуск библиотеки Pix
-                putExtra("options", getOptions(5))
+                putExtra("options", getOptions(imageCounter))
             }
             launcher?.launch(intent) // слушатель getLauncherForMultiImages выдает лаунчер
         }
@@ -82,12 +81,15 @@ object ImagePicker { // получаем картинки, чтобы потом
     }
 
 
-    fun showSelectedImages(resultCode: Int, requestCode: Int, data: Intent?, edAct: EditAdAct){
-         if (resultCode == AppCompatActivity.RESULT_OK && requestCode == REQUEST_CODE_GET_SINGLE_IMAGE){
-            if (data != null) {
+    fun getLauncherForSingleImage(edAct: EditAdAct): ActivityResultLauncher<Intent> {
+        return edAct.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
 
-                val uris = data.getStringArrayListExtra(Pix.IMAGE_RESULTS)
-                edAct.chooseImageFragment?.setSingleImage(uris?.get(0)!!, edAct.editImagePosition)
+            if (result.resultCode == AppCompatActivity.RESULT_OK) {
+                if (result.data != null) {
+
+                    val uris = result.data?.getStringArrayListExtra(Pix.IMAGE_RESULTS)
+                    edAct.chooseImageFragment?.setSingleImage(uris?.get(0)!!, edAct.editImagePosition)
+                }
             }
         }
     }

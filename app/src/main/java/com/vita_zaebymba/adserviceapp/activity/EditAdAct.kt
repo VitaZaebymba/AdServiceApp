@@ -30,6 +30,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     var editImagePosition = 0 //позиция картинки, которую хотим изменить (для редактирования фото)
     private val dbManager = DatabaseManager(null)
     var launcherMultiSelectImage: ActivityResultLauncher<Intent>? = null
+    var launcherSingleSelectImage: ActivityResultLauncher<Intent>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +67,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         rootElement.vpImages.adapter = imageAdapter
 
         launcherMultiSelectImage = ImagePicker.getLauncherForMultiImages(this) // ссылку на созданный коллбак сохраняем в переменной
+        launcherSingleSelectImage = ImagePicker.getLauncherForSingleImage(this)
 
     }
 
@@ -97,7 +99,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
     fun onClickGetImages(view: View){
        if (imageAdapter.mainArray.size == 0){ // если нет фото, открываем выбор картинки, если есть фото, то открываем фрагмент с фото
-           ImagePicker.launchMultiSelectedImages(this, launcherMultiSelectImage) // результат будет приходить в getLauncherForMultiImages
+           ImagePicker.launcher(this, launcherMultiSelectImage, 5) // результат будет приходить в getLauncherForMultiImages
        } else{
            openChooseImageFragment(null)
            chooseImageFragment?.updateAdapterFromEdit(imageAdapter.mainArray)
