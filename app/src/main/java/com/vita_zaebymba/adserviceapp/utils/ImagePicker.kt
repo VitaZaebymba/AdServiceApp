@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.fxn.pix.Options
 import com.fxn.pix.Pix
+import com.fxn.utility.PermUtil
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,10 +35,13 @@ object ImagePicker { // получаем картинки, чтобы потом
     }
 
     fun launchMultiSelectedImages(edAct: EditAdAct, launcher: ActivityResultLauncher<Intent>){
-        val intent = Intent(edAct, Pix::class.java).apply {
-            putExtra("options", getOptions(5))
+        PermUtil.checkForCamaraWritePermissions(edAct){
+            val intent = Intent(edAct, Pix::class.java).apply {
+                putExtra("options", getOptions(5))
+            }
+            launcher.launch(intent)
         }
-        launcher.launch(intent)
+
     }
 
 
