@@ -123,7 +123,8 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
                 tvCategory.text.toString(),
                 editPrice.text.toString(),
                 editTextDescription.text.toString(),
-                dbManager.db.push().key //генарация уникального ключа для пути
+                dbManager.db.push().key, //генарация уникального ключа для пути
+                dbManager.auth.uid
                 )
         }
         return ad
