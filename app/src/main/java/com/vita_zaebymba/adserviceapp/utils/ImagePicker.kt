@@ -20,9 +20,8 @@ object ImagePicker { // получаем картинки, чтобы потом
     const val MAX_IMAGE_COUNT = 5
     const val REQUEST_CODE_GET_IMAGES = 999
     const val REQUEST_CODE_GET_SINGLE_IMAGE = 998
-    fun getImages(context: AppCompatActivity, imageCounter: Int, rCode: Int){
+    fun getOptions(context: AppCompatActivity, imageCounter: Int, rCode: Int): Options{
         val options  = Options.init()
-            .setRequestCode(rCode) //Request code for activity results
             .setCount(imageCounter) ////Number of images to restrict selection c
             .setFrontfacing(false) //Front Facing camera on start
             .setSpanCount(4) //Span count for gallery min 1 & max 5
@@ -31,7 +30,11 @@ object ImagePicker { // получаем картинки, чтобы потом
             .setScreenOrientation(Options.SCREEN_ORIENTATION_PORTRAIT) //Orientation
             .setPath("/pix/images") //Custom Path For media Storage
 
-            Pix.start(context, options)
+        return options
+    }
+
+    fun launchMultiSelectedImages(edAct: EditAdAct){
+
     }
 
 
