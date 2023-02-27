@@ -20,11 +20,11 @@ object ImagePicker { // получаем картинки, чтобы потом
     const val MAX_IMAGE_COUNT = 5
     const val REQUEST_CODE_GET_IMAGES = 999
     const val REQUEST_CODE_GET_SINGLE_IMAGE = 998
-    fun getOptions(context: AppCompatActivity, imageCounter: Int, rCode: Int): Options{
+    private fun getOptions(imageCounter: Int): Options{
         val options  = Options.init()
             .setCount(imageCounter) ////Number of images to restrict selection c
             .setFrontfacing(false) //Front Facing camera on start
-            .setSpanCount(4) //Span count for gallery min 1 & max 5
+            //.setSpanCount(4) //Span count for gallery min 1 & max 5
             .setMode(Options.Mode.Picture) //Option to select only pictures or video
             .setVideoDurationLimitinSeconds(30) //Duration for video recording
             .setScreenOrientation(Options.SCREEN_ORIENTATION_PORTRAIT) //Orientation
@@ -33,8 +33,11 @@ object ImagePicker { // получаем картинки, чтобы потом
         return options
     }
 
-    fun launchMultiSelectedImages(edAct: EditAdAct){
-
+    fun launchMultiSelectedImages(edAct: EditAdAct, launcher: ActivityResultLauncher<Intent>){
+        val intent = Intent(edAct, Pix::class.java).apply {
+            putExtra("options", getOptions(5))
+        }
+        launcher.launch(intent)
     }
 
 
