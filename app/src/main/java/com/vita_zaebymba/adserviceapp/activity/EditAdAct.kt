@@ -36,12 +36,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         init()
 
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) { //запускается при нажатии на кнопку галочку для добавления картинок
-        super.onActivityResult(requestCode, resultCode, data)
-        ImagePicker.showSelectedImages(resultCode, requestCode, data, this)
-
-    }
+    
 
     override fun onRequestPermissionsResult( // Доступ к памяти и камере
         requestCode: Int,

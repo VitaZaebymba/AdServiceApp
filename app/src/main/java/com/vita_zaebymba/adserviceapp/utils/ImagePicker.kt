@@ -83,7 +83,7 @@ object ImagePicker { // получаем картинки, чтобы потом
 
 
     fun showSelectedImages(resultCode: Int, requestCode: Int, data: Intent?, edAct: EditAdAct){
-         else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == REQUEST_CODE_GET_SINGLE_IMAGE){
+         if (resultCode == AppCompatActivity.RESULT_OK && requestCode == REQUEST_CODE_GET_SINGLE_IMAGE){
             if (data != null) {
 
                 val uris = data.getStringArrayListExtra(Pix.IMAGE_RESULTS)
