@@ -11,12 +11,12 @@ import androidx.activity.result.ActivityResultLauncher
 import com.fxn.utility.PermUtil
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.adapters.ImageAdapter
-import com.vita_zaebymba.adserviceapp.data.Ad
-import com.vita_zaebymba.adserviceapp.database.DatabaseManager
+import com.vita_zaebymba.adserviceapp.model.Ad
 import com.vita_zaebymba.adserviceapp.databinding.ActivityEditAdBinding
 import com.vita_zaebymba.adserviceapp.dialogs.DialogSpinnerHelper
 import com.vita_zaebymba.adserviceapp.fragments.FragmentCloseInterface
 import com.vita_zaebymba.adserviceapp.fragments.ImageListFragment
+import com.vita_zaebymba.adserviceapp.model.DatabaseManager
 import com.vita_zaebymba.adserviceapp.utils.CityHelper
 import com.vita_zaebymba.adserviceapp.utils.ImagePicker
 import java.util.ArrayList
@@ -27,8 +27,8 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     private val dialog = DialogSpinnerHelper()
     private var isImagesPermissionGranted = false
     lateinit var imageAdapter: ImageAdapter
+    private val dbManager = DatabaseManager()
     var editImagePosition = 0 //позиция картинки, которую хотим изменить (для редактирования фото)
-    private val dbManager = DatabaseManager(null)
     var launcherMultiSelectImage: ActivityResultLauncher<Intent>? = null
     var launcherSingleSelectImage: ActivityResultLauncher<Intent>? = null
 

@@ -1,4 +1,4 @@
-package com.vita_zaebymba.adserviceapp.data
+package com.vita_zaebymba.adserviceapp.model
 
 data class Ad( // бд поместит сразу все значения
     val title: String? = null,

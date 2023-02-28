@@ -2,16 +2,13 @@ package com.vita_zaebymba.adserviceapp.fragments
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.vita_zaebymba.adserviceapp.R
-import com.vita_zaebymba.adserviceapp.databinding.ListImageFragmentBinding
+import com.vita_zaebymba.adserviceapp.fragments.InterAdsClose
 
 open class BaseAdsFragment: Fragment(), InterAdsClose { // класс для показа рекламного баннера
 

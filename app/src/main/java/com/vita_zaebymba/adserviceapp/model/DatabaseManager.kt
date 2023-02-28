@@ -1,15 +1,13 @@
-package com.vita_zaebymba.adserviceapp.database
+package com.vita_zaebymba.adserviceapp.model
 
-import android.util.Log
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.vita_zaebymba.adserviceapp.data.Ad
 
-class DatabaseManager(val readDataCallback: ReadDataCallback?) {
+class DatabaseManager {
     val db = Firebase.database.getReference("main") // получение инстанции бд
     val auth = Firebase.auth
 
@@ -19,7 +17,8 @@ class DatabaseManager(val readDataCallback: ReadDataCallback?) {
         }
 
     }
-    fun readDataFromDb(){ // читаем данные из бд
+
+    fun readDataFromDb(readDataCallback: ReadDataCallback?){ // читаем данные из бд
         db.addListenerForSingleValueEvent(object: ValueEventListener{
 
 
@@ -38,6 +37,10 @@ class DatabaseManager(val readDataCallback: ReadDataCallback?) {
             }
 
         })
+    }
+
+    interface ReadDataCallback {
+        fun readData(list: ArrayList<Ad>)
     }
 
 }

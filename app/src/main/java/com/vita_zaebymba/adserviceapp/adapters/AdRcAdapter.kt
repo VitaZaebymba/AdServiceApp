@@ -6,10 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
-import com.vita_zaebymba.adserviceapp.data.Ad
+import com.vita_zaebymba.adserviceapp.model.Ad
 import com.vita_zaebymba.adserviceapp.databinding.AdListItemBinding
-import com.vita_zaebymba.adserviceapp.databinding.SignDialogBinding
-import java.security.acl.Owner
 
 class AdRcAdapter(val auth: FirebaseAuth): RecyclerView.Adapter<AdRcAdapter.AdHolder>() {
 
