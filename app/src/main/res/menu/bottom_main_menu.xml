@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/id_new_ad"
+        android:title="New add"
+        android:orderInCategory="400"
+        android:icon="@drawable/ic_new_ad"
+        />
+
+    <item
+        android:id="@+id/id_my_ads"
+        android:title="My ads"
+        android:orderInCategory="300"
+        android:icon="@drawable/ic_my_ads"
+        />
+
+    <item
+        android:id="@+id/id_favourites"
+        android:title="Favs"
+        android:orderInCategory="200"
+        android:icon="@drawable/ic_fav_pressed_gray"
+        />
+
+    <item
+        android:id="@+id/id_home"
+        android:title="Home"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_home"
+        />
+
+</menu>
