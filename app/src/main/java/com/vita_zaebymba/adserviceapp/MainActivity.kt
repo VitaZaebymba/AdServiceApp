@@ -83,10 +83,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun initViewModel(){
-        firebaseViewModel.liveAdsData.observe(this, {
-            // код обновляется после считывания чего-либо из бд, viewModel решает, можно ли обновлять данные
+        firebaseViewModel.liveAdsData.observe(this) { // ждет обновлений, viewModel решает, можно ли обновлять данные
             adapter.updateAdapter(it)
-        })
+        }
     }
 
     private fun init(){
