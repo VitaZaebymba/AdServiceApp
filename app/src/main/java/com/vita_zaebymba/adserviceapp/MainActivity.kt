@@ -45,20 +45,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         initRecyclerView()
         initViewModel()
         firebaseViewModel.loadAllAds()
+        bottomMenuonClick()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean { // активити нового объявления
-        if(item.itemId == R.id.id_new_ad) {
-            val i = Intent(this, EditAdAct::class.java)
-            startActivity(i)
-        }
-        return super.onOptionsItemSelected(item)
+    override fun onResume() {
+        super.onResume()
+        rootElement.toolbarMainContent.bNavView.selectedItemId = R.id.id_home // переброс на главную страницу с объявлениями
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE){
@@ -95,6 +89,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
         rootElement.navView.setNavigationItemSelectedListener(this) //navigation view будет передавать нажатия на кнопки меню
         tvAccount = rootElement.navView.getHeaderView(0).findViewById(R.id.tvAccountEmail) //отображение текста в header
+    }
+
+    private fun bottomMenuonClick() = with(rootElement){
+        toolbarMainContent.bNavView.setOnNavigationItemSelectedListener {
+            item ->
+                when(item.itemId){
+                    R.id.id_new_ad -> {
+                        val i = Intent(this@MainActivity, EditAdAct::class.java) // активити нового элемента
+                        startActivity(i)
+                    }
+                    R.id.id_my_ads -> { Toast.makeText(this@MainActivity, "MyAds", Toast.LENGTH_LONG).show() }
+                    R.id.id_favourites -> { Toast.makeText(this@MainActivity, "MyFav", Toast.LENGTH_LONG).show() }
+                    R.id.id_home -> { Toast.makeText(this@MainActivity, "Home", Toast.LENGTH_LONG).show() }
+                }
+
+            true
+        }
     }
 
 
