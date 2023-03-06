@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
@@ -45,7 +44,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         initRecyclerView()
         initViewModel()
         firebaseViewModel.loadAllAds()
-        bottomMenuonClick()
+        bottomMenuOnClick()
     }
 
     override fun onResume() {
@@ -91,8 +90,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         tvAccount = rootElement.navView.getHeaderView(0).findViewById(R.id.tvAccountEmail) //отображение текста в header
     }
 
-    private fun bottomMenuonClick() = with(rootElement){
-        toolbarMainContent.bNavView.setOnNavigationItemSelectedListener {
+    private fun bottomMenuOnClick() = with(rootElement){
+        toolbarMainContent.bNavView.setOnItemSelectedListener {
             item ->
                 when(item.itemId){
                     R.id.id_new_ad -> {
