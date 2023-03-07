@@ -21,7 +21,6 @@ class DatabaseManager {
     fun readDataFromDb(readDataCallback: ReadDataCallback?){ // читаем данные из бд
         db.addListenerForSingleValueEvent(object: ValueEventListener{
 
-
             override fun onDataChange(snapshot: DataSnapshot) {
                 val adArray = ArrayList<Ad>()
                 for (item in snapshot.children) {
