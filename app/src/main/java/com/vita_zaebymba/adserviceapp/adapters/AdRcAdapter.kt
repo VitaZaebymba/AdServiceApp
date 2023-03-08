@@ -37,7 +37,7 @@ class AdRcAdapter(val auth: FirebaseAuth): RecyclerView.Adapter<AdRcAdapter.AdHo
 
     class AdHolder(val binding: AdListItemBinding, val auth: FirebaseAuth): RecyclerView.ViewHolder(binding.root) { // переиспользуем элементы, заполняем объявлениями
 
-        fun setData(ad: Ad){ 
+        fun setData(ad: Ad){
             binding.apply {
                 tvTitleAdList.text = ad.title
                 tvDiscription.text = ad.description
