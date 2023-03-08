@@ -4,6 +4,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.Query
+
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -20,12 +21,12 @@ class DatabaseManager {
     }
 
     fun getMyAds(readDataCallback: ReadDataCallback?){
-        val query = db.orderByChild(auth.uid + "ad/uid").equalTo(auth.uid) // выдать все объявления, принадлежащие uid
+        val query = db.orderByChild(auth.uid + "/ad/uid").equalTo(auth.uid) // выдать все объявления, принадлежащие uid
         readDataFromDb(query, readDataCallback)
     }
 
     fun getAllAds(readDataCallback: ReadDataCallback?){
-        val query = db.orderByChild(auth.uid + "ad/price")
+        val query = db.orderByChild(auth.uid + "/ad/price")
         readDataFromDb(query, readDataCallback)
     }
 

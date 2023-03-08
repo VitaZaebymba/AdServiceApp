@@ -98,9 +98,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         val i = Intent(this@MainActivity, EditAdAct::class.java) // активити нового элемента
                         startActivity(i)
                     }
-                    R.id.id_my_ads -> { Toast.makeText(this@MainActivity, "MyAds", Toast.LENGTH_LONG).show() }
-                    R.id.id_favourites -> { Toast.makeText(this@MainActivity, "MyFav", Toast.LENGTH_LONG).show() }
-                    R.id.id_home -> { Toast.makeText(this@MainActivity, "Home", Toast.LENGTH_LONG).show() }
+                    R.id.id_my_ads -> {
+                        firebaseViewModel.loadMyAds()
+                        toolbarMainContent.toolbar.title = getString(R.string.ad_my_ads)
+                    }
+                    R.id.id_favourites -> {
+                        Toast.makeText(this@MainActivity, "MyFav", Toast.LENGTH_LONG).show()
+                        toolbarMainContent.toolbar.title = getString(R.string.ad_favourites)
+                    }
+                    R.id.id_home -> {
+                        firebaseViewModel.loadAllAds()
+                        toolbarMainContent.toolbar.title = getString(R.string.def)
+                    }
                 }
 
             true
