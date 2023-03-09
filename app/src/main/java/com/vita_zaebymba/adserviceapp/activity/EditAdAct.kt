@@ -40,6 +40,20 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
     }
 
+    private fun fillViews(ad: Ad) = with(rootElement) {
+        tvTitleCountry.text = ad.country
+        tvTitleCity.text = ad.city
+        editTel.setText(ad.tel)
+        editIndex.setText(ad.index)
+        checkBoxWithSend.isChecked = ad.delivery.toBoolean()
+
+        tvCategory.text = ad.category
+        tvTitleWrite.setText(ad.title)
+        editPrice.setText(ad.price)
+        editTextDescription.setText(ad.description)
+
+    }
+
 
     override fun onRequestPermissionsResult( // Доступ к памяти и камере
         requestCode: Int,

@@ -1,5 +1,7 @@
 package com.vita_zaebymba.adserviceapp.model
 
+import java.io.Serializable
+
 data class Ad( // бд поместит сразу все значения
     val title: String? = null,
     val country: String? = null,
@@ -12,4 +14,4 @@ data class Ad( // бд поместит сразу все значения
     val description: String? = null,
     val key: String? = null,
     val uid: String? = null
-)
+) : Serializable

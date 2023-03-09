@@ -52,8 +52,10 @@ class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHol
         private fun onClickEdit(ad: Ad): View.OnClickListener { // редактирование объявления после публикации
             return View.OnClickListener {
                 val editIntent = Intent(act, EditAdAct::class.java).apply {
-                    putExtra()
+                    putExtra(MainActivity.EDIT_STATE, true)
+                    putExtra(MainActivity.ADS_DATA, ad)
                 }
+                act.startActivity(editIntent)
             }
         }
 
