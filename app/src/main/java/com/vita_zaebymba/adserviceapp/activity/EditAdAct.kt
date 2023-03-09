@@ -52,8 +52,8 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     }
 
     private fun fillViews(ad: Ad) = with(rootElement) { // редактирование
-        tvTitleCountry.text = ad.country
-        tvTitleCity.text = ad.city
+        tvChooseCountry.text = ad.country
+        tvChooseCity.text = ad.city
         editTel.setText(ad.tel)
         editIndex.setText(ad.index)
         checkBoxWithSend.isChecked = ad.delivery.toBoolean()
