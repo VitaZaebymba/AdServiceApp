@@ -26,7 +26,7 @@ class DatabaseManager {
     }
 
     fun getAllAds(readDataCallback: ReadDataCallback?){
-        val query = db.orderByChild(auth.uid + "/ad/price")
+        val query = db.orderByChild(auth.uid + "ad/price")
         readDataFromDb(query, readDataCallback)
     }
 
