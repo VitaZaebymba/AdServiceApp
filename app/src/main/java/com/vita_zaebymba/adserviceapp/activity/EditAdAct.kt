@@ -38,14 +38,20 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         rootElement = ActivityEditAdBinding.inflate(layoutInflater)
         setContentView(rootElement.root)
         init()
+        checkEditState()
+    }
 
+    private fun checkEditState(){
+        if (isEditState()) {
+            fillViews(intent.getSerializableExtra(MainActivity.ADS_DATA) as Ad)
+        }
     }
 
     private fun isEditState() : Boolean { // проверка состояния для редактирования
         return intent.getBooleanExtra(MainActivity.EDIT_STATE, false)
     }
 
-    private fun fillViews(ad: Ad) = with(rootElement) {
+    private fun fillViews(ad: Ad) = with(rootElement) { // редактирование
         tvTitleCountry.text = ad.country
         tvTitleCity.text = ad.city
         editTel.setText(ad.tel)
