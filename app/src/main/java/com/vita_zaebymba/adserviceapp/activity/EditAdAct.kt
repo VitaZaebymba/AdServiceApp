@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import com.fxn.utility.PermUtil
+import com.vita_zaebymba.adserviceapp.MainActivity
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.adapters.ImageAdapter
 import com.vita_zaebymba.adserviceapp.model.Ad
@@ -38,6 +39,10 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         setContentView(rootElement.root)
         init()
 
+    }
+
+    private fun isEditState() : Boolean { // проверка состояния для редактирования
+        return intent.getBooleanExtra(MainActivity.EDIT_STATE, false)
     }
 
     private fun fillViews(ad: Ad) = with(rootElement) {
