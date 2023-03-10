@@ -14,4 +14,4 @@ data class Ad( // бд поместит сразу все значения
     val description: String? = null,
     val key: String? = null,
     val uid: String? = null
-) : Serializable
+) : Serializable // сериализация
