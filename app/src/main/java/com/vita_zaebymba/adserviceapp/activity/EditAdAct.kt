@@ -29,9 +29,11 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     private var isImagesPermissionGranted = false
     lateinit var imageAdapter: ImageAdapter
     private val dbManager = DatabaseManager()
-    var editImagePosition = 0 //позиция картинки, которую хотим изменить (для редактирования фото)
     var launcherMultiSelectImage: ActivityResultLauncher<Intent>? = null
     var launcherSingleSelectImage: ActivityResultLauncher<Intent>? = null
+    var editImagePosition = 0 //позиция картинки, которую хотим изменить (для редактирования фото)
+    private var isEditState = false
+    private var ad: Ad? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +44,10 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     }
 
     private fun checkEditState(){
-        if (isEditState()) {
-            fillViews(intent.getSerializableExtra(MainActivity.ADS_DATA) as Ad)
+        isEditState = isEditState() // проверяя эту переменную, если true - то это объявление для редактирования и при нажатии на "обубликовать" объявление обновляется
+        if (isEditState) {
+            ad = intent.getSerializableExtra(MainActivity.ADS_DATA) as Ad // переменная будет доступна на уровне всего класса и из объявления, которое редактируем, сможем достать ключ, чтобы по нему обновить объявление
+            if (ad != null) fillViews(ad!!)
         }
     }
 
@@ -51,7 +55,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         return intent.getBooleanExtra(MainActivity.EDIT_STATE, false)
     }
 
-    private fun fillViews(ad: Ad) = with(rootElement) { // редактирование
+    private fun fillViews(ad: Ad) = with(rootElement) { // заполнение объявления, редактирование
         tvChooseCountry.text = ad.country
         tvChooseCity.text = ad.city
         editTel.setText(ad.tel)
@@ -133,7 +137,12 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     }
 
     fun onClickPublish(view: View){
-        dbManager.publishAd(fillAd())
+        val ad = fillAd() // заполнили ad
+        if(isEditState){
+            dbManager.publishAd()
+        } else {
+            dbManager.publishAd()
+        }
     }
 
     private fun fillAd(): Ad{
