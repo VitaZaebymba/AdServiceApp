@@ -139,9 +139,9 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     fun onClickPublish(view: View){
         val adTemp = fillAd() // заполнили ad
         if(isEditState){
-            dbManager.publishAd(adTemp.copy(key = ad?.key)) // передаем копию с измениями, асинхронная операция
+            dbManager.publishAd(adTemp.copy(key = ad?.key), onPublishFinish()) // передаем копию с измениями, асинхронная операция
         } else {
-            dbManager.publishAd(adTemp)
+            dbManager.publishAd(adTemp, onPublishFinish())
         }
     }
 
