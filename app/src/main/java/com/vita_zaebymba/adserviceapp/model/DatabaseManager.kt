@@ -13,9 +13,11 @@ class DatabaseManager {
     val db = Firebase.database.getReference("main") // получение инстанции бд
     val auth = Firebase.auth
 
-    fun publishAd(ad: Ad){
+    fun publishAd(ad: Ad, finishListener: FinishWorkListener){
         if (auth.uid != null) {
-            db.child(ad.key ?: "Empty").child(auth.uid!!).child("ad").setValue(ad)
+            db.child(ad.key ?: "Empty").child(auth.uid!!).child("ad").setValue(ad).addOnCompleteListener { // ожидание окончания записи в бд
+                finishListener.onFinish()
+            }
         }
 
     }
@@ -54,6 +56,10 @@ class DatabaseManager {
 
     interface ReadDataCallback {
         fun readData(list: ArrayList<Ad>)
+    }
+
+    interface FinishWorkListener {
+        fun onFinish()
     }
 
 }
