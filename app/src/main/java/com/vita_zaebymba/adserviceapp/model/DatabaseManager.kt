@@ -32,6 +32,11 @@ class DatabaseManager {
         readDataFromDb(query, readDataCallback)
     }
 
+    fun  deleteAd(ad: Ad, listener: FinishWorkListener) {
+        if (ad.key == null || ad.uid == null) return
+        db.child(ad.key).child(ad.uid) // ключ объявления - название узла, где находится объявление
+    }
+
 
 
     private fun readDataFromDb(query: Query, readDataCallback: ReadDataCallback?){ // читаем данные из бд
