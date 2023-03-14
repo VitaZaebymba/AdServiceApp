@@ -32,6 +32,22 @@ class DatabaseManager {
         }
     }
 
+    private fun addToFavs(ad: Ad, listener: FinishWorkListener){ // добавление в избранное
+        ad.key?.let {
+            auth.uid?.let { uid -> db.child(it).child(FAVS_NODE).child(uid).setValue(uid).addOnCompleteListener { // db - основной путь, it - key, далее - избранное (favs)
+                if(it.isSuccessful) listener.onFinish()
+            } }
+        }
+    }
+
+    private fun removeFromFavs(ad: Ad, listener: FinishWorkListener){ // удаление из избранного
+        ad.key?.let {
+            auth.uid?.let { uid -> db.child(it).child(FAVS_NODE).child(uid).removeValue().addOnCompleteListener { // db - основной путь, it - key, далее - избранное (favs)
+                if(it.isSuccessful) listener.onFinish()
+            } }
+        }
+    }
+
 
     fun getMyAds(readDataCallback: ReadDataCallback?){
         val query = db.orderByChild(auth.uid + "/ad/uid").equalTo(auth.uid) // выдать все объявления, принадлежащие uid
@@ -87,7 +103,7 @@ class DatabaseManager {
         fun readData(list: ArrayList<Ad>)
     }
 
-    interface FinishWorkListener {
+    interface FinishWorkListener { // чтобы знать, когда запись прошла
         fun onFinish()
     }
 
@@ -95,6 +111,7 @@ class DatabaseManager {
         const val AD_NODE = "ad"
         const val MAIN_NODE = "main"
         const val INFO_NODE = "info"
+        const val FAVS_NODE = "favs"
     }
 
 }
