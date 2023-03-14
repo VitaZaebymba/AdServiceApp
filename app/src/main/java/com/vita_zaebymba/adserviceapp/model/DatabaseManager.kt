@@ -19,8 +19,12 @@ class DatabaseManager {
                 finishListener.onFinish()
             }
         }
+    }
+
+    fun adViewed(){ // объявляение просмотрено
 
     }
+
 
     fun getMyAds(readDataCallback: ReadDataCallback?){
         val query = db.orderByChild(auth.uid + "/ad/uid").equalTo(auth.uid) // выдать все объявления, принадлежащие uid
@@ -47,7 +51,7 @@ class DatabaseManager {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val adArray = ArrayList<Ad>()
                 for (item in snapshot.children) {
-                    val ad = item.children.iterator().next().child("ad").getValue(Ad::class.java)
+                    val ad = item.children.iterator().next().child(AD_NODE).getValue(Ad::class.java)
                     if (ad != null ) adArray.add(ad) // заполняем массив объявлениеями
 
                 }
@@ -67,6 +71,12 @@ class DatabaseManager {
 
     interface FinishWorkListener {
         fun onFinish()
+    }
+
+    companion object {
+        const val AD_NODE = "ad"
+        const val MAIN_NODE = "main"
+        const val INFO_NODE = "info"
     }
 
 }
