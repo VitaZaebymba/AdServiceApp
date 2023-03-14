@@ -47,7 +47,10 @@ class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHol
             showEditPanel(isOwner(ad))
 
             ibEditAd.setOnClickListener(onClickEdit(ad))
-            ibDeleteAd.setOnClickListener()
+
+            ibDeleteAd.setOnClickListener{
+                act.onDeleteItem(ad) // интерфейс
+            }
         }
 
         private fun onClickEdit(ad: Ad): View.OnClickListener { // редактирование объявления после публикации
@@ -72,7 +75,10 @@ class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHol
             }
         }
 
+    }
 
+    interface DeleteItemListener { // запускается на MainActivity при нажатии на кнопку "Удалить" и потом уже запустятся все функции для удаления ad из бд и адаптера
+        fun onDeleteItem(ad: Ad)
     }
 
 }

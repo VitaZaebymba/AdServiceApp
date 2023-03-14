@@ -7,7 +7,7 @@ import com.vita_zaebymba.adserviceapp.model.DatabaseManager
 
 class FirebaseViewModel: ViewModel() {
     private val dbManager = DatabaseManager()
-    val liveAdsData = MutableLiveData<ArrayList<Ad>>() // посредник для обновления view
+    val liveAdsData = MutableLiveData<ArrayList<Ad>?>() // посредник для обновления view
 
     fun loadAllAds(){
         dbManager.getAllAds(object: DatabaseManager.ReadDataCallback{
@@ -30,10 +30,11 @@ class FirebaseViewModel: ViewModel() {
     fun deleteItem(ad: Ad){
         dbManager.deleteAd(ad, object: DatabaseManager.FinishWorkListener {
             override fun onFinish() {
-                
+                val updatedList = liveAdsData.value // берем старый список
+                updatedList?.remove(ad) // после удаления в бд, удаляем и в адаптере
+                liveAdsData.postValue(updatedList)
             }
-
-        }
+        })
     }
 
 }
