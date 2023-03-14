@@ -32,6 +32,14 @@ class DatabaseManager {
         }
     }
 
+    fun onFavClick(ad: Ad, listener: FinishWorkListener){ // определяет, какую функцию запустить: addToFavs или removeFromFavs
+        if (ad.isFav) {
+            removeFromFavs(ad, listener)
+        } else {
+            addToFavs(ad, listener)
+        }
+    }
+
     private fun addToFavs(ad: Ad, listener: FinishWorkListener){ // добавление в избранное
         ad.key?.let {
             auth.uid?.let { uid -> db.child(it).child(FAVS_NODE).child(uid).setValue(uid).addOnCompleteListener { // db - основной путь, it - key, далее - избранное (favs)

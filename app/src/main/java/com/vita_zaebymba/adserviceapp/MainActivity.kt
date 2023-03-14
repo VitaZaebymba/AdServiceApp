@@ -196,4 +196,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         firebaseViewModel.adViewed(ad)
     }
 
+    override fun onFavClicked(ad: Ad) {
+        firebaseViewModel.onFavClick(ad)
+    }
+
 }

@@ -14,6 +14,7 @@ data class Ad( // бд поместит сразу все значения
     val description: String? = null,
     val key: String? = null,
     val uid: String? = null,
+    val isFav: Boolean = false,
 
     // 3 переменные для записи инфы из InfoItem
     var viewsCounter: String? = "0",

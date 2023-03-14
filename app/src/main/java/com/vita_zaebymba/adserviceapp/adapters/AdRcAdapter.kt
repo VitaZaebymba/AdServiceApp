@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.vita_zaebymba.adserviceapp.MainActivity
+import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
 import com.vita_zaebymba.adserviceapp.model.Ad
 import com.vita_zaebymba.adserviceapp.databinding.AdListItemBinding
@@ -46,14 +47,22 @@ class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHol
             tvDiscription.text = ad.description
             tvPrice.text = ad.price
             tvViewCounter.text = ad.viewsCounter
-
             showEditPanel(isOwner(ad))
+            ibEditAd.setOnClickListener(onClickEdit(ad))
+
+            if (ad.isFav) {
+                ibFavorite.setImageResource(R.drawable.ic_fav_pressed)
+            } else {
+                ibFavorite.setImageResource(R.drawable.ic_fav_normal)
+            }
+
+            ibFavorite.setOnClickListener {
+                act.onFavClicked(ad)
+            }
 
             itemView.setOnClickListener { // нажатие на объявление (для счетчика просмотров), 1 шаг
                 act.onAdViewed(ad)
             }
-
-            ibEditAd.setOnClickListener(onClickEdit(ad))
 
             ibDeleteAd.setOnClickListener{
                 act.onDeleteItem(ad) // интерфейс
@@ -87,6 +96,7 @@ class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHol
     interface Listener { // запускается на MainActivity при нажатии на кнопку "Удалить" и потом уже запустятся все функции для удаления ad из бд и адаптера
         fun onDeleteItem(ad: Ad)
         fun onAdViewed(ad: Ad)
+        fun onFavClicked(ad: Ad)
     }
 
 }
