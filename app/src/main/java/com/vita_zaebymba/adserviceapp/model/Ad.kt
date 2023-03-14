@@ -13,5 +13,10 @@ data class Ad( // бд поместит сразу все значения
     val price: String? = null,
     val description: String? = null,
     val key: String? = null,
-    val uid: String? = null
+    val uid: String? = null,
+
+    // 3 переменные для записи инфы из InfoItem
+    val viewsCounter: String? = "0",
+    val emailCounter: String? = "0",
+    val callsCounter: String? = "0"
 ) : Serializable

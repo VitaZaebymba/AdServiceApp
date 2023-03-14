@@ -10,19 +10,24 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class DatabaseManager {
-    val db = Firebase.database.getReference("main") // получение инстанции бд
+    val db = Firebase.database.getReference(MAIN_NODE) // получение инстанции бд
     val auth = Firebase.auth
 
     fun publishAd(ad: Ad, finishListener: FinishWorkListener){
         if (auth.uid != null) {
-            db.child(ad.key ?: "Empty").child(auth.uid!!).child("ad").setValue(ad).addOnCompleteListener { // ожидание окончания записи в бд
+            db.child(ad.key ?: "Empty").child(auth.uid!!).child(AD_NODE).setValue(ad).addOnCompleteListener { // ожидание окончания записи в бд
                 finishListener.onFinish()
             }
         }
     }
 
-    fun adViewed(){ // объявляение просмотрено
+    fun adViewed(ad: Ad){ // объявляение просмотрено
 
+        if (auth.uid != null) {
+            db.child(ad.key ?: "Empty")
+                .child(INFO_NODE)
+                .setValue()
+        }
     }
 
 
