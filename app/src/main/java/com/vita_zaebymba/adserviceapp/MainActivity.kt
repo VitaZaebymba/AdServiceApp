@@ -27,7 +27,7 @@ import com.vita_zaebymba.adserviceapp.model.Ad
 import com.vita_zaebymba.adserviceapp.viewmodel.FirebaseViewModel
 
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, AdRcAdapter.DeleteItemListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, AdRcAdapter.Listener {
     private lateinit var tvAccount: TextView
 
     private lateinit var rootElement: ActivityMainBinding
@@ -190,6 +190,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onDeleteItem(ad: Ad) {
         firebaseViewModel.deleteItem(ad)
+    }
+
+    override fun onAdViewed(ad: Ad) {  // 2 шаг, объявление, на котрое нажали приходит на MainActivity
+        firebaseViewModel.adViewed(ad)
     }
 
 }

@@ -45,7 +45,13 @@ class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHol
             tvTitleAdList.text = ad.title
             tvDiscription.text = ad.description
             tvPrice.text = ad.price
+            tvViewCounter.text = ad.viewsCounter
+
             showEditPanel(isOwner(ad))
+
+            itemView.setOnClickListener { // нажатие на объявление (для счетчика просмотров), 1 шаг
+                act.onAdViewed(ad)
+            }
 
             ibEditAd.setOnClickListener(onClickEdit(ad))
 
@@ -78,8 +84,9 @@ class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHol
 
     }
 
-    interface DeleteItemListener { // запускается на MainActivity при нажатии на кнопку "Удалить" и потом уже запустятся все функции для удаления ad из бд и адаптера
+    interface Listener { // запускается на MainActivity при нажатии на кнопку "Удалить" и потом уже запустятся все функции для удаления ad из бд и адаптера
         fun onDeleteItem(ad: Ad)
+        fun onAdViewed(ad: Ad)
     }
 
 }

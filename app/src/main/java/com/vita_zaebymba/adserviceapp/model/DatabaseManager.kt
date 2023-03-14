@@ -7,6 +7,7 @@ import com.google.firebase.database.Query
 
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 
 class DatabaseManager {
@@ -21,12 +22,13 @@ class DatabaseManager {
         }
     }
 
-    fun adViewed(ad: Ad){ // объявляение просмотрено
-
+    fun adViewed(ad: Ad){ // объявляение просмотрено, 4 шаг
+        var counter = ad.viewsCounter!!.toInt()
+        counter++
         if (auth.uid != null) {
             db.child(ad.key ?: "Empty")
                 .child(INFO_NODE)
-                .setValue()
+                .setValue(InfoItem(counter.toString(), ad.emailCounter, ad.callsCounter))
         }
     }
 
@@ -51,16 +53,27 @@ class DatabaseManager {
 
 
     private fun readDataFromDb(query: Query, readDataCallback: ReadDataCallback?){ // читаем данные из бд
-        query.addListenerForSingleValueEvent(object: ValueEventListener{
+        query.addListenerForSingleValueEvent(object: ValueEventListener{ // query - путь, откуда считываем данные
 
-            override fun onDataChange(snapshot: DataSnapshot) {
+            override fun onDataChange(snapshot: DataSnapshot) { // в snapshot находятся считанные данные
                 val adArray = ArrayList<Ad>()
                 for (item in snapshot.children) {
-                    val ad = item.children.iterator().next().child(AD_NODE).getValue(Ad::class.java)
-                    if (ad != null ) adArray.add(ad) // заполняем массив объявлениеями
+
+                    var ad: Ad? = null
+
+                    item.children.forEach{ // цикл внутри узла key
+                        if (ad == null) ad = it.child(AD_NODE).getValue(Ad::class.java)
+                    }
+                    val infoItem = item.child(INFO_NODE).getValue(InfoItem::class.java)
+
+                    // перезагружаем данные в объявление
+                    ad?.viewsCounter = infoItem?.viewsCounter ?: "0"
+                    ad?.emailCounter = infoItem?.emailCounter ?: "0"
+                    ad?.callsCounter = infoItem?.callsCounter ?: "0"
+                    if (ad != null ) adArray.add(ad!!) // заполняем массив объявлениеями
 
                 }
-                readDataCallback?.readData(adArray)
+                readDataCallback?.readData(adArray) // отправляем список на адаптер
 
             }
 

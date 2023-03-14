@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.vita_zaebymba.adserviceapp.model.Ad
 
 class DiffUtilHelper(val oldList: List<Ad>, val newList: List<Ad>): DiffUtil.Callback() {
+
     override fun getOldListSize(): Int {
         return oldList.size
     }
