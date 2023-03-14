@@ -48,6 +48,15 @@ class FirebaseViewModel: ViewModel() {
         })
     }
 
+    fun loadMyFavs(){
+        dbManager.getMyFavs(object: DatabaseManager.ReadDataCallback{
+            override fun readData(list: ArrayList<Ad>) {
+                liveAdsData.value = list
+            }
+
+        })
+    }
+
     fun deleteItem(ad: Ad){
         dbManager.deleteAd(ad, object: DatabaseManager.FinishWorkListener {
             override fun onFinish() {

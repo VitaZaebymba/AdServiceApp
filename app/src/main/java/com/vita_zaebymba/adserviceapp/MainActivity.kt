@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -78,9 +79,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun initViewModel(){
         firebaseViewModel.liveAdsData.observe(this) { // ждет обновлений, viewModel решает, можно ли обновлять данные и доступен ли адаптер
-            if (it != null) {
-                adapter.updateAdapter(it)
-            } // новый список it
+            adapter.updateAdapter(it!!)// новый список it
+            rootElement.toolbarMainContent.tvEmpty.visibility =
+                if (it.isEmpty()) View.VISIBLE else View.GONE
         }
     }
 
@@ -106,7 +107,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         toolbarMainContent.toolbar.title = getString(R.string.ad_my_ads)
                     }
                     R.id.id_favourites -> {
-                        Toast.makeText(this@MainActivity, "MyFav", Toast.LENGTH_LONG).show()
+                        firebaseViewModel.loadMyFavs()
                         toolbarMainContent.toolbar.title = getString(R.string.ad_favourites)
                     }
                     R.id.id_home -> {

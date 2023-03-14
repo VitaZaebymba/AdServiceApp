@@ -62,5 +62,7 @@
     <string name="delivery_send">Доставка</string>
     <string name="publish">Опубликовать</string>
 
+    <string name="empty_fav">У вас нет избранных объявлений</string>
+
 
 </resources>

@@ -62,8 +62,13 @@ class DatabaseManager {
         readDataFromDb(query, readDataCallback)
     }
 
+    fun getMyFavs(readDataCallback: ReadDataCallback?){
+        val query = db.orderByChild( "/favs/${auth.uid}").equalTo(auth.uid) // выдать все объявления, принадлежащие uid
+        readDataFromDb(query, readDataCallback)
+    }
+
     fun getAllAds(readDataCallback: ReadDataCallback?){
-        val query = db.orderByChild(auth.uid + "ad/price")
+        val query = db.orderByChild(auth.uid + "/ad/price")
         readDataFromDb(query, readDataCallback)
     }
 
