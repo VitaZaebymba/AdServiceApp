@@ -47,6 +47,7 @@ class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHol
             showEditPanel(isOwner(ad))
 
             ibEditAd.setOnClickListener(onClickEdit(ad))
+            ibDeleteAd.setOnClickListener()
         }
 
         private fun onClickEdit(ad: Ad): View.OnClickListener { // редактирование объявления после публикации

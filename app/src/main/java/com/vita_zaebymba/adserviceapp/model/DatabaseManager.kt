@@ -34,7 +34,9 @@ class DatabaseManager {
 
     fun  deleteAd(ad: Ad, listener: FinishWorkListener) {
         if (ad.key == null || ad.uid == null) return
-        db.child(ad.key).child(ad.uid) // ключ объявления - название узла, где находится объявление
+        db.child(ad.key).child(ad.uid).removeValue().addOnCompleteListener { // ключ объявления - название узла, где находится объявление, операция асинхронная
+            if (it.isSuccessful) listener.onFinish()
+        }
     }
 
 
