@@ -47,6 +47,7 @@ class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHol
             tvDiscription.text = ad.description
             tvPrice.text = ad.price
             tvViewCounter.text = ad.viewsCounter
+            tvFavoriteCounter.text = ad.favCounter
             showEditPanel(isOwner(ad))
             ibEditAd.setOnClickListener(onClickEdit(ad))
 

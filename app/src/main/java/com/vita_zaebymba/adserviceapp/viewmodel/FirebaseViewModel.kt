@@ -25,7 +25,8 @@ class FirebaseViewModel: ViewModel() {
                 val pos = updatedList?.indexOf(ad) // узнаем, на какое объявление нажали
                 if (pos != -1) {
                     pos?.let {
-                        updatedList[pos] = updatedList[pos].copy(isFav = !ad.isFav) // копируем объявление, иначе адаптер не обновит
+                        val favCounter = if(ad.isFav) ad.favCounter!!.toInt() - 1 else ad.favCounter!!.toInt() + 1
+                        updatedList[pos] = updatedList[pos].copy(isFav = !ad.isFav, favCounter = favCounter.toString()) // копируем объявление, иначе адаптер не обновит
                     }
                 }
                 liveAdsData.postValue(updatedList)

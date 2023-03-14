@@ -90,6 +90,12 @@ class DatabaseManager {
                     }
                     val infoItem = item.child(INFO_NODE).getValue(InfoItem::class.java)
 
+                    val favCounter = item.child(FAVS_NODE).childrenCount // кол-во элементов, которые находятся на этом пути
+                    val isFav = auth.uid?.let { item.child(FAVS_NODE).child(it).getValue(String::class.java) }
+                    ad?.isFav = isFav != null // узнаем, объявление в избранном или нет
+
+                    ad?.favCounter = favCounter.toString()
+
                     // перезагружаем данные в объявление
                     ad?.viewsCounter = infoItem?.viewsCounter ?: "0"
                     ad?.emailCounter = infoItem?.emailCounter ?: "0"
