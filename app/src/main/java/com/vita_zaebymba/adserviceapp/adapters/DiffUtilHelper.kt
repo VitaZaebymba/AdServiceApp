@@ -1,21 +1,22 @@
 package com.vita_zaebymba.adserviceapp.adapters
 
 import androidx.recyclerview.widget.DiffUtil
+import com.vita_zaebymba.adserviceapp.model.Ad
 
-class DiffUtilHelper: DiffUtil.Callback() {
+class DiffUtilHelper(val oldList: List<Ad>, val newList: List<Ad>): DiffUtil.Callback() {
     override fun getOldListSize(): Int {
-        TODO("Not yet implemented")
+        return oldList.size
     }
 
     override fun getNewListSize(): Int {
-        TODO("Not yet implemented")
+        return newList.size
     }
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        TODO("Not yet implemented")
+        return oldList[oldItemPosition].key == newList[newItemPosition].key // сравнение по ключу
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        TODO("Not yet implemented")
+        return oldList[oldItemPosition] == newList[newItemPosition] // полное сравнение
     }
 }

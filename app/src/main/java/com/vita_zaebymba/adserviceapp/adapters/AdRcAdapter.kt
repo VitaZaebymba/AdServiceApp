@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.vita_zaebymba.adserviceapp.MainActivity
@@ -30,11 +31,11 @@ class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHol
         return adArray.size
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun updateAdapter(newList: List<Ad>){
+        val diffResult = DiffUtil.calculateDiff(DiffUtilHelper(adArray, newList)) // обновление списка, анимация
+        diffResult.dispatchUpdatesTo(this) // применить обновления к адаптеру
         adArray.clear()
         adArray.addAll(newList)
-        notifyDataSetChanged()
     }
 
 
