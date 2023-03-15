@@ -187,8 +187,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
 
             })
-        } else {
-            user.email
+        } else if(user.isAnonymous){
+            tvAccount.text = getString(R.string.guest_acc)
+        } else if(!user.isAnonymous) {
+            tvAccount.text = user.email
         }
 
     }

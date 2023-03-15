@@ -58,7 +58,7 @@ class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHol
             }
 
             ibFavorite.setOnClickListener {
-                act.onFavClicked(ad)
+                if(act.mAuth.currentUser?.isAnonymous == false) act.onFavClicked(ad)
             }
 
             itemView.setOnClickListener { // нажатие на объявление (для счетчика просмотров), 1 шаг
