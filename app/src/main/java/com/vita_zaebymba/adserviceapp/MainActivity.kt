@@ -18,6 +18,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.vita_zaebymba.adserviceapp.accounthelper.AccountHelper
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
 import com.vita_zaebymba.adserviceapp.adapters.AdRcAdapter
 import com.vita_zaebymba.adserviceapp.databinding.ActivityMainBinding
@@ -175,9 +176,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun uiUpdate(user:FirebaseUser?){ // шапка бокового меню
+        if (user == null) {
+            dialogHelper.accHelper.signInAnonymously(object: AccountHelper.Listener{ // Запускается при успешной анонимной регистрации
+                override fun onComplete() {
+                    tvAccount.text = getString(R.string.guest_acc)
+                }
 
-        tvAccount.text = if (user == null) {
-            resources.getString(R.string.not_reg)
+            })
         } else {
             user.email
         }

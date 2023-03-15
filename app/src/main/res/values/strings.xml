@@ -63,6 +63,7 @@
     <string name="publish">Опубликовать</string>
 
     <string name="empty_fav">У вас нет избранных объявлений</string>
+    <string name="guest_acc">Гость</string>
 
 
 </resources>

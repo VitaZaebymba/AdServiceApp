@@ -143,5 +143,21 @@ class AccountHelper(act:MainActivity) {
         }
     }
 
+    fun signInAnonymously(listener: Listener){
+        act.mAuth.signInAnonymously().addOnCompleteListener {
+            task ->
+            if (task.isSuccessful) {
+                listener.onComplete()
+                Toast.makeText(act, "Вы вошли как гость", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(act, "Не удалось войти как гость", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    interface Listener {
+        fun onComplete()
+    }
+
 
 }
