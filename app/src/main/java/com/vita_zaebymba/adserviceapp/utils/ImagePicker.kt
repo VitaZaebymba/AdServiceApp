@@ -2,6 +2,7 @@ package com.vita_zaebymba.adserviceapp.utils
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResult
@@ -33,14 +34,12 @@ object ImagePicker { // получаем картинки, чтобы потом
         return options
     }
 
-    fun launcher(edAct: EditAdAct, launcher: ActivityResultLauncher<Intent>?, imageCounter: Int){
+    fun launcher(edAct: EditAdAct,  imageCounter: Int){
         edAct.addPixToActivity(R.id.place_holder, getOptions(imageCounter)){ result ->// повяление фрагмента для выбора фото вместо place_holder
             when (result.status) {
                 PixEventCallback.Status.SUCCESS -> {
-                    val fList = edAct.supportFragmentManager.fragments
-                    fList.forEach {
-                        if (it.isVisible) edAct.supportFragmentManager.beginTransaction().remove(it).commit() // закрытие фрагмента после выбора фото
-                    }
+                    getMultiSelectedImages(edAct, result.data) // передаем активити и список ссылок ContentResolver от библиотеки Pix, это уже ссылки не на файл, а на content
+                    closePixFrag(edAct)
                 }
                 else -> {}
             }
@@ -48,42 +47,33 @@ object ImagePicker { // получаем картинки, чтобы потом
 
     }
 
-
-    fun getLauncherForMultiImages(edAct: EditAdAct): ActivityResultLauncher<Intent>{ //лаунчер для получения нескольких картинок. Слушатель, который следит за результатом, полученный из активити
-        return edAct.registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-            result: ActivityResult ->
-
-            /*if (result.resultCode == AppCompatActivity.RESULT_OK) {
-
-                if (result.data != null) {
-
-                    val returnValues = result.data?.getStringArrayListExtra(Pix.IMAGE_RESULTS) //если размер > 1, то 2 и больше картинок и отправляем во фрагмент, фрагмент запускает адаптер и адаптер заполняет RecyclerView
-
-                    if (returnValues?.size!! > 1 && edAct.chooseImageFragment == null) { // в первый раз выбираем картинки
-
-                        edAct.openChooseImageFragment(returnValues) // returnValues - ссылки на картинки
-
-                    } else if (returnValues.size == 1 && edAct.chooseImageFragment == null) { // выбор одной картинки
-
-                        CoroutineScope(Dispatchers.Main).launch{
-
-                            edAct.rootElement.pBarLoad.visibility = View.VISIBLE
-                            val bitMapArray = ImageManager.imageResize(returnValues) as ArrayList<Bitmap>
-                            edAct.rootElement.pBarLoad.visibility = View.GONE
-                            edAct.imageAdapter.update(bitMapArray)
-                        }
-
-
-                    } else if (edAct.chooseImageFragment != null) { // пользователь выбирал картинки раньше
-
-                        edAct.chooseImageFragment?.updateAdapter(returnValues)
-                    }
-
-                }
-
-            }*/
+    private fun closePixFrag(edAct: EditAdAct){
+        val fList = edAct.supportFragmentManager.fragments
+        fList.forEach {
+            if (it.isVisible) edAct.supportFragmentManager.beginTransaction().remove(it).commit() // закрытие фрагмента после выбора фото
         }
     }
+
+
+    fun getMultiSelectedImages(edAct: EditAdAct, uris: List<Uri>) { // фнукция будет сразу принимать ссылки и активити и их обрабатывать, List - это выбранные фото, которые передались
+        if (uris.size > 1 && edAct.chooseImageFragment == null) { // в первый раз выбираем картинки
+            edAct.openChooseImageFragment(uris as ArrayList<Uri>) // uris - ссылки на картинки
+
+        } else if (edAct.chooseImageFragment != null) {
+            edAct.chooseImageFragment?.updateAdapter(uris as ArrayList<Uri>)
+
+        } else if (uris.size == 1 && edAct.chooseImageFragment == null) {
+            CoroutineScope(Dispatchers.Main).launch {
+                edAct.rootElement.pBarLoad.visibility = View.VISIBLE
+                val bitMapArray = ImageManager.imageResize(uris as ArrayList<Uri>, edAct) as ArrayList<Bitmap>
+                edAct.rootElement.pBarLoad.visibility = View.GONE
+                edAct.imageAdapter.update(bitMapArray)
+                }
+
+        }
+    }
+
+
 
 
     fun getLauncherForSingleImage(edAct: EditAdAct): ActivityResultLauncher<Intent> {

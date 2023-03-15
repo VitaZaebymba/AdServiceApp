@@ -52,7 +52,7 @@ class SelectImageRvAdapter(val adapterCallback: AdapterCallback): RecyclerView.A
         fun setData(bitMap: Bitmap){ //передаем ссылку и title
 
             viewBinding.imEditImage.setOnClickListener {
-                ImagePicker.launcher(context as EditAdAct, context.launcherSingleSelectImage, 1)
+                ImagePicker.launcher(context as EditAdAct,  1)
                 context.editImagePosition = adapterPosition
             }
 

@@ -2,6 +2,7 @@ package com.vita_zaebymba.adserviceapp.fragments
 
 import android.app.Activity
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -24,7 +25,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, private val newList: ArrayList<String>?): BaseAdsFragment(), AdapterCallback{ // этот фрагмент запускает список с картинками
+class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, private val newList: ArrayList<Uri>?): BaseAdsFragment(), AdapterCallback{ // этот фрагмент запускает список с картинками
 
     val adapter = SelectImageRvAdapter(this)
     val dragCallback = ItemTouchMoveCallback(adapter)
@@ -76,11 +77,11 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         activity?.supportFragmentManager?.beginTransaction()?.remove(this@ImageListFragment)?.commit() // удаляем фрагмент, остается активити
     }
 
-    private fun resizeSelectedImages(newList: ArrayList<String>, needClear: Boolean){
+    private fun resizeSelectedImages(newList: ArrayList<Uri>, needClear: Boolean){
         job = CoroutineScope(Dispatchers.Main).launch { // создание корутины
 
             val dialog = ProgressDialog.createProgressDialog(activity as Activity)
-            val bitmapList = ImageManager.imageResize(newList) // уменьшаем картинки и выдаем bitmapList
+            val bitmapList = ImageManager.imageResize(newList, activity as Activity) // уменьшаем картинки и выдаем bitmapList
             dialog.dismiss()
             adapter.updateAdapter(bitmapList, needClear) // bitmapList Передаем в адаптер и добавляем эту картинку
 
@@ -107,23 +108,23 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
             }
             addImageItem?.setOnMenuItemClickListener {
                 val imageCount = ImagePicker.MAX_IMAGE_COUNT - adapter.mainArray.size
-                ImagePicker.launcher(activity as EditAdAct, (activity as EditAdAct).launcherMultiSelectImage, imageCount)
+                ImagePicker.launcher(activity as EditAdAct, imageCount)
                 true
             }
         }
     }
 
-    fun updateAdapter(newList: ArrayList<String>){ // к имеющимся картинкам добавляем еще картинки
+    fun updateAdapter(newList: ArrayList<Uri>){ // к имеющимся картинкам добавляем еще картинки
         resizeSelectedImages(newList, false)
     }
 
 
-    fun setSingleImage(uri: String, position: Int){ //uri - ссылка новой картинки, на которую хоти заменить старое фото
+    fun setSingleImage(uri: Uri, position: Int){ //uri - ссылка новой картинки, на которую хоти заменить старое фото
 
         val pBar = binding.rcViewSelectedImage[position].findViewById<ProgressBar>(R.id.pBar)
         job = CoroutineScope(Dispatchers.Main).launch {
             pBar.visibility = View.VISIBLE
-            val bitmapList = ImageManager.imageResize(listOf(uri))
+            val bitmapList = ImageManager.imageResize(arrayListOf(uri), activity as Activity)
             pBar.visibility = View.GONE
             adapter.mainArray[position] = bitmapList[0]
             adapter.notifyItemChanged(position)

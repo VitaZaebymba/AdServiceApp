@@ -3,6 +3,7 @@ package com.vita_zaebymba.adserviceapp.activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -28,8 +29,6 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     private var isImagesPermissionGranted = false
     lateinit var imageAdapter: ImageAdapter
     private val dbManager = DatabaseManager()
-    var launcherMultiSelectImage: ActivityResultLauncher<Intent>? = null
-    var launcherSingleSelectImage: ActivityResultLauncher<Intent>? = null
     var editImagePosition = 0 //позиция картинки, которую хотим изменить (для редактирования фото)
     private var isEditState = false
     private var ad: Ad? = null
@@ -73,10 +72,6 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     private fun init(){
         imageAdapter = ImageAdapter()
         rootElement.vpImages.adapter = imageAdapter
-
-        launcherMultiSelectImage = ImagePicker.getLauncherForMultiImages(this) // ссылку на созданный коллбак сохраняем в переменной
-        launcherSingleSelectImage = ImagePicker.getLauncherForSingleImage(this)
-
     }
 
     //OnClicks
@@ -107,7 +102,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
     fun onClickGetImages(view: View){
        if (imageAdapter.mainArray.size == 0){ // если нет фото, открываем выбор картинки, если есть фото, то открываем фрагмент с фото
-           ImagePicker.launcher(this, launcherMultiSelectImage, 5) // результат будет приходить в getLauncherForMultiImages
+           ImagePicker.launcher(this,  5) // результат будет приходить в getLauncherForMultiImages
        } else{
            openChooseImageFragment(null)
            chooseImageFragment?.updateAdapterFromEdit(imageAdapter.mainArray)
@@ -160,7 +155,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         chooseImageFragment = null
     }
 
-    fun openChooseImageFragment(newList: ArrayList<String>?){
+    fun openChooseImageFragment(newList: ArrayList<Uri>?){
         chooseImageFragment = ImageListFragment(this, newList)
         rootElement.scrollViewMain.visibility = View.GONE
         val fm = supportFragmentManager.beginTransaction()
