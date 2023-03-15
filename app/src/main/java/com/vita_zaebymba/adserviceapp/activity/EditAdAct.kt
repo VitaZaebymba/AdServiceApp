@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import com.fxn.utility.PermUtil
 import com.vita_zaebymba.adserviceapp.MainActivity
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.adapters.ImageAdapter
@@ -69,26 +68,6 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
     }
 
-
-    override fun onRequestPermissionsResult( // Доступ к памяти и камере
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode){
-            PermUtil.REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS -> {
-                //If request is cancelled, the result arrays are empty
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    //ImagePicker.getImages(this, 5, ImagePicker.REQUEST_CODE_GET_IMAGES)
-                } else {
-                    isImagesPermissionGranted = false
-                    Toast.makeText(this, "Approve permission to open Pix ImagePicker", Toast.LENGTH_LONG).show()
-                }
-                return
-            }
-        }
-    }
 
 
     private fun init(){

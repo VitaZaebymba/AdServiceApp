@@ -8,10 +8,12 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.fxn.pix.Options
-import com.fxn.pix.Pix
-import com.fxn.utility.PermUtil
+import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
+import io.ak1.pix.helpers.PixEventCallback
+import io.ak1.pix.helpers.addPixToActivity
+import io.ak1.pix.models.Mode
+import io.ak1.pix.models.Options
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,24 +23,27 @@ object ImagePicker { // получаем картинки, чтобы потом
     const val MAX_IMAGE_COUNT = 5
     const val REQUEST_CODE_GET_IMAGES = 999
     const val REQUEST_CODE_GET_SINGLE_IMAGE = 998
-    private fun getOptions(imageCounter: Int): Options{
-        val options  = Options.init()
-            .setCount(imageCounter) ////Number of images to restrict selection c
-            .setFrontfacing(false) //Front Facing camera on start
-            .setMode(Options.Mode.Picture) //Option to select only pictures or video
-            .setVideoDurationLimitinSeconds(30) //Duration for video recording
-            .setScreenOrientation(Options.SCREEN_ORIENTATION_PORTRAIT) //Orientation
-            .setPath("/pix/images") //Custom Path For media Storage
-
+    private fun getOptions(imageCounter: Int): Options {
+        val options  = Options().apply {
+            count = imageCounter //Number of images to restrict selection
+            isFrontFacing = false //Front Facing camera on start
+            mode = Mode.Picture //Option to select only pictures or video
+            path = "/pix/images"
+        }
         return options
     }
 
     fun launcher(edAct: EditAdAct, launcher: ActivityResultLauncher<Intent>?, imageCounter: Int){
-        PermUtil.checkForCamaraWritePermissions(edAct){
-            val intent = Intent(edAct, Pix::class.java).apply { // запуск библиотеки Pix
-                putExtra("options", getOptions(imageCounter))
+        edAct.addPixToActivity(R.id.place_holder, getOptions(imageCounter)){ result ->// повяление фрагмента для выбора фото вместо place_holder
+            when (result.status) {
+                PixEventCallback.Status.SUCCESS -> {
+                    val fList = edAct.supportFragmentManager.fragments
+                    fList.forEach {
+                        if (it.isVisible) edAct.supportFragmentManager.beginTransaction().remove(it).commit() // закрытие фрагмента после выбора фото
+                    }
+                }
+                else -> {}
             }
-            launcher?.launch(intent) // слушатель getLauncherForMultiImages выдает лаунчер
         }
 
     }
@@ -48,7 +53,7 @@ object ImagePicker { // получаем картинки, чтобы потом
         return edAct.registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result: ActivityResult ->
 
-            if (result.resultCode == AppCompatActivity.RESULT_OK) {
+            /*if (result.resultCode == AppCompatActivity.RESULT_OK) {
 
                 if (result.data != null) {
 
@@ -76,7 +81,7 @@ object ImagePicker { // получаем картинки, чтобы потом
 
                 }
 
-            }
+            }*/
         }
     }
 
@@ -84,13 +89,13 @@ object ImagePicker { // получаем картинки, чтобы потом
     fun getLauncherForSingleImage(edAct: EditAdAct): ActivityResultLauncher<Intent> {
         return edAct.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
 
-            if (result.resultCode == AppCompatActivity.RESULT_OK) {
+           /* if (result.resultCode == AppCompatActivity.RESULT_OK) {
                 if (result.data != null) {
 
                     val uris = result.data?.getStringArrayListExtra(Pix.IMAGE_RESULTS)
                     edAct.chooseImageFragment?.setSingleImage(uris?.get(0)!!, edAct.editImagePosition)
                 }
-            }
+            }*/
         }
     }
 
