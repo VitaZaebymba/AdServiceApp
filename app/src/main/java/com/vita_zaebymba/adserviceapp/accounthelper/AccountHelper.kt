@@ -23,39 +23,42 @@ class AccountHelper(act:MainActivity) {
 
                     task ->
                     if (task.isSuccessful) {
-                        sendEmailVerification(task.result?.user!!) //отправляем email
-                        act.uiUpdate(task.result?.user)
-
+                        signUpWithEmailSuccessful(task.result.user!!)
                     }
                     else {
-                        //Toast.makeText(act, act.resources.getString(R.string.sign_up_error), Toast.LENGTH_LONG).show()
-                        //Log.d("MyLog", "Exception: ${exception.errorCode}")
-                        if (task.exception is FirebaseAuthUserCollisionException){
-                            val exception = task.exception as FirebaseAuthUserCollisionException
-                            if (exception.errorCode == FirebaseAuthConstants.ERROR_EMAIL_ALREADY_IN_USE){
-                                //Toast.makeText(act, FirebaseAuthConstants.ERROR_EMAIL_ALREADY_IN_USE, Toast.LENGTH_LONG).show()
-                                linkEmailToGmail(email, password)
-                            }
-                        } else if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                            val exception = task.exception as FirebaseAuthInvalidCredentialsException
-                            if (exception.errorCode == FirebaseAuthConstants.ERROR_INVALID_EMAIL){
-                                Toast.makeText(act, FirebaseAuthConstants.ERROR_INVALID_EMAIL, Toast.LENGTH_LONG).show()
-                                //Log.d("MyLog", "Exception: ${exception.errorCode}")
-                            }
-                        }
-                        if (task.exception is FirebaseAuthWeakPasswordException) {
-                            val exception = task.exception as FirebaseAuthWeakPasswordException
-                            Log.d("MyLog", "Exception: ${exception.errorCode}")
-                            if (exception.errorCode == FirebaseAuthConstants.ERROR_WEAK_PASSWORD) {
-                                Toast.makeText(act, FirebaseAuthConstants.ERROR_WEAK_PASSWORD, Toast.LENGTH_LONG).show()
-                                //Log.d("MyLog", "Exception: ${exception.errorCode}")
-                            }
-                        }
+                        signUpWithEmailException(task.exception!!, email, password)
                 }
 
              }
         }
     }
+
+    private fun signUpWithEmailSuccessful(user: FirebaseUser){
+        sendEmailVerification(user) //отправляем email
+        act.uiUpdate(user)
+    }
+
+    private fun signUpWithEmailException(e: Exception, email: String, password: String) {
+
+        if (e is FirebaseAuthUserCollisionException){
+            val exception = e as FirebaseAuthUserCollisionException
+            if (exception.errorCode == FirebaseAuthConstants.ERROR_EMAIL_ALREADY_IN_USE){
+                linkEmailToGmail(email, password)
+            }
+        } else if (e is FirebaseAuthInvalidCredentialsException) {
+            val exception = e as FirebaseAuthInvalidCredentialsException
+            if (exception.errorCode == FirebaseAuthConstants.ERROR_INVALID_EMAIL){
+                Toast.makeText(act, FirebaseAuthConstants.ERROR_INVALID_EMAIL, Toast.LENGTH_LONG).show()
+            }
+        }
+        if (e is FirebaseAuthWeakPasswordException) {
+            //Log.d("MyLog", "Exception: ${e.errorCode}")
+            if (e.errorCode == FirebaseAuthConstants.ERROR_WEAK_PASSWORD) {
+                Toast.makeText(act, FirebaseAuthConstants.ERROR_WEAK_PASSWORD, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
 
     fun signInpWithEmail(email:String, password: String){
         if (email.isNotEmpty() && password.isNotEmpty()){
