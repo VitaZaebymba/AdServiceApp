@@ -165,6 +165,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
             R.id.id_sign_out -> {
+                if (mAuth.currentUser?.isAnonymous == true) { // проверка выхода анонимного пользователя
+                    rootElement.drawerLayout.closeDrawer(GravityCompat.START)
+                    return true
+                }
                 uiUpdate(null)
                 mAuth.signOut()
                 dialogHelper.accHelper.signOutGoogle()

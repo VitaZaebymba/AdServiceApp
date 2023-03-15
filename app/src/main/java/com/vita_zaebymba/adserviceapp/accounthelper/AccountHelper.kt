@@ -119,15 +119,20 @@ class AccountHelper(act:MainActivity) {
 
     fun signInFirebaseWithGoogle(token: String){ // вход по гугл аккаунту, из аккаунта берем токен и превращаем его в credential
         val credential = GoogleAuthProvider.getCredential(token, null)
-        act.mAuth.signInWithCredential(credential).addOnCompleteListener {
-            task ->
-                if (task.isSuccessful) {
-                Toast.makeText(act, "Sign in done", Toast.LENGTH_LONG).show()
-                    act.uiUpdate(task.result?.user)
-            } else {
-                    Log.d("MyLog", "Google Sign In Exception: ${task.exception}")
+        act.mAuth.currentUser?.delete()?.addOnCompleteListener { task -> // удаление анонимного аккаунта, если зарегистрировались
+            if (task.isSuccessful){
+                act.mAuth.signInWithCredential(credential).addOnCompleteListener {
+                        task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(act, "Sign in done", Toast.LENGTH_LONG).show()
+                        act.uiUpdate(task.result?.user)
+                    } else {
+                        Log.d("MyLog", "Google Sign In Exception: ${task.exception}")
+                    }
                 }
+            }
         }
+
     }
 
     private fun linkEmailToGmail(email: String, password: String) { // функция для соединения почты и гугл аккаунты
