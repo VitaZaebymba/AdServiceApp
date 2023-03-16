@@ -5,9 +5,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
@@ -52,7 +49,7 @@ class SelectImageRvAdapter(val adapterCallback: AdapterCallback): RecyclerView.A
         fun setData(bitMap: Bitmap){ //передаем ссылку и title
 
             viewBinding.imEditImage.setOnClickListener {
-                ImagePicker.launcher(context as EditAdAct,  1)
+                ImagePicker.getSingleImages(context as EditAdAct)
                 context.editImagePosition = adapterPosition
             }
 

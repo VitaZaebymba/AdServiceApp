@@ -1,14 +1,11 @@
 package com.vita_zaebymba.adserviceapp.activity
 
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import com.vita_zaebymba.adserviceapp.MainActivity
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.adapters.ImageAdapter
@@ -102,7 +99,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
     fun onClickGetImages(view: View){
        if (imageAdapter.mainArray.size == 0){ // если нет фото, открываем выбор картинки, если есть фото, то открываем фрагмент с фото
-           ImagePicker.launcher(this,  5) // результат будет приходить в getLauncherForMultiImages
+           ImagePicker.getMultiImages(this,  5) // результат будет приходить в getLauncherForMultiImages
        } else{
            openChooseImageFragment(null)
            chooseImageFragment?.updateAdapterFromEdit(imageAdapter.mainArray)
@@ -156,7 +153,8 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     }
 
     fun openChooseImageFragment(newList: ArrayList<Uri>?){
-        chooseImageFragment = ImageListFragment(this, newList)
+        chooseImageFragment = ImageListFragment(this)
+        if(newList != null) chooseImageFragment?.resizeSelectedImages(newList, true, this)
         rootElement.scrollViewMain.visibility = View.GONE
         val fm = supportFragmentManager.beginTransaction()
         fm.replace(R.id.place_holder, chooseImageFragment!!) //интерфейс передадим во фрагмент через конструктор

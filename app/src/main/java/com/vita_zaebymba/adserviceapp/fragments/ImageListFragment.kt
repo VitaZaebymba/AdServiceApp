@@ -25,7 +25,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, private val newList: ArrayList<Uri>?): BaseAdsFragment(), AdapterCallback{ // этот фрагмент запускает список с картинками
+class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface): BaseAdsFragment(), AdapterCallback{ // этот фрагмент запускает список с картинками
 
     val adapter = SelectImageRvAdapter(this)
     val dragCallback = ItemTouchMoveCallback(adapter)
@@ -48,10 +48,6 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
             touchHelper.attachToRecyclerView(rcViewSelectedImage)
             rcViewSelectedImage.layoutManager = LinearLayoutManager(activity) // указываем, как элементы будут располагаться
             rcViewSelectedImage.adapter = adapter // присваиваем адаптер
-
-            if (newList != null) {
-                resizeSelectedImages(newList, true)
-            }
         }
 
     }
@@ -77,11 +73,11 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
         activity?.supportFragmentManager?.beginTransaction()?.remove(this@ImageListFragment)?.commit() // удаляем фрагмент, остается активити
     }
 
-    private fun resizeSelectedImages(newList: ArrayList<Uri>, needClear: Boolean){
+    fun resizeSelectedImages(newList: ArrayList<Uri>, needClear: Boolean, activity: Activity){
         job = CoroutineScope(Dispatchers.Main).launch { // создание корутины
 
-            val dialog = ProgressDialog.createProgressDialog(activity as Activity)
-            val bitmapList = ImageManager.imageResize(newList, activity as Activity) // уменьшаем картинки и выдаем bitmapList
+            val dialog = ProgressDialog.createProgressDialog(activity)
+            val bitmapList = ImageManager.imageResize(newList, activity) // уменьшаем картинки и выдаем bitmapList
             dialog.dismiss()
             adapter.updateAdapter(bitmapList, needClear) // bitmapList Передаем в адаптер и добавляем эту картинку
 
@@ -108,14 +104,14 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface, 
             }
             addImageItem?.setOnMenuItemClickListener {
                 val imageCount = ImagePicker.MAX_IMAGE_COUNT - adapter.mainArray.size
-                ImagePicker.launcher(activity as EditAdAct, imageCount)
+                ImagePicker.getMultiImages(activity as EditAdAct, imageCount)
                 true
             }
         }
     }
 
     fun updateAdapter(newList: ArrayList<Uri>){ // к имеющимся картинкам добавляем еще картинки
-        resizeSelectedImages(newList, false)
+        resizeSelectedImages(newList, false, activity as Activity)
     }
 
 
