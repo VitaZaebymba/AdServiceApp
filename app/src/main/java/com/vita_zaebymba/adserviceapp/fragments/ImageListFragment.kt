@@ -92,6 +92,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface):
             tb.inflateMenu(R.menu.menu_choose_image)
             val deleteItem = tb.menu.findItem(R.id.delete_image)
             addImageItem = tb.menu.findItem(R.id.id_add_image)
+            if (adapter.mainArray.size > 4) addImageItem?.isVisible = false
 
             tb.setNavigationOnClickListener {
                 showInterAd()
@@ -104,14 +105,14 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface):
             }
             addImageItem?.setOnMenuItemClickListener {
                 val imageCount = ImagePicker.MAX_IMAGE_COUNT - adapter.mainArray.size
-                ImagePicker.getMultiImages(activity as EditAdAct, imageCount)
+                ImagePicker.addImages(activity as EditAdAct, imageCount)
                 true
             }
         }
     }
 
-    fun updateAdapter(newList: ArrayList<Uri>){ // к имеющимся картинкам добавляем еще картинки
-        resizeSelectedImages(newList, false, activity as Activity)
+    fun updateAdapter(newList: ArrayList<Uri>, activity: Activity){ // к имеющимся картинкам добавляем еще картинки
+        resizeSelectedImages(newList, false, activity)
     }
 
 

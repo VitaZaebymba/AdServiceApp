@@ -40,7 +40,21 @@ object ImagePicker { // получаем картинки, чтобы потом
             when (result.status) {
                 PixEventCallback.Status.SUCCESS -> {
                     getMultiSelectedImages(edAct, result.data) // передаем активити и список ссылок ContentResolver от библиотеки Pix, это уже ссылки не на файл, а на content
-                    closePixFrag(edAct)
+                }
+                else -> {}
+            }
+        }
+
+    }
+
+    fun addImages (edAct: EditAdAct, imageCounter: Int){ // открывает фрагмент от библиотеки Pix
+        val f = edAct.chooseImageFragment
+        edAct.addPixToActivity(R.id.place_holder, getOptions(imageCounter)){ result ->// повяление фрагмента для выбора фото вместо place_holder
+            when (result.status) {
+                PixEventCallback.Status.SUCCESS -> {
+                    edAct.chooseImageFragment = f
+                    openChooseImageFrag(edAct, f!!)
+                    edAct.chooseImageFragment?.updateAdapter(result.data as ArrayList<Uri>, edAct) // во фрагмент, который был открыт, передать туда новые картинки
                 }
                 else -> {}
             }
@@ -81,9 +95,6 @@ object ImagePicker { // получаем картинки, чтобы потом
         if (uris.size > 1 && edAct.chooseImageFragment == null) { // в первый раз выбираем картинки
             edAct.openChooseImageFragment(uris as ArrayList<Uri>) // uris - ссылки на картинки, открыть новый фрагмент
 
-        } else if (edAct.chooseImageFragment != null) {
-            edAct.chooseImageFragment?.updateAdapter(uris as ArrayList<Uri>) // во фрагмент, который был открыт, передать туда новые картинки
-
         } else if (uris.size == 1 && edAct.chooseImageFragment == null) { // либо взять картинки, которые уже были на edAct и переедать во фрагмент
 
             CoroutineScope(Dispatchers.Main).launch {
@@ -91,6 +102,7 @@ object ImagePicker { // получаем картинки, чтобы потом
                 val bitMapArray = ImageManager.imageResize(uris as ArrayList<Uri>, edAct) as ArrayList<Bitmap>
                 edAct.rootElement.pBarLoad.visibility = View.GONE
                 edAct.imageAdapter.update(bitMapArray)
+                closePixFrag(edAct)
             }
         }
     }
