@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 
 object ImagePicker { // получаем картинки, чтобы потом показывать в списке и т.д.
 
-    const val MAX_IMAGE_COUNT = 5
+    const val MAX_IMAGE_COUNT = 3
     const val REQUEST_CODE_GET_IMAGES = 999
     const val REQUEST_CODE_GET_SINGLE_IMAGE = 998
     private fun getOptions(imageCounter: Int): Options {

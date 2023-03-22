@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
 import com.vita_zaebymba.adserviceapp.MainActivity
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.adapters.ImageAdapter
@@ -26,7 +27,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     private val dialog = DialogSpinnerHelper()
     private var isImagesPermissionGranted = false
     lateinit var imageAdapter: ImageAdapter
-    private val dbManager = DatabaseManager()
+    private val dbManager = DatabaseManager() // все ссылки для сохранения в этом классе
     var editImagePosition = 0 //позиция картинки, которую хотим изменить (для редактирования фото)
     private var isEditState = false
     private var ad: Ad? = null
@@ -100,7 +101,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
     fun onClickGetImages(view: View){
        if (imageAdapter.mainArray.size == 0){ // если нет фото, открываем выбор картинки, если есть фото, то открываем фрагмент с фото
-           ImagePicker.getMultiImages(this,  5) // результат будет приходить в getLauncherForMultiImages
+           ImagePicker.getMultiImages(this,  3) // результат будет приходить в getLauncherForMultiImages
        } else{
            openChooseImageFragment(null)
            chooseImageFragment?.updateAdapterFromEdit(imageAdapter.mainArray)
@@ -113,7 +114,8 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         if(isEditState){
             dbManager.publishAd(adTemp.copy(key = ad?.key), onPublishFinish()) // передаем копию с измениями, асинхронная операция
         } else {
-            dbManager.publishAd(adTemp, onPublishFinish())
+            //dbManager.publishAd(adTemp, onPublishFinish()) // загрузка текстовой части объявления
+            uploadImages(adTemp)
         }
     }
 
@@ -138,6 +140,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
                 tvCategory.text.toString(),
                 editPrice.text.toString(),
                 editTextDescription.text.toString(),
+                "empty",
                 dbManager.db.push().key, //генарация уникального ключа для пути
                 dbManager.auth.uid,
                 "0"
@@ -162,8 +165,11 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         fm.commit()
     }
 
-    private fun uploadImages() { // загрузка всех картинок
-
+    private fun uploadImages(adTemp: Ad) { // загрузка всех картинок
+        val byteArray = prepareImageByteArray(imageAdapter.mainArray[0])
+        uploadImage(byteArray) {
+            dbManager.publishAd(adTemp.copy(mainImage = it.result.toString()), onPublishFinish())
+        }
     }
 
     private fun prepareImageByteArray(bitmap: Bitmap): ByteArray { // берем нашу картинку как битмап и превращаем в байты
@@ -172,8 +178,14 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         return outStream.toByteArray()
     }
 
-    private fun uploadImage(byteArray: ByteArray) { // загрузка одной картинки для подготовки
-
+    private fun uploadImage(byteArray: ByteArray, listener: OnCompleteListener<Uri>) { // загрузка одной картинки для подготовки
+        val imStorageRef = dbManager.dbStorage
+            .child(dbManager.auth.uid!!)
+            .child("image_${System.currentTimeMillis()}") // ссылка, где будет храниться картинка
+        val uploadTask = imStorageRef.putBytes(byteArray) // записываем байты в путь на Storage, который указали
+        uploadTask.continueWithTask { // ссылка с Firebase Storage на хранилище
+            task -> imStorageRef.downloadUrl
+        }.addOnCompleteListener(listener)
     }
 
 }

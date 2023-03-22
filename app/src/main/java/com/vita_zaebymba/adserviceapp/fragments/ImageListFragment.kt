@@ -81,7 +81,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface):
             dialog.dismiss()
             adapter.updateAdapter(bitmapList, needClear) // bitmapList Передаем в адаптер и добавляем эту картинку
 
-            if (adapter.mainArray.size > 4) addImageItem?.isVisible = false
+            if (adapter.mainArray.size > 2) addImageItem?.isVisible = false
         }
     }
 
@@ -92,7 +92,7 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface):
             tb.inflateMenu(R.menu.menu_choose_image)
             val deleteItem = tb.menu.findItem(R.id.delete_image)
             addImageItem = tb.menu.findItem(R.id.id_add_image)
-            if (adapter.mainArray.size > 4) addImageItem?.isVisible = false
+            if (adapter.mainArray.size > 2) addImageItem?.isVisible = false
 
             tb.setNavigationOnClickListener {
                 showInterAd()
