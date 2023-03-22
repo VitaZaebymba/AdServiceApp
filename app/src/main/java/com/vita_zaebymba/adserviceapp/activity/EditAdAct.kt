@@ -17,6 +17,7 @@ import com.vita_zaebymba.adserviceapp.fragments.ImageListFragment
 import com.vita_zaebymba.adserviceapp.model.DatabaseManager
 import com.vita_zaebymba.adserviceapp.utils.CityHelper
 import com.vita_zaebymba.adserviceapp.utils.ImagePicker
+import java.io.ByteArrayOutputStream
 import java.util.ArrayList
 
 class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
@@ -161,11 +162,17 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         fm.commit()
     }
 
-    private fun uploadImages(){
+    private fun uploadImages() { // загрузка всех картинок
 
     }
 
-    private fun prepareImageByteArray(){
+    private fun prepareImageByteArray(bitmap: Bitmap): ByteArray { // берем нашу картинку как битмап и превращаем в байты
+        val outStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, outStream) // сжатие картинки и превращение её в поток
+        return outStream.toByteArray()
+    }
+
+    private fun uploadImage(byteArray: ByteArray) { // загрузка одной картинки для подготовки
 
     }
 
