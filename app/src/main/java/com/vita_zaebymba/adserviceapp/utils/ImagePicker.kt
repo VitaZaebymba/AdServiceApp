@@ -48,12 +48,10 @@ object ImagePicker { // получаем картинки, чтобы потом
     }
 
     fun addImages (edAct: EditAdAct, imageCounter: Int){ // открывает фрагмент от библиотеки Pix
-        val f = edAct.chooseImageFragment
         edAct.addPixToActivity(R.id.place_holder, getOptions(imageCounter)){ result ->// повяление фрагмента для выбора фото вместо place_holder
             when (result.status) {
                 PixEventCallback.Status.SUCCESS -> {
-                    edAct.chooseImageFragment = f
-                    openChooseImageFrag(edAct, f!!)
+                    openChooseImageFrag(edAct)
                     edAct.chooseImageFragment?.updateAdapter(result.data as ArrayList<Uri>, edAct) // во фрагмент, который был открыт, передать туда новые картинки
                 }
                 else -> {}
@@ -63,12 +61,10 @@ object ImagePicker { // получаем картинки, чтобы потом
     }
 
     fun getSingleImages (edAct: EditAdAct){ // открывает фрагмент от библиотеки Pix
-        val f = edAct.chooseImageFragment
         edAct.addPixToActivity(R.id.place_holder, getOptions(1)){ result ->// повяление фрагмента для выбора фото вместо place_holder
             when (result.status) {
                 PixEventCallback.Status.SUCCESS -> {
-                   edAct.chooseImageFragment = f
-                   openChooseImageFrag(edAct, f!!)
+                   openChooseImageFrag(edAct)
                    singleImage(edAct, result.data[0])
                 }
                 else -> {}
@@ -77,8 +73,8 @@ object ImagePicker { // получаем картинки, чтобы потом
 
     }
 
-    private fun openChooseImageFrag(edAct: EditAdAct, f: Fragment) {
-        edAct.supportFragmentManager.beginTransaction().replace(R.id.place_holder, f).commit() // открывает фрагмент, который был в памяти
+    private fun openChooseImageFrag(edAct: EditAdAct) {
+        edAct.supportFragmentManager.beginTransaction().replace(R.id.place_holder, edAct.chooseImageFragment!!).commit() // открывает фрагмент, который был в памяти
     }
 
 

@@ -161,4 +161,12 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         fm.commit()
     }
 
+    private fun uploadImages(){
+
+    }
+
+    private fun prepareImageByteArray(){
+
+    }
+
 }

@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var tvAccount: TextView
 
     private lateinit var rootElement: ActivityMainBinding
-    private val dialogHelper = DialogHelper(this) 
+    private val dialogHelper = DialogHelper(this)
     val mAuth = Firebase.auth
     val adapter = AdRcAdapter(this)
     private val firebaseViewModel: FirebaseViewModel by viewModels()

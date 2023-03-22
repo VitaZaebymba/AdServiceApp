@@ -64,13 +64,13 @@ class ImageListFragment(private val fragCloseInterface: FragmentCloseInterface):
 
     override fun onDetach() {
         super.onDetach()
-        fragCloseInterface.onFragmentClose(adapter.mainArray)
-        job?.cancel()
     }
 
     override fun onClose() {
         super.onClose()
         activity?.supportFragmentManager?.beginTransaction()?.remove(this@ImageListFragment)?.commit() // удаляем фрагмент, остается активити
+        fragCloseInterface.onFragmentClose(adapter.mainArray)
+        job?.cancel()
     }
 
     fun resizeSelectedImages(newList: ArrayList<Uri>, needClear: Boolean, activity: Activity){
