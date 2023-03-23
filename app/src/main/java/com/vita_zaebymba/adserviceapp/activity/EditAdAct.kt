@@ -31,6 +31,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     var editImagePosition = 0 //позиция картинки, которую хотим изменить (для редактирования фото)
     private var isEditState = false
     private var ad: Ad? = null
+    private var imageIndex = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,12 +111,12 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     }
 
     fun onClickPublish(view: View){
-        val adTemp = fillAd() // заполнили ad
+       ad = fillAd() // заполнили ad
         if(isEditState){
-            dbManager.publishAd(adTemp.copy(key = ad?.key), onPublishFinish()) // передаем копию с измениями, асинхронная операция
+            ad?.copy(key = ad?.key)?.let { dbManager.publishAd(it, onPublishFinish()) } // передаем копию с измениями, асинхронная операция
         } else {
             //dbManager.publishAd(adTemp, onPublishFinish()) // загрузка текстовой части объявления
-            uploadImages(adTemp)
+            uploadImages()
         }
     }
 
@@ -165,11 +166,20 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         fm.commit()
     }
 
-    private fun uploadImages(adTemp: Ad) { // загрузка всех картинок
-        val byteArray = prepareImageByteArray(imageAdapter.mainArray[0])
+    private fun uploadImages() { // загрузка всех картинок
+        val byteArray = prepareImageByteArray(imageAdapter.mainArray[imageIndex])
         uploadImage(byteArray) {
-            dbManager.publishAd(adTemp.copy(mainImage = it.result.toString()), onPublishFinish())
+            dbManager.publishAd(ad!!, onPublishFinish())
         }
+    }
+
+    private fun nextImage(){
+        imageIndex++
+        uploadImages()
+    }
+
+    private fun setImageUriToAd(uri: String){
+
     }
 
     private fun prepareImageByteArray(bitmap: Bitmap): ByteArray { // берем нашу картинку как битмап и превращаем в байты
