@@ -167,19 +167,29 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     }
 
     private fun uploadImages() { // загрузка всех картинок
-        val byteArray = prepareImageByteArray(imageAdapter.mainArray[imageIndex])
-        uploadImage(byteArray) {
+        if(imageAdapter.mainArray.size == imageIndex) { // если нет картинок
             dbManager.publishAd(ad!!, onPublishFinish())
+            return
+        }
+        val byteArray = prepareImageByteArray(imageAdapter.mainArray[imageIndex]) // берем картинку с позиции imageIndex
+        uploadImage(byteArray) { // загружаем картинку в Storage и нам приходит ссылка
+            // dbManager.publishAd(ad!!, onPublishFinish())
+            nextImage(it.result.toString())
         }
     }
 
-    private fun nextImage(){
+    private fun nextImage(uri: String){
+        setImageUriToAd(uri) // записываем ссылку в объявление вместе с текстом
         imageIndex++
         uploadImages()
     }
 
     private fun setImageUriToAd(uri: String){
-
+        when(imageIndex) { // условие проверяет позицию, на которой только что загрузили картинку
+            0 -> ad = ad?.copy(mainImage = uri) // записываем картинку в объявление
+            1 -> ad = ad?.copy(image2 = uri)
+            2 -> ad = ad?.copy(image3 = uri)
+        }
     }
 
     private fun prepareImageByteArray(bitmap: Bitmap): ByteArray { // берем нашу картинку как битмап и превращаем в байты
