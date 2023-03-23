@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
+import com.squareup.picasso.Picasso
 import com.vita_zaebymba.adserviceapp.MainActivity
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
@@ -48,15 +49,15 @@ class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHol
             tvPrice.text = ad.price
             tvViewCounter.text = ad.viewsCounter
             tvFavoriteCounter.text = ad.favCounter
+
+            Picasso.get().load(ad.mainImage).into(mainImage) // показ картинки в объявлении на главной странице
+
+            isFav(ad)
             showEditPanel(isOwner(ad))
-            ibEditAd.setOnClickListener(onClickEdit(ad))
+            mainOnClick(ad)
+        }
 
-            if (ad.isFav) {
-                ibFavorite.setImageResource(R.drawable.ic_fav_pressed)
-            } else {
-                ibFavorite.setImageResource(R.drawable.ic_fav_normal)
-            }
-
+        private fun mainOnClick(ad: Ad) = with(binding){
             ibFavorite.setOnClickListener {
                 if(act.mAuth.currentUser?.isAnonymous == false) act.onFavClicked(ad)
             }
@@ -65,8 +66,17 @@ class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHol
                 act.onAdViewed(ad)
             }
 
+            ibEditAd.setOnClickListener(onClickEdit(ad))
             ibDeleteAd.setOnClickListener{
                 act.onDeleteItem(ad) // интерфейс
+            }
+        }
+
+        private fun isFav(ad: Ad){
+            if (ad.isFav) {
+                binding.ibFavorite.setImageResource(R.drawable.ic_fav_pressed)
+            } else {
+                binding.ibFavorite.setImageResource(R.drawable.ic_fav_normal)
             }
         }
 
