@@ -142,6 +142,8 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
                 editPrice.text.toString(),
                 editTextDescription.text.toString(),
                 "empty",
+                "empty",
+                "empty",
                 dbManager.db.push().key, //генарация уникального ключа для пути
                 dbManager.auth.uid,
                 "0"
