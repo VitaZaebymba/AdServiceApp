@@ -65,5 +65,14 @@
     <string name="empty_fav">У вас нет избранных объявлений</string>
     <string name="guest_acc">Гость</string>
 
+    <!-- Description Ad Text -->
+    <string name="price_description">Цена:</string>
+    <string name="tel_description">Телефон:</string>
+    <string name="email_description">Почта:</string>
+    <string name="country_description">Страна:</string>
+    <string name="city_description">Город:</string>
+    <string name="index_description">Индекс:</string>
+    <string name="delivery_description">Доставка:</string>
+
 
 </resources>
