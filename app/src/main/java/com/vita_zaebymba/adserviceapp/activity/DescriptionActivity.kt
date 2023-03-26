@@ -22,7 +22,7 @@ class DescriptionActivity : AppCompatActivity() {
         init()
     }
 
-    private fun init(){
+    private fun init(){ // инициализируем адаптер
         adapter = ImageAdapter()
         binding.apply {
             viewPager.adapter = adapter
@@ -32,14 +32,14 @@ class DescriptionActivity : AppCompatActivity() {
 
     private fun getIntentFromMainAct(){
         val ad = intent.getSerializableExtra(AD) as Ad
-        fillImageArray(ad)
+        fillImageArray(ad) // заполняем картинками
     }
 
     private fun fillImageArray(ad: Ad) { // заполнение массива ссылками из getBitmapFromUri (class ImageManager)
         val listUris = listOf(ad.mainImage, ad.image2, ad.image3)
         CoroutineScope(Dispatchers.Main).launch {
             val bitmapList = ImageManager.getBitmapFromUris(listUris)
-            adapter.update(bitmapList as ArrayList<Bitmap>)
+            adapter.update(bitmapList as ArrayList<Bitmap>) // обновляем адаптер
         }
     }
 
