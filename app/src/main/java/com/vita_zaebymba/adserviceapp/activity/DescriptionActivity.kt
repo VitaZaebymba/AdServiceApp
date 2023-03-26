@@ -1,5 +1,6 @@
 package com.vita_zaebymba.adserviceapp.activity
 
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.vita_zaebymba.adserviceapp.adapters.ImageAdapter
@@ -26,16 +27,19 @@ class DescriptionActivity : AppCompatActivity() {
         binding.apply {
             viewPager.adapter = adapter
         }
+        getIntentFromMainAct()
     }
 
     private fun getIntentFromMainAct(){
         val ad = intent.getSerializableExtra(AD) as Ad
+        fillImageArray(ad)
     }
 
     private fun fillImageArray(ad: Ad) { // заполнение массива ссылками из getBitmapFromUri (class ImageManager)
         val listUris = listOf(ad.mainImage, ad.image2, ad.image3)
         CoroutineScope(Dispatchers.Main).launch {
             val bitmapList = ImageManager.getBitmapFromUris(listUris)
+            adapter.update(bitmapList as ArrayList<Bitmap>)
         }
     }
 

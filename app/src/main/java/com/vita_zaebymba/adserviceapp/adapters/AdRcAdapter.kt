@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
 import com.vita_zaebymba.adserviceapp.MainActivity
 import com.vita_zaebymba.adserviceapp.R
+import com.vita_zaebymba.adserviceapp.activity.DescriptionActivity
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
 import com.vita_zaebymba.adserviceapp.model.Ad
 import com.vita_zaebymba.adserviceapp.databinding.AdListItemBinding
@@ -70,6 +71,13 @@ class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHol
             ibDeleteAd.setOnClickListener{
                 act.onDeleteItem(ad) // интерфейс
             }
+
+            itemView.setOnClickListener {
+                val i = Intent(binding.root.context, DescriptionActivity::class.java)
+                i.putExtra(DescriptionActivity.AD, ad)
+                binding.root.context.startActivity(i)
+            }
+
         }
 
         private fun isFav(ad: Ad){
