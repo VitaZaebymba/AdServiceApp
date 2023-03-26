@@ -41,7 +41,7 @@ object ImageManager {
     }
 
 
-    suspend fun imageResize(uris: List<Uri>, act: Activity): List<Bitmap> = withContext(Dispatchers.IO){ // функция будет запускаться в фоновом режиме
+    suspend fun imageResize(uris: ArrayList<Uri>, act: Activity): List<Bitmap> = withContext(Dispatchers.IO){ // функция будет запускаться в фоновом режиме
         val tempList = ArrayList<List<Int>>() // массив с высотой и шириной
         val bitmapList = ArrayList<Bitmap>()
 
@@ -79,7 +79,7 @@ object ImageManager {
     }
 
 
-    suspend fun getBitmapFromUri(uris: List<String>): List<Bitmap> = withContext(Dispatchers.IO){
+    suspend fun getBitmapFromUris(uris: List<String?>): List<Bitmap> = withContext(Dispatchers.IO){
 
         val bitmapList = ArrayList<Bitmap>()
 

@@ -4,6 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.vita_zaebymba.adserviceapp.adapters.ImageAdapter
 import com.vita_zaebymba.adserviceapp.databinding.ActivityDescriptionBinding
+import com.vita_zaebymba.adserviceapp.model.Ad
+import com.vita_zaebymba.adserviceapp.utils.ImageManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class DescriptionActivity : AppCompatActivity() {
     lateinit var binding: ActivityDescriptionBinding
@@ -21,6 +26,21 @@ class DescriptionActivity : AppCompatActivity() {
         binding.apply {
             viewPager.adapter = adapter
         }
-
     }
+
+    private fun getIntentFromMainAct(){
+        val ad = intent.getSerializableExtra(AD) as Ad
+    }
+
+    private fun fillImageArray(ad: Ad) { // заполнение массива ссылками из getBitmapFromUri (class ImageManager)
+        val listUris = listOf(ad.mainImage, ad.image2, ad.image3)
+        CoroutineScope(Dispatchers.Main).launch {
+            val bitmapList = ImageManager.getBitmapFromUris(listUris)
+        }
+    }
+
+    companion object{
+        const val AD = "AD"
+    }
+
 }
