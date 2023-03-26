@@ -74,5 +74,8 @@
     <string name="index_description">Индекс:</string>
     <string name="delivery_description">Доставка:</string>
 
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+
 
 </resources>
