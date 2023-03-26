@@ -204,7 +204,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         firebaseViewModel.deleteItem(ad)
     }
 
-    override fun onAdViewed(ad: Ad) {  // 2 шаг, объявление, на котрое нажали приходит на MainActivity
+    override fun onAdViewed(ad: Ad) {  // 2 шаг, объявление, на которое нажали приходит на MainActivity
         firebaseViewModel.adViewed(ad)
     }
 
