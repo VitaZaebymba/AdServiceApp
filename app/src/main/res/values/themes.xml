@@ -33,4 +33,10 @@
         <item name="android:textSize">12dp</item>
     </style>
 
+    <style name="MyFabStyle" parent="Widget.Design.FloatingActionButton">
+        <item name="backgroundTint">@color/shark</item>
+        <item name="tint">@color/white</item>
+    </style>
+
+
 </resources>

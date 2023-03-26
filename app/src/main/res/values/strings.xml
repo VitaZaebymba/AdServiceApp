@@ -60,7 +60,7 @@
     <string name="description_hint">*Описание</string>
     <string name="delivery">Отправить доставкой</string>
     <string name="delivery_send">Доставка</string>
-    <string name="publish">Опубликовать</string>
+    <string name="publish">Разместить объявление</string>
 
     <string name="empty_fav">У вас нет избранных объявлений</string>
     <string name="guest_acc">Гость</string>
