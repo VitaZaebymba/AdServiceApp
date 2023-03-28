@@ -16,7 +16,7 @@ class DescriptionActivity : AppCompatActivity() {
     lateinit var binding: ActivityDescriptionBinding
     lateinit var adapter: ImageAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) { 
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDescriptionBinding.inflate(layoutInflater)
         setContentView(binding.root)
