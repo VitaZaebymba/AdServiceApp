@@ -1,8 +1,10 @@
 package com.vita_zaebymba.adserviceapp.activity
 
+import android.content.Intent
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.net.toUri
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.adapters.ImageAdapter
 import com.vita_zaebymba.adserviceapp.databinding.ActivityDescriptionBinding
@@ -15,12 +17,15 @@ import kotlinx.coroutines.launch
 class DescriptionActivity : AppCompatActivity() {
     lateinit var binding: ActivityDescriptionBinding
     lateinit var adapter: ImageAdapter
+    private var ad: Ad? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDescriptionBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
+        binding.fbTel.setOnClickListener { call() }
+        binding.fbEmail.setOnClickListener {  }
     }
 
     private fun init(){ // инициализируем адаптер
@@ -32,8 +37,8 @@ class DescriptionActivity : AppCompatActivity() {
     }
 
     private fun getIntentFromMainAct(){
-        val ad = intent.getSerializableExtra(AD) as Ad // получаем объявление
-        updateUI(ad)
+        ad = intent.getSerializableExtra(AD) as Ad // получаем объявление
+        if(ad != null) updateUI(ad!!)
     }
 
     private fun fillImageArray(ad: Ad) { // заполнение массива ссылками из getBitmapFromUri (class ImageManager)
@@ -71,6 +76,18 @@ class DescriptionActivity : AppCompatActivity() {
 
     companion object{
         const val AD = "AD"
+    }
+
+    private fun call() { // функция для звонка продавцу
+        val callUri = "tel:${ad?.tel}"
+        val iCall = Intent(Intent.ACTION_DIAL) // для открытия приложения для звонков
+        iCall.data = callUri.toUri()
+        startActivity(iCall)
+    }
+
+    private fun sendEmail() {
+        val iSendEmail = Intent(Intent.ACTION_SEND)
+
     }
 
 }
