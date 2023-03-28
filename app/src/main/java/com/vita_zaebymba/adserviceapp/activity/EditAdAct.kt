@@ -141,6 +141,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
                 tvCategory.text.toString(),
                 editPrice.text.toString(),
                 editTextDescription.text.toString(),
+                editEmail.text.toString(),
                 "empty",
                 "empty",
                 "empty",

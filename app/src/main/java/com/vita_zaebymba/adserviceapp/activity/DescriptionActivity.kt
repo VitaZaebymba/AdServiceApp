@@ -51,6 +51,7 @@ class DescriptionActivity : AppCompatActivity() {
 
     private fun fillTextViews(ad:Ad) = with(binding) {
         tvTitleDescription.text = ad.title
+        tvEmailD.text = ad.email
         tvPriceD.text = ad.price
         tvTelD.text = ad.tel
         tvCountryD.text = ad.country
