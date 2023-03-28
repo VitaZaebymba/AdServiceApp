@@ -77,5 +77,9 @@
     <string name="yes">Да</string>
     <string name="no">Нет</string>
 
+    <string name="ad">Объявление</string>
+    <string name="extra_text">Здравствуйте, меня интересует ваше объявление!</string>
+    <string name="open_email">Открыть с помощью</string>
+
 
 </resources>

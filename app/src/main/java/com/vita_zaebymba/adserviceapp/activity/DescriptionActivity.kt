@@ -1,5 +1,6 @@
 package com.vita_zaebymba.adserviceapp.activity
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
@@ -25,7 +26,7 @@ class DescriptionActivity : AppCompatActivity() {
         setContentView(binding.root)
         init()
         binding.fbTel.setOnClickListener { call() }
-        binding.fbEmail.setOnClickListener {  }
+        binding.fbEmail.setOnClickListener { sendEmail() }
     }
 
     private fun init(){ // инициализируем адаптер
@@ -87,7 +88,17 @@ class DescriptionActivity : AppCompatActivity() {
 
     private fun sendEmail() {
         val iSendEmail = Intent(Intent.ACTION_SEND)
+        iSendEmail.type = "message/rfc822"
+        iSendEmail.apply {
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(ad?.email))
+            putExtra(Intent.EXTRA_SUBJECT, "Объявление")
+            putExtra(Intent.EXTRA_TEXT, "Здравствуйте, меня интересует ваше объявление!")
+        }
+        try {
+            startActivity(Intent.createChooser(iSendEmail, "Открыть с помощью"))
+        } catch (e: ActivityNotFoundException) {
 
+        }
     }
 
 }
