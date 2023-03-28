@@ -91,11 +91,11 @@ class DescriptionActivity : AppCompatActivity() {
         iSendEmail.type = "message/rfc822"
         iSendEmail.apply {
             putExtra(Intent.EXTRA_EMAIL, arrayOf(ad?.email))
-            putExtra(Intent.EXTRA_SUBJECT, "Объявление")
-            putExtra(Intent.EXTRA_TEXT, "Здравствуйте, меня интересует ваше объявление!")
+            putExtra(Intent.EXTRA_SUBJECT, getString(R.string.extra_subject))
+            putExtra(Intent.EXTRA_TEXT, getString(R.string.extra_text))
         }
         try {
-            startActivity(Intent.createChooser(iSendEmail, "Открыть с помощью"))
+            startActivity(Intent.createChooser(iSendEmail, getString(R.string.open_email)))
         } catch (e: ActivityNotFoundException) {
 
         }
