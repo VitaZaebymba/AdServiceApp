@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.net.toUri
+import androidx.viewpager2.widget.ViewPager2
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.adapters.ImageAdapter
 import com.vita_zaebymba.adserviceapp.databinding.ActivityDescriptionBinding
@@ -35,6 +36,7 @@ class DescriptionActivity : AppCompatActivity() {
             viewPager.adapter = adapter
         }
         getIntentFromMainAct()
+        imageChangeCounter()
     }
 
     private fun getIntentFromMainAct(){
@@ -92,6 +94,16 @@ class DescriptionActivity : AppCompatActivity() {
         } catch (e: ActivityNotFoundException) {
 
         }
+    }
+
+    private fun imageChangeCounter() { // счетчик картинок в объявлении
+        binding.viewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                val imageCounter = "${position + 1}/${binding.viewPager.adapter?.itemCount}"
+                binding.tvImageCounter.text = imageCounter
+            }
+        })
     }
 
 }
