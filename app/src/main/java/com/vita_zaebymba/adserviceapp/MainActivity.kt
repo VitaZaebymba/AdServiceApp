@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.vita_zaebymba.adserviceapp.accounthelper.AccountHelper
+import com.vita_zaebymba.adserviceapp.activity.DescriptionActivity
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
 import com.vita_zaebymba.adserviceapp.adapters.AdRcAdapter
 import com.vita_zaebymba.adserviceapp.databinding.ActivityMainBinding
@@ -206,6 +207,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onAdViewed(ad: Ad) {  // 2 шаг, объявление, на которое нажали приходит на MainActivity
         firebaseViewModel.adViewed(ad)
+        val i = Intent(this, DescriptionActivity::class.java)
+        i.putExtra(DescriptionActivity.AD, ad) // перадем данные на активити, которое хотим открыть
+        startActivity(i)
     }
 
     override fun onFavClicked(ad: Ad) {

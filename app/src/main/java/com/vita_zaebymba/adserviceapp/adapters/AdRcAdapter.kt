@@ -71,13 +71,6 @@ class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHol
             ibDeleteAd.setOnClickListener{
                 act.onDeleteItem(ad) // интерфейс
             }
-
-            itemView.setOnClickListener {
-                val i = Intent(binding.root.context, DescriptionActivity::class.java)
-                i.putExtra(DescriptionActivity.AD, ad) // перадем данные на активити, которое хотим открыть
-                binding.root.context.startActivity(i)
-            }
-
         }
 
         private fun isFav(ad: Ad){
