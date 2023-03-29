@@ -9,9 +9,9 @@ import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.exifinterface.media.ExifInterface
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
+import com.vita_zaebymba.adserviceapp.adapters.ImageAdapter
+import com.vita_zaebymba.adserviceapp.model.Ad
+import kotlinx.coroutines.*
 import java.io.File
 import java.io.InputStream
 
@@ -79,7 +79,7 @@ object ImageManager {
     }
 
 
-    suspend fun getBitmapFromUris(uris: List<String?>): List<Bitmap> = withContext(Dispatchers.IO){
+    private suspend fun getBitmapFromUris(uris: List<String?>): List<Bitmap> = withContext(Dispatchers.IO){
 
         val bitmapList = ArrayList<Bitmap>()
 
@@ -91,6 +91,14 @@ object ImageManager {
         }
 
         return@withContext bitmapList
+    }
+
+    fun fillImageArray(ad: Ad, adapter: ImageAdapter) { // заполнение массива ссылками из getBitmapFromUri (class ImageManager)
+        val listUris = listOf(ad.mainImage, ad.image2, ad.image3)
+        CoroutineScope(Dispatchers.Main).launch {
+            val bitmapList = getBitmapFromUris(listUris)
+            adapter.update(bitmapList as ArrayList<Bitmap>) // обновляем адаптер
+        }
     }
 
 }

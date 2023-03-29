@@ -42,16 +42,9 @@ class DescriptionActivity : AppCompatActivity() {
         if(ad != null) updateUI(ad!!)
     }
 
-    private fun fillImageArray(ad: Ad) { // заполнение массива ссылками из getBitmapFromUri (class ImageManager)
-        val listUris = listOf(ad.mainImage, ad.image2, ad.image3)
-        CoroutineScope(Dispatchers.Main).launch {
-            val bitmapList = ImageManager.getBitmapFromUris(listUris)
-            adapter.update(bitmapList as ArrayList<Bitmap>) // обновляем адаптер
-        }
-    }
 
     private fun updateUI(ad: Ad) {
-        fillImageArray(ad) // заполняем картинками
+        ImageManager.fillImageArray(ad, adapter) // заполняем картинками
         fillTextViews(ad)
     }
 

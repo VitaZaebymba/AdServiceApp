@@ -17,6 +17,7 @@ import com.vita_zaebymba.adserviceapp.fragments.FragmentCloseInterface
 import com.vita_zaebymba.adserviceapp.fragments.ImageListFragment
 import com.vita_zaebymba.adserviceapp.model.DatabaseManager
 import com.vita_zaebymba.adserviceapp.utils.CityHelper
+import com.vita_zaebymba.adserviceapp.utils.ImageManager
 import com.vita_zaebymba.adserviceapp.utils.ImagePicker
 import java.io.ByteArrayOutputStream
 import java.util.ArrayList
@@ -64,7 +65,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         tvTitleWrite.setText(ad.title)
         editPrice.setText(ad.price)
         editTextDescription.setText(ad.description)
-
+        ImageManager.fillImageArray(ad, imageAdapter)
     }
 
 
