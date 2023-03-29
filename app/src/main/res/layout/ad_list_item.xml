@@ -65,7 +65,8 @@
                 android:layout_marginEnd="5dp"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center_horizontal"
-                android:text="TextView" />
+                android:text="TextView"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tvPrice"
@@ -76,7 +77,10 @@
                 android:layout_marginEnd="5dp"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center_horizontal"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textColor="@color/vivid_cerulean"
+                android:textSize="16sp"
+                android:textStyle="normal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
