@@ -8,6 +8,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -37,6 +39,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val dialogHelper = DialogHelper(this)
     val mAuth = Firebase.auth
     val adapter = AdRcAdapter(this)
+    lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
     private val firebaseViewModel: FirebaseViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,22 +60,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode == GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE){
-            //Log.d("MyLog", "Sign in Result")
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data) // передаем интент аккаунта, по которому зашли
-            try {
-                val account = task.getResult(ApiException::class.java)
-                if (account != null){
-                    dialogHelper.accHelper.signInFirebaseWithGoogle(account.idToken!!)
-                }
+    private fun onActivityResult() {
+        googleSignInLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { // callback будетполучать данные, когда выберем аккаунт
+                val task =
+                    GoogleSignIn.getSignedInAccountFromIntent(it.data) // передаем интент аккаунта, по которому зашли
+                try {
+                    val account = task.getResult(ApiException::class.java)
+                    if (account != null) {
+                        dialogHelper.accHelper.signInFirebaseWithGoogle(account.idToken!!)
+                    }
 
-            } catch (e:ApiException){
-                Log.d("MyLog", "Api error: ${e.message}")
+                } catch (e: ApiException) {
+                    Log.d("MyLog", "Api error: ${e.message}")
+                }
             }
-        }
-        super.onActivityResult(requestCode, resultCode, data)
+
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -89,6 +94,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun init(){
         setSupportActionBar(rootElement.toolbarMainContent.toolbar)
+        onActivityResult()
         var toggle = ActionBarDrawerToggle(this, rootElement.drawerLayout, rootElement.toolbarMainContent.toolbar, R.string.open, R.string.close) //кнопка для бокового меню
         rootElement.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()

@@ -126,7 +126,7 @@ class AccountHelper(act:MainActivity) {
     fun signInWithGoogle(){
         signInClient = getSignInClient()
         val intent = signInClient.signInIntent // интент для входа
-        act.startActivityForResult(intent, GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE) // ожидание результата - аккаунт, откуда берется токен
+        act.googleSignInLauncher.launch(intent) // ожидание результата - аккаунт, откуда берется токен
     }
 
     fun signOutGoogle(){
