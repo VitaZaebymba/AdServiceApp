@@ -1,15 +1,8 @@
 package com.vita_zaebymba.adserviceapp.utils
 
-import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import android.util.Log
 import android.view.View
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.vita_zaebymba.adserviceapp.R
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
 import io.ak1.pix.helpers.PixEventCallback
@@ -94,9 +87,9 @@ object ImagePicker { // получаем картинки, чтобы потом
         } else if (uris.size == 1 && edAct.chooseImageFragment == null) { // либо взять картинки, которые уже были на edAct и переедать во фрагмент
 
             CoroutineScope(Dispatchers.Main).launch {
-                edAct.rootElement.pBarLoad.visibility = View.VISIBLE
+                edAct.binding.pBarLoad.visibility = View.VISIBLE
                 val bitMapArray = ImageManager.imageResize(uris as ArrayList<Uri>, edAct) as ArrayList<Bitmap>
-                edAct.rootElement.pBarLoad.visibility = View.GONE
+                edAct.binding.pBarLoad.visibility = View.GONE
                 edAct.imageAdapter.update(bitMapArray)
                 closePixFrag(edAct)
             }
