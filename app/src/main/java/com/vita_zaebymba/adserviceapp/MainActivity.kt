@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -20,6 +21,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.squareup.picasso.Picasso
 import com.vita_zaebymba.adserviceapp.accounthelper.AccountHelper
 import com.vita_zaebymba.adserviceapp.activity.DescriptionActivity
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
@@ -27,15 +29,15 @@ import com.vita_zaebymba.adserviceapp.adapters.AdRcAdapter
 import com.vita_zaebymba.adserviceapp.databinding.ActivityMainBinding
 import com.vita_zaebymba.adserviceapp.dialoghelper.DialogConst
 import com.vita_zaebymba.adserviceapp.dialoghelper.DialogHelper
-import com.vita_zaebymba.adserviceapp.dialoghelper.GoogleAccConst
 import com.vita_zaebymba.adserviceapp.model.Ad
 import com.vita_zaebymba.adserviceapp.viewmodel.FirebaseViewModel
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, AdRcAdapter.Listener {
     private lateinit var tvAccount: TextView
+    private lateinit var imAccount: ImageView
 
-    private lateinit var rootElement: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     private val dialogHelper = DialogHelper(this)
     val mAuth = Firebase.auth
     val adapter = AdRcAdapter(this)
@@ -44,8 +46,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        rootElement = ActivityMainBinding.inflate(layoutInflater)
-        val view = rootElement.root
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
         setContentView(view)
         init()
         initRecyclerView()
@@ -56,7 +58,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onResume() {
         super.onResume()
-        rootElement.toolbarMainContent.bNavView.selectedItemId = R.id.id_home // переброс на главную страницу с объявлениями
+        binding.toolbarMainContent.bNavView.selectedItemId = R.id.id_home // переброс на главную страницу с объявлениями
     }
 
 
@@ -87,22 +89,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun initViewModel(){
         firebaseViewModel.liveAdsData.observe(this) { // ждет обновлений, viewModel решает, можно ли обновлять данные и доступен ли адаптер
             adapter.updateAdapter(it!!)// новый список it
-            rootElement.toolbarMainContent.tvEmpty.visibility =
+            binding.toolbarMainContent.tvEmpty.visibility =
                 if (it.isEmpty()) View.VISIBLE else View.GONE
         }
     }
 
     private fun init(){
-        setSupportActionBar(rootElement.toolbarMainContent.toolbar)
+        setSupportActionBar(binding.toolbarMainContent.toolbar)
         onActivityResult()
-        var toggle = ActionBarDrawerToggle(this, rootElement.drawerLayout, rootElement.toolbarMainContent.toolbar, R.string.open, R.string.close) //кнопка для бокового меню
-        rootElement.drawerLayout.addDrawerListener(toggle)
+        var toggle = ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbarMainContent.toolbar, R.string.open, R.string.close) //кнопка для бокового меню
+        binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-        rootElement.navView.setNavigationItemSelectedListener(this) //navigation view будет передавать нажатия на кнопки меню
-        tvAccount = rootElement.navView.getHeaderView(0).findViewById(R.id.tvAccountEmail) //отображение текста в header
+        binding.navView.setNavigationItemSelectedListener(this) //navigation view будет передавать нажатия на кнопки меню
+        tvAccount = binding.navView.getHeaderView(0).findViewById(R.id.tvAccountEmail) //отображение текста в header
+        imAccount = binding.navView.getHeaderView(0).findViewById(R.id.imageAccount) //отображение аватарки в header
     }
 
-    private fun bottomMenuOnClick() = with(rootElement){
+    private fun bottomMenuOnClick() = with(binding){
         toolbarMainContent.bNavView.setOnItemSelectedListener {
             item ->
                 when(item.itemId){
@@ -130,7 +133,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     private fun initRecyclerView(){ // показ объявлений на главное странице
-        rootElement.apply {
+        binding.apply {
             toolbarMainContent.rcView.layoutManager = LinearLayoutManager(this@MainActivity)
             toolbarMainContent.rcView.adapter = adapter
         }
@@ -173,7 +176,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.id_sign_out -> {
                 if (mAuth.currentUser?.isAnonymous == true) { // проверка выхода анонимного пользователя
-                    rootElement.drawerLayout.closeDrawer(GravityCompat.START)
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
                     return true
                 }
                 uiUpdate(null)
@@ -182,7 +185,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
         }
-        rootElement.drawerLayout.closeDrawer(GravityCompat.START) //меню сворачивается после нажатия на раздел
+        binding.drawerLayout.closeDrawer(GravityCompat.START) //меню сворачивается после нажатия на раздел
         return true
     }
 
@@ -191,13 +194,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             dialogHelper.accHelper.signInAnonymously(object: AccountHelper.Listener{ // Запускается при успешной анонимной регистрации
                 override fun onComplete() {
                     tvAccount.text = getString(R.string.guest_acc)
+                    imAccount.setImageResource(R.drawable.anonymous_hacker_avatar)
                 }
 
             })
         } else if(user.isAnonymous){
             tvAccount.text = getString(R.string.guest_acc)
+            imAccount.setImageResource(R.drawable.anonymous_hacker_avatar)
         } else if(!user.isAnonymous) {
             tvAccount.text = user.email
+            Picasso.get().load(user.photoUrl).into(imAccount)
         }
 
     }
