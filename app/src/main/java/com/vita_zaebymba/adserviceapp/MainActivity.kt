@@ -15,6 +15,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.navigation.NavigationView
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         initViewModel()
         firebaseViewModel.loadAllAds()
         bottomMenuOnClick()
+        scrollListener()
     }
 
     override fun onResume() {
@@ -208,10 +210,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
-    companion object{
-        const val EDIT_STATE = "edit_state"
-        const val ADS_DATA = "ads_data"
-    }
 
     override fun onDeleteItem(ad: Ad) {
         firebaseViewModel.deleteItem(ad)
@@ -226,6 +224,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onFavClicked(ad: Ad) {
         firebaseViewModel.onFavClick(ad)
+    }
+
+    private fun scrollListener() = with(binding.toolbarMainContent){
+        rcView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (recyclerView.canScrollVertically(SCROLL_DOWN) && newState == RecyclerView.SCROLL_STATE_IDLE){
+                    Log.d("MyLog", "Can't scroll down")
+                }
+            }
+        })
+    }
+
+    companion object{
+        const val EDIT_STATE = "edit_state"
+        const val ADS_DATA = "ads_data"
+        const val SCROLL_DOWN = 1
     }
 
 }
