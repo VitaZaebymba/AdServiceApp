@@ -35,6 +35,7 @@ class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHol
     }
 
     fun updateAdapter(newList: List<Ad>){
+
         val diffResult = DiffUtil.calculateDiff(DiffUtilHelper(adArray, newList)) // обновление списка, анимация
         diffResult.dispatchUpdatesTo(this) // применить обновления к адаптеру
         adArray.clear()

@@ -53,7 +53,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         init()
         initRecyclerView()
         initViewModel()
-        firebaseViewModel.loadAllAds()
         bottomMenuOnClick()
         scrollListener()
     }
@@ -124,7 +123,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         toolbarMainContent.toolbar.title = getString(R.string.ad_favourites)
                     }
                     R.id.id_home -> {
-                        firebaseViewModel.loadAllAds()
+                        firebaseViewModel.loadAllAds("0")
                         toolbarMainContent.toolbar.title = getString(R.string.def)
                     }
                 }
@@ -230,8 +229,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         rcView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (recyclerView.canScrollVertically(SCROLL_DOWN) && newState == RecyclerView.SCROLL_STATE_IDLE){
+                if (!recyclerView.canScrollVertically(SCROLL_DOWN) && newState == RecyclerView.SCROLL_STATE_IDLE){
                     Log.d("MyLog", "Can't scroll down")
+                    val adList = firebaseViewModel.liveAdsData.value!!
+                    if (adList.isNotEmpty()) {
+                        adList[adList.size - 1].let { it.time?.let { it1 -> firebaseViewModel.loadAllAds(it1)}
+                        }
+                    }
                 }
             }
         })
