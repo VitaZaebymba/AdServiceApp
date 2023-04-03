@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     val adapter = AdRcAdapter(this)
     lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
     private val firebaseViewModel: FirebaseViewModel by viewModels()
+    private var clearUpdate: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,9 +90,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun initViewModel(){
         firebaseViewModel.liveAdsData.observe(this) { // ждет обновлений, viewModel решает, можно ли обновлять данные и доступен ли адаптер
-            adapter.updateAdapter(it!!)// новый список it
-            binding.toolbarMainContent.tvEmpty.visibility =
-                if (it.isEmpty()) View.VISIBLE else View.GONE
+            if(!clearUpdate) {
+                if (it != null) {
+                    adapter.updateAdapter(it)
+                } // новый список it
+            } else {
+                if (it != null) {
+                    adapter.updateAdapterWithClear(it)
+                }
+            }
+            if (it != null) {
+                binding.toolbarMainContent.tvEmpty.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
+            }
         }
     }
 
