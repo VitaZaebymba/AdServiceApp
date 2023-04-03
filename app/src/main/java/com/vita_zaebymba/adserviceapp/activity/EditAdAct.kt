@@ -150,6 +150,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
                 "empty",
                 dbManager.db.push().key, //генарация уникального ключа для пути
                 dbManager.auth.uid,
+                System.currentTimeMillis().toString(),
                 "0"
                 )
         }

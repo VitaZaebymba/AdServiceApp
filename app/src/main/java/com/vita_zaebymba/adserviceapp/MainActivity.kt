@@ -226,7 +226,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         firebaseViewModel.onFavClick(ad)
     }
 
-    private fun scrollListener() = with(binding.toolbarMainContent){
+    private fun scrollListener() = with(binding.toolbarMainContent){ // слушатель для RView, порматывание до конца списка
         rcView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
