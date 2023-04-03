@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
             if (it != null) {
-                binding.toolbarMainContent.tvEmpty.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
+                binding.toolbarMainContent.tvEmpty.visibility = if (adapter.itemCount == 0) View.VISIBLE else View.GONE
             }
         }
     }
@@ -119,6 +119,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun bottomMenuOnClick() = with(binding){
         toolbarMainContent.bNavView.setOnItemSelectedListener {
             item ->
+            clearUpdate = true
                 when(item.itemId){
                     R.id.id_new_ad -> {
                         val i = Intent(this@MainActivity, EditAdAct::class.java) // активити нового элемента
@@ -152,6 +153,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        clearUpdate = true
 
         when(item.itemId){
             R.id.id_my_ads -> {
@@ -227,7 +229,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onAdViewed(ad: Ad) {  // 2 шаг, объявление, на которое нажали приходит на MainActivity
         firebaseViewModel.adViewed(ad)
         val i = Intent(this, DescriptionActivity::class.java)
-        i.putExtra(DescriptionActivity.AD, ad) // перадем данные на активити, которое хотим открыть
+        i.putExtra(DescriptionActivity.AD, ad) // передаем данные на активити, которое хотим открыть
         startActivity(i)
     }
 
@@ -240,7 +242,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(SCROLL_DOWN) && newState == RecyclerView.SCROLL_STATE_IDLE){
-                    Log.d("MyLog", "Can't scroll down")
+                   clearUpdate = false
                     val adList = firebaseViewModel.liveAdsData.value!!
                     if (adList.isNotEmpty()) {
                         adList[adList.size - 1].let { it.time?.let { it1 -> firebaseViewModel.loadAllAds(it1)}
