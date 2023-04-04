@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var tvAccount: TextView
     private lateinit var imAccount: ImageView
 
-    private lateinit var binding: ActivityMainBinding //test
+    private lateinit var binding: ActivityMainBinding
     private val dialogHelper = DialogHelper(this)
     val mAuth = Firebase.auth
     val adapter = AdRcAdapter(this)
