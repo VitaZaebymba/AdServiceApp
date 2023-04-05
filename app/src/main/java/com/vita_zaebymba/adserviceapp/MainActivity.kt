@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
     private val firebaseViewModel: FirebaseViewModel by viewModels()
     private var clearUpdate: Boolean = true
+    private var currentCategory: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,13 +91,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun initViewModel(){
         firebaseViewModel.liveAdsData.observe(this) { // ждет обновлений, viewModel решает, можно ли обновлять данные и доступен ли адаптер
+           val list = it?.let { it1 -> getAdsByCategory(it1) }
             if(!clearUpdate) {
-                if (it != null) {
-                    adapter.updateAdapter(it)
-                } // новый список it
+                if (list != null) {
+                    adapter.updateAdapter(list)
+                }
             } else {
                 if (it != null) {
-                    adapter.updateAdapterWithClear(it)
+                    if (list != null) {
+                        adapter.updateAdapterWithClear(list)
+                    }
                 }
             }
             if (it != null) {
@@ -105,7 +109,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    private fun getAdsByCategory(list: ArrayList<Ad>): ArrayList<Ad>{
+        val tempList = ArrayList<Ad>()
+        tempList.addAll(list)
+        if(currentCategory != getString(R.string.def)){
+            tempList.clear()
+            list.forEach {
+                if (currentCategory == it.category) tempList.add(it) // в список добавятся отсортированные объявления
+            }
+        }
+        tempList.reverse()
+        return tempList
+    }
+
     private fun init(){
+        currentCategory = getString(R.string.def)
         setSupportActionBar(binding.toolbarMainContent.toolbar)
         onActivityResult()
         var toggle = ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbarMainContent.toolbar, R.string.open, R.string.close) //кнопка для бокового меню
@@ -134,6 +152,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         toolbarMainContent.toolbar.title = getString(R.string.ad_favourites)
                     }
                     R.id.id_home -> {
+                        currentCategory = getString(R.string.def)
                         firebaseViewModel.loadAllAdsFirstPage()
                         toolbarMainContent.toolbar.title = getString(R.string.def)
                     }
@@ -201,6 +220,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
    private fun getAdsFromCat(cat: String){
+       currentCategory = cat // узнаем, на какой категории находимся
         val catTime = "${cat}_0"
         firebaseViewModel.loadAllAdsFromCat(catTime)
     }
@@ -256,9 +276,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun getAdsFromCat(adsList: ArrayList<Ad>) { // Функция определяет, что нужно загружать: разное или категории (для скролла)
-        adsList[adsList.size - 1].let {
-            if (it.category == getString(R.string.def)) {
-                it.time?.let { it1 -> firebaseViewModel.loadAllAdsFirstPage(it1) }
+        adsList[0].let {
+            if (currentCategory== getString(R.string.def)) {
+                it.time?.let { it1 -> firebaseViewModel.loadAllAdsNextPage(it1) }
             } else {
                 val catTime = "${it.category}_${it.time}"
                 firebaseViewModel.loadAllAdsFromCat(catTime)
