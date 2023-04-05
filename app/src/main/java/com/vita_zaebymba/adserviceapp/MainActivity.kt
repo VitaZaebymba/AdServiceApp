@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         toolbarMainContent.toolbar.title = getString(R.string.ad_favourites)
                     }
                     R.id.id_home -> {
-                        firebaseViewModel.loadAllAds("0")
+                        firebaseViewModel.loadAllAdsFirstPage()
                         toolbarMainContent.toolbar.title = getString(R.string.def)
                     }
                 }
@@ -258,7 +258,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun getAdsFromCat(adsList: ArrayList<Ad>) { // Функция определяет, что нужно загружать: разное или категории (для скролла)
         adsList[adsList.size - 1].let {
             if (it.category == getString(R.string.def)) {
-                it.time?.let { it1 -> firebaseViewModel.loadAllAds(it1) }
+                it.time?.let { it1 -> firebaseViewModel.loadAllAdsFirstPage(it1) }
             } else {
                 val catTime = "${it.category}_${it.time}"
                 firebaseViewModel.loadAllAdsFromCat(catTime)
