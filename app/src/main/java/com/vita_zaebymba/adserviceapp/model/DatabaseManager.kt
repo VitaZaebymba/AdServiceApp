@@ -16,10 +16,11 @@ class DatabaseManager {
     val dbStorage = Firebase.storage.getReference(MAIN_NODE)
     val auth = Firebase.auth
 
-    fun publishAd(ad: Ad, finishListener: FinishWorkListener){
-        if (auth.uid != null) {
-            db.child(ad.key ?: "Empty").child(auth.uid!!).child(AD_NODE).setValue(ad).addOnCompleteListener { // ожидание окончания записи в бд
-                finishListener.onFinish()
+    fun publishAd(ad: Ad, finishListener: FinishWorkListener) {
+        if (auth.uid != null) db.child(ad.key ?: "Empty").child(auth.uid!!).child(AD_NODE).setValue(ad).addOnCompleteListener { // ожидание окончания записи в бд
+
+            db.child(ad.key ?: "Empty").child(auth.uid!!).child(FILTER_NODE).setValue(ad).addOnCompleteListener {
+                    finishListener.onFinish()
             }
         }
     }
@@ -130,6 +131,7 @@ class DatabaseManager {
 
     companion object {
         const val AD_NODE = "ad"
+        const val FILTER_NODE = "adFilter"
         const val MAIN_NODE = "main"
         const val INFO_NODE = "info"
         const val FAVS_NODE = "favs"
