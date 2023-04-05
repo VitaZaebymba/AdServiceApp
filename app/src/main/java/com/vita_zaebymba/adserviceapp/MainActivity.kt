@@ -248,22 +248,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                    clearUpdate = false
                     val adsList = firebaseViewModel.liveAdsData.value!!
                     if (adsList.isNotEmpty()) {
-                        adsList[adsList.size - 1].let { it.time?.let { it1 -> firebaseViewModel.loadAllAds(it1)
-                            }
-                        }
+                        getAdsFromCat(adsList)
                     }
                 }
             }
         })
     }
 
-    private fun getAdsFromCat(cat: String, adsList: ArrayList<Ad>) {
+    private fun getAdsFromCat(adsList: ArrayList<Ad>) { // Функция определяет, что нужно загружать: разное или категории (для скролла)
         adsList[adsList.size - 1].let {
-            if (cat == getString(R.string.def)) {
+            if (it.category == getString(R.string.def)) {
                 it.time?.let { it1 -> firebaseViewModel.loadAllAds(it1) }
             } else {
                 val catTime = "${it.category}_${it.time}"
-                firebaseViewModel.loadAllAdsFromCat(cat)
+                firebaseViewModel.loadAllAdsFromCat(catTime)
             }
         }
     }
