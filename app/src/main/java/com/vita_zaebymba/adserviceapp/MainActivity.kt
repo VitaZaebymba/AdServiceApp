@@ -246,14 +246,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(SCROLL_DOWN) && newState == RecyclerView.SCROLL_STATE_IDLE){
                    clearUpdate = false
-                    val adList = firebaseViewModel.liveAdsData.value!!
-                    if (adList.isNotEmpty()) {
-                        adList[adList.size - 1].let { it.time?.let { it1 -> firebaseViewModel.loadAllAds(it1)}
+                    val adsList = firebaseViewModel.liveAdsData.value!!
+                    if (adsList.isNotEmpty()) {
+                        adsList[adsList.size - 1].let { it.time?.let { it1 -> firebaseViewModel.loadAllAds(it1)
+                            }
                         }
                     }
                 }
             }
         })
+    }
+
+    private fun getAdsFromCat(cat: String, adsList: ArrayList<Ad>) {
+        adsList[adsList.size - 1].let {
+            if (cat == getString(R.string.def)) {
+                it.time?.let { it1 -> firebaseViewModel.loadAllAds(it1) }
+            } else {
+                val catTime = "${it.category}_${it.time}"
+                firebaseViewModel.loadAllAdsFromCat(cat)
+            }
+        }
     }
 
     companion object{
