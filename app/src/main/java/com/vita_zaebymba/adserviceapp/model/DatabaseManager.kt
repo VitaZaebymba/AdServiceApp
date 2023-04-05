@@ -83,8 +83,13 @@ class DatabaseManager {
         readDataFromDb(query, readDataCallback)
     }
 
-    fun getAllAdsFromCats(lastCatTime: String, readDataCallback: ReadDataCallback?){
-        val query = db.orderByChild(GET_ALL_ADS_FROM_CAT).startAfter(lastCatTime).limitToFirst(ADS_LIMIT)
+    fun getAllAdsFromCatFirstPage(cat: String, readDataCallback: ReadDataCallback?){
+        val query = db.orderByChild(GET_ALL_ADS_FROM_CAT).startAt(cat).endAt(cat + "_\uf8ff").limitToLast(ADS_LIMIT) // если неизвестно время, то берем uf8ff
+        readDataFromDb(query, readDataCallback)
+    }
+
+    fun getAllAdsFromCatNextPage(catTime: String, readDataCallback: ReadDataCallback?){
+        val query = db.orderByChild(GET_ALL_ADS_FROM_CAT).endBefore(catTime).limitToLast(ADS_LIMIT)
         readDataFromDb(query, readDataCallback)
     }
 

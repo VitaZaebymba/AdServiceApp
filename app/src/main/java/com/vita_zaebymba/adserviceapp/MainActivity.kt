@@ -221,8 +221,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
    private fun getAdsFromCat(cat: String){
        currentCategory = cat // узнаем, на какой категории находимся
-        val catTime = "${cat}_0"
-        firebaseViewModel.loadAllAdsFromCat(catTime)
+        firebaseViewModel.loadAllAdsFromCat(cat)
     }
 
     fun uiUpdate(user:FirebaseUser?){ // шапка бокового меню
@@ -281,7 +280,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 it.time?.let { it1 -> firebaseViewModel.loadAllAdsNextPage(it1) }
             } else {
                 val catTime = "${it.category}_${it.time}"
-                firebaseViewModel.loadAllAdsFromCat(catTime)
+                firebaseViewModel.loadAllAdsFromCatNextPage(catTime)
             }
         }
     }
