@@ -18,6 +18,15 @@ class FirebaseViewModel: ViewModel() {
         })
     }
 
+    fun loadAllAdsFromCat(lastCatTime: String){ // отфильтрованные объявления по времени
+        dbManager.getAllAds(lastCatTime, object: DatabaseManager.ReadDataCallback{
+            override fun readData(list: ArrayList<Ad>) {
+                liveAdsData.value = list
+            }
+
+        })
+    }
+
     fun onFavClick(ad: Ad){
         dbManager.onFavClick(ad, object: DatabaseManager.FinishWorkListener{
             override fun onFinish() {

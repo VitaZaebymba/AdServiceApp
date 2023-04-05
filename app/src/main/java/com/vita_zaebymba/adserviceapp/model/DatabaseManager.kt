@@ -17,11 +17,14 @@ class DatabaseManager {
     val auth = Firebase.auth
 
     fun publishAd(ad: Ad, finishListener: FinishWorkListener) {
-        if (auth.uid != null) db.child(ad.key ?: "Empty").child(auth.uid!!).child(AD_NODE).setValue(ad).addOnCompleteListener { // ожидание окончания записи в бд
+        if (auth.uid != null) db.child(ad.key ?: "Empty").child(auth.uid!!).child(AD_NODE)
+            .setValue(ad).addOnCompleteListener { // ожидание окончания записи в бд
 
-            db.child(ad.key ?: "Empty").child(auth.uid!!).child(FILTER_NODE).setValue(ad).addOnCompleteListener {
+            val adFilter = AdFilter(ad.time, "${ad.category}_${ad.time}")
+            db.child(ad.key ?: "Empty").child(auth.uid!!).child(FILTER_NODE).setValue(adFilter)
+                .addOnCompleteListener {
                     finishListener.onFinish()
-            }
+                }
         }
     }
 
@@ -71,7 +74,12 @@ class DatabaseManager {
     }
 
     fun getAllAds(lastTime: String, readDataCallback: ReadDataCallback?){
-        val query = db.orderByChild(auth.uid + "/ad/time").startAfter(lastTime).limitToFirst(ADS_LIMIT)
+        val query = db.orderByChild(GET_ALL_ADS).startAfter(lastTime).limitToFirst(ADS_LIMIT)
+        readDataFromDb(query, readDataCallback)
+    }
+
+    fun getAllAdsFromCats(lastCatTime: String, readDataCallback: ReadDataCallback?){
+        val query = db.orderByChild(GET_ALL_ADS_FROM_CAT).startAfter(lastCatTime).limitToFirst(ADS_LIMIT)
         readDataFromDb(query, readDataCallback)
     }
 
@@ -136,6 +144,9 @@ class DatabaseManager {
         const val INFO_NODE = "info"
         const val FAVS_NODE = "favs"
         const val ADS_LIMIT = 2
+
+        const val GET_ALL_ADS = "/adFilter/time"
+        const val GET_ALL_ADS_FROM_CAT = "/adFilter/catTime"
     }
 
 }
