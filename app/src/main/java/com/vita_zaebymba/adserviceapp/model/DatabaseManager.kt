@@ -21,7 +21,7 @@ class DatabaseManager {
             .setValue(ad).addOnCompleteListener { // ожидание окончания записи в бд
 
             val adFilter = AdFilter(ad.time, "${ad.category}_${ad.time}")
-            db.child(ad.key ?: "Empty").child(auth.uid!!).child(FILTER_NODE).setValue(adFilter)
+            db.child(ad.key ?: "Empty").child(FILTER_NODE).setValue(adFilter)
                 .addOnCompleteListener {
                     finishListener.onFinish()
                 }
@@ -74,12 +74,12 @@ class DatabaseManager {
     }
 
     fun getAllAds(lastTime: String, readDataCallback: ReadDataCallback?){
-        val query = db.orderByChild(GET_ALL_ADS).startAfter(lastTime).limitToFirst(ADS_LIMIT)
+        val query = db.orderByChild("/adFilter/time").startAfter(lastTime).limitToFirst(ADS_LIMIT)
         readDataFromDb(query, readDataCallback)
     }
 
     fun getAllAdsFromCats(lastCatTime: String, readDataCallback: ReadDataCallback?){
-        val query = db.orderByChild(GET_ALL_ADS_FROM_CAT).startAfter(lastCatTime).limitToFirst(ADS_LIMIT)
+        val query = db.orderByChild("/adFilter/catTime").startAfter(lastCatTime).limitToFirst(ADS_LIMIT)
         readDataFromDb(query, readDataCallback)
     }
 

@@ -183,9 +183,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
             R.id.id_sign_in -> {
-
                 dialogHelper.createSignDialog(DialogConst.SIGN_IN_STATE)
-
             }
             R.id.id_sign_out -> {
                 if (mAuth.currentUser?.isAnonymous == true) { // проверка выхода анонимного пользователя
@@ -202,8 +200,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    private fun getAdsFromCat(category: String){
-        val catTime = "${category}_0"
+   private fun getAdsFromCat(cat: String){
+        val catTime = "${cat}_0"
         firebaseViewModel.loadAllAdsFromCat(catTime)
     }
 

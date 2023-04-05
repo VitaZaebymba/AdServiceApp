@@ -18,8 +18,8 @@ class FirebaseViewModel: ViewModel() {
         })
     }
 
-    fun loadAllAdsFromCat(lastCatTime: String){ // отфильтрованные объявления по времени
-        dbManager.getAllAds(lastCatTime, object: DatabaseManager.ReadDataCallback{
+    fun loadAllAdsFromCat(lastCatTime: String){
+        dbManager.getAllAdsFromCats(lastCatTime, object: DatabaseManager.ReadDataCallback{
             override fun readData(list: ArrayList<Ad>) {
                 liveAdsData.value = list
             }
