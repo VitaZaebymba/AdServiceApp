@@ -163,19 +163,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this, "Pressed to favourites", Toast.LENGTH_LONG).show()
             }
             R.id.id_car -> {
-                Toast.makeText(this, "Pressed to cars", Toast.LENGTH_LONG).show()
+                getAdsFromCat(getString(R.string.ad_car))
             }
             R.id.id_pc -> {
-                Toast.makeText(this, "Pressed to pc", Toast.LENGTH_LONG).show()
+                getAdsFromCat(getString(R.string.ad_pc))
             }
             R.id.id_phones -> {
-                Toast.makeText(this, "Pressed to phones", Toast.LENGTH_LONG).show()
+                getAdsFromCat(getString(R.string.ad_phones))
             }
             R.id.id_dm -> {
-                Toast.makeText(this, "Pressed to dm", Toast.LENGTH_LONG).show()
+                getAdsFromCat(getString(R.string.ad_dm))
             }
             R.id.id_witcher -> {
-                Toast.makeText(this, "Pressed to witcher", Toast.LENGTH_LONG).show()
+                getAdsFromCat(getString(R.string.ad_witcher))
             }
             R.id.id_sign_up -> {
 
@@ -200,6 +200,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START) //меню сворачивается после нажатия на раздел
         return true
+    }
+
+    private fun getAdsFromCat(category: String){
+        val catTime = "${category}_0"
+        firebaseViewModel.loadAllAdsFromCat(catTime)
     }
 
     fun uiUpdate(user:FirebaseUser?){ // шапка бокового меню
