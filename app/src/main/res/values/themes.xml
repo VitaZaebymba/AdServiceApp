@@ -38,5 +38,14 @@
         <item name="tint">@color/white</item>
     </style>
 
+    <style name="AppTheme.Filter" parent="Theme.MaterialComponents.Light">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:statusBarColor">@color/black</item>
+    </style>
+
+
 
 </resources>
