@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
@@ -26,6 +27,7 @@ import com.squareup.picasso.Picasso
 import com.vita_zaebymba.adserviceapp.accounthelper.AccountHelper
 import com.vita_zaebymba.adserviceapp.activity.DescriptionActivity
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
+import com.vita_zaebymba.adserviceapp.activity.FilterActivity
 import com.vita_zaebymba.adserviceapp.adapters.AdRcAdapter
 import com.vita_zaebymba.adserviceapp.databinding.ActivityMainBinding
 import com.vita_zaebymba.adserviceapp.dialoghelper.DialogConst
@@ -57,6 +59,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         initViewModel()
         bottomMenuOnClick()
         scrollListener()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.id_filter) startActivity(Intent(this@MainActivity, FilterActivity::class.java))
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {
