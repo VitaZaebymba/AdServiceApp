@@ -156,7 +156,7 @@ class DatabaseManager {
         const val ADS_LIMIT = 2
 
         const val GET_ALL_ADS = "/adFilter/time"
-        const val GET_ALL_ADS_FROM_CAT = "/adFilter/catTime"
+        const val GET_ALL_ADS_FROM_CAT = "/adFilter/cat_time"
     }
 
 }
