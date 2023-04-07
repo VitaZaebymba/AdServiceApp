@@ -33,6 +33,7 @@ import com.vita_zaebymba.adserviceapp.databinding.ActivityMainBinding
 import com.vita_zaebymba.adserviceapp.dialoghelper.DialogConst
 import com.vita_zaebymba.adserviceapp.dialoghelper.DialogHelper
 import com.vita_zaebymba.adserviceapp.model.Ad
+import com.vita_zaebymba.adserviceapp.utils.FilterManager
 import com.vita_zaebymba.adserviceapp.viewmodel.FirebaseViewModel
 
 
@@ -109,6 +110,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             if (it.resultCode == RESULT_OK){
                 filter = it.data?.getStringExtra(FilterActivity.FILTER_KEY)!!
                 Log.d("MyLog", "Filter: $filter")
+                Log.d("MyLog", "getFilter: ${FilterManager.getFilter(filter!!)}")
             }
         }
     }
