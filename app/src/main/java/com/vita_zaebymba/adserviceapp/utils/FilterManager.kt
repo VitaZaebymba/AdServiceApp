@@ -23,13 +23,25 @@ object FilterManager {
     }
 
     fun getFilter(filter: String): String { // получение фильтра, передача выбранного фильтра в бд с помощью databaseManager и запрос нужного объявления, согласно выбранной фильтрации
-        val sBuilder = StringBuilder()
-        val tempArray = filter.split("_")
-        if (tempArray[0] != "empty") sBuilder.append("country_")
-        if (tempArray[1] != "empty") sBuilder.append("city_")
-        if (tempArray[2] != "empty") sBuilder.append("index_")
-        sBuilder.append("delivery_time")
+        val sBuilderNode = StringBuilder()
+        val sBuilderFilter = StringBuilder()
 
-        return sBuilder.toString()
+        val tempArray = filter.split("_")
+        if (tempArray[0] != "empty") {
+            sBuilderNode.append("country_")
+            sBuilderFilter.append("${tempArray[0]}_")
+        }
+        if (tempArray[1] != "empty") {
+            sBuilderNode.append("city_")
+            sBuilderFilter.append("${tempArray[1]}_")
+        }
+        if (tempArray[2] != "empty") {
+            sBuilderNode.append("index_")
+            sBuilderFilter.append("${tempArray[2]}_")
+        }
+        sBuilderFilter.append(tempArray[3])
+        sBuilderNode.append("delivery_time")
+
+        return "$sBuilderNode|$sBuilderFilter" // получение узла и фильтра
     }
 }
