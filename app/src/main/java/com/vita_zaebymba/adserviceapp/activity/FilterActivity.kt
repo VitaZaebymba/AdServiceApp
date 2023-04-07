@@ -77,7 +77,7 @@ class FilterActivity : AppCompatActivity() {
         }
     }
 
-    private fun createFilter(): String = with(binding) { // фнукция для сборки строки фильтра
+    private fun createFilter(): String = with(binding) { // функция для сборки строки фильтра
         val sBuilder = StringBuilder()
         val arrayTempFilter = listOf(tvChooseCountry.text,
             tvChooseCity.text,
