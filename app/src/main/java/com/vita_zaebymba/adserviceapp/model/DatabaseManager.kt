@@ -10,6 +10,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.vita_zaebymba.adserviceapp.utils.FilterManager
 
 class DatabaseManager {
     val db = Firebase.database.getReference(MAIN_NODE) // получение инстанции бд
@@ -20,7 +21,7 @@ class DatabaseManager {
         if (auth.uid != null) db.child(ad.key ?: "Empty").child(auth.uid!!).child(AD_NODE)
             .setValue(ad).addOnCompleteListener { // ожидание окончания записи в бд
 
-            val adFilter = AdFilter(ad.time, "${ad.category}_${ad.time}")
+            val adFilter = FilterManager.createFilter(ad)
             db.child(ad.key ?: "Empty").child(FILTER_NODE).setValue(adFilter)
                 .addOnCompleteListener {
                     finishListener.onFinish()
