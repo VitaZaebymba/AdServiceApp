@@ -158,6 +158,7 @@
                 android:id="@+id/btDone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:backgroundTint="@color/vivid_cerulean"
                 android:text="@string/filter" />
 

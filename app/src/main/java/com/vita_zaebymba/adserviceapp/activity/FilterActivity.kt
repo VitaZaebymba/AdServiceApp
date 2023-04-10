@@ -84,6 +84,7 @@ class FilterActivity : AppCompatActivity() {
             tvChooseCity.text = getString(R.string.choose_city)
             editIndex.setText("")
             checkBoxWithSend.isChecked = false
+            setResult(RESULT_CANCELED)
         }
     }
 
