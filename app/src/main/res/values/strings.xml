@@ -62,6 +62,7 @@
     <string name="delivery_send">Доставка</string>
     <string name="publish">Разместить объявление</string>
     <string name="filter">Применить фильтр</string>
+    <string name="filter_clear">Очистить фильтр</string>
 
     <string name="empty_fav">Пусто</string>
     <string name="guest_acc">Гость</string>

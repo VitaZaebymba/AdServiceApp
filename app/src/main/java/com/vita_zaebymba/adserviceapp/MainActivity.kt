@@ -254,7 +254,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
    private fun getAdsFromCat(cat: String){
        currentCategory = cat // узнаем, на какой категории находимся
-        firebaseViewModel.loadAllAdsFromCat(cat)
+       filterDb?.let { firebaseViewModel.loadAllAdsFromCat(cat, it) }
     }
 
     fun uiUpdate(user:FirebaseUser?){ // шапка бокового меню

@@ -24,6 +24,7 @@ class FilterActivity : AppCompatActivity() {
         onClickSelectCountry()
         onClickSelectCity()
         onClickDone()
+        onClickClear()
         actionBarSettings()
         getFilter()
     }
@@ -74,6 +75,15 @@ class FilterActivity : AppCompatActivity() {
             }
             setResult(RESULT_OK, i)
             finish()
+        }
+    }
+
+    private fun onClickClear() = with(binding) {
+        btClear.setOnClickListener {
+            tvChooseCountry.text = getString(R.string.choose_country)
+            tvChooseCity.text = getString(R.string.choose_city)
+            editIndex.setText("")
+            checkBoxWithSend.isChecked = false
         }
     }
 

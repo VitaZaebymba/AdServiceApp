@@ -161,6 +161,13 @@
                 android:backgroundTint="@color/vivid_cerulean"
                 android:text="@string/filter" />
 
+            <Button
+                android:id="@+id/btClear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/vivid_cerulean"
+                android:text="@string/filter_clear" />
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
