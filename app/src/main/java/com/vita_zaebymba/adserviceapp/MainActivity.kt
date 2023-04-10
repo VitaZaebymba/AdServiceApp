@@ -313,7 +313,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun getAdsFromCat(adsList: ArrayList<Ad>) { // Функция определяет, что нужно загружать: разное или категории (для скролла)
         adsList[0].let {
             if (currentCategory== getString(R.string.def)) {
-                it.time?.let { it1 -> firebaseViewModel.loadAllAdsNextPage(it1) }
+                it.time?.let { it1 -> filterDb?.let { it2 ->
+                    firebaseViewModel.loadAllAdsNextPage(it1, it2)
+                    }
+                }
             } else {
                 val catTime = "${it.category}_${it.time}"
                 firebaseViewModel.loadAllAdsFromCatNextPage(catTime)

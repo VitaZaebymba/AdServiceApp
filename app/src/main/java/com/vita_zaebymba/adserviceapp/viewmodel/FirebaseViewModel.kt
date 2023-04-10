@@ -18,8 +18,8 @@ class FirebaseViewModel: ViewModel() {
         })
     }
 
-    fun loadAllAdsNextPage(time: String){ // отфильтрованные объявления по времени
-        dbManager.getAllAdsNextPage(time, object: DatabaseManager.ReadDataCallback{
+    fun loadAllAdsNextPage(time: String, filter: String){ // отфильтрованные объявления по времени
+        dbManager.getAllAdsNextPage(time, filter, object: DatabaseManager.ReadDataCallback{
             override fun readData(list: ArrayList<Ad>) {
                 liveAdsData.value = list
             }

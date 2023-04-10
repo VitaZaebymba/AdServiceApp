@@ -91,20 +91,21 @@ class DatabaseManager {
     }
 
     fun getAllAdsNextPage(time: String, filter: String, readDataCallback: ReadDataCallback?){
-        val query = if (filter.isEmpty()){
-            db.orderByChild(GET_ALL_ADS).endBefore(time).limitToLast(ADS_LIMIT)
+        if (filter.isEmpty()){
+            val query = db.orderByChild(GET_ALL_ADS).endBefore(time).limitToLast(ADS_LIMIT)
+            readDataFromDb(query, readDataCallback)
         } else {
-            getAllAdsByFilterNextPage(filter, time)
+            getAllAdsByFilterNextPage(filter, time, readDataCallback)
         }
-        readDataFromDb(query, readDataCallback)
+
     }
 
-    fun getAllAdsByFilterNextPage(tempFilter: String, time: String): Query {
+    private fun getAllAdsByFilterNextPage(tempFilter: String, time: String, readDataCallback: ReadDataCallback?){
         val orderBy = tempFilter.split("|")[0]
         val filter = tempFilter.split("|")[1]
-        return db.orderByChild("/adFilter/$orderBy")
+        val query = db.orderByChild("/adFilter/$orderBy")
             .endBefore(filter + "_$time").limitToLast(ADS_LIMIT)
-
+        readNextPageFromDb(query, filter, orderBy, readDataCallback) // если объявление по фильтру не совпадает, оно отсеется
     }
 
     fun getAllAdsFromCatFirstPage(cat: String, filter: String, readDataCallback: ReadDataCallback?){
@@ -176,6 +177,46 @@ class DatabaseManager {
 
         })
     }
+
+
+    private fun readNextPageFromDb(query: Query, filter: String, orderBy: String, readDataCallback: ReadDataCallback?) {
+        query.addListenerForSingleValueEvent(object: ValueEventListener{ // query - путь, откуда считываем данные
+
+            override fun onDataChange(snapshot: DataSnapshot) { // в snapshot находятся считанные данные
+                val adArray = ArrayList<Ad>()
+                for (item in snapshot.children) {
+
+                    var ad: Ad? = null
+
+                    item.children.forEach{ // цикл внутри узла key
+                        if (ad == null) ad = it.child(AD_NODE).getValue(Ad::class.java)
+                    }
+                    val infoItem = item.child(INFO_NODE).getValue(InfoItem::class.java)
+                    val filterNotValue = item.child(FILTER_NODE).child(orderBy).value.toString()
+
+                    val favCounter = item.child(FAVS_NODE).childrenCount // кол-во элементов, которые находятся на этом пути
+                    val isFav = auth.uid?.let { item.child(FAVS_NODE).child(it).getValue(String::class.java) }
+                    ad?.isFav = isFav != null // узнаем, объявление в избранном или нет
+
+                    ad?.favCounter = favCounter.toString()
+
+                    // перезагружаем данные в объявление
+                    ad?.viewsCounter = infoItem?.viewsCounter ?: "0"
+                    ad?.emailCounter = infoItem?.emailCounter ?: "0"
+                    ad?.callsCounter = infoItem?.callsCounter ?: "0"
+                    if (ad != null && filterNotValue.startsWith(filter)) adArray.add(ad!!) // заполняем массив объявлениеями
+
+                }
+                readDataCallback?.readData(adArray) // отправляем список на адаптер
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+        })
+    }
+
 
     interface ReadDataCallback {
         fun readData(list: ArrayList<Ad>)
