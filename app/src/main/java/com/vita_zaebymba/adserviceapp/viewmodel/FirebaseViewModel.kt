@@ -9,8 +9,8 @@ class FirebaseViewModel: ViewModel() {
     private val dbManager = DatabaseManager()
     val liveAdsData = MutableLiveData<ArrayList<Ad>?>() // посредник для обновления view
 
-    fun loadAllAdsFirstPage(){ // отфильтрованные объявления по времени
-        dbManager.getAllAdsFirstPage(object: DatabaseManager.ReadDataCallback{
+    fun loadAllAdsFirstPage(filter: String){ // отфильтрованные объявления по времени
+        dbManager.getAllAdsFirstPage(filter, object: DatabaseManager.ReadDataCallback{
             override fun readData(list: ArrayList<Ad>) {
                 liveAdsData.value = list
             }

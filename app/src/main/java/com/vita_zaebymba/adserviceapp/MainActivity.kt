@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var clearUpdate: Boolean = true
     private var currentCategory: String? = null
     private var filter: String? = "empty"
+    private var filterDb: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,9 +109,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         filterLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK){
-                filter = it.data?.getStringExtra(FilterActivity.FILTER_KEY)!!
+                filter = it.data?.getStringExtra(FilterActivity.FILTER_KEY)!! // переменная для сохранения состояния того, что выбрали в фильтре и возвращать его назад
                 Log.d("MyLog", "Filter: $filter")
                 Log.d("MyLog", "getFilter: ${FilterManager.getFilter(filter!!)}")
+                filterDb = FilterManager.getFilter(filter!!)
             }
         }
     }
@@ -184,7 +186,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     }
                     R.id.id_home -> {
                         currentCategory = getString(R.string.def)
-                        firebaseViewModel.loadAllAdsFirstPage()
+                        filterDb?.let { firebaseViewModel.loadAllAdsFirstPage(it) }
                         toolbarMainContent.toolbar.title = getString(R.string.def)
                     }
                 }
