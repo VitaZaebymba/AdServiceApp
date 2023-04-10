@@ -82,7 +82,7 @@ class DatabaseManager {
         readDataFromDb(query, readDataCallback)
     }
 
-    fun getAllAdsByFilterFirstPage(tempFilter: String): Query {
+    fun getAllAdsByFilterFirstPage(tempFilter: String): Query { // фильтрация первой страницы
         val orderBy = tempFilter.split("|")[0]
         val filter = tempFilter.split("|")[1]
         return db.orderByChild("/adFilter/$orderBy")
@@ -95,9 +95,23 @@ class DatabaseManager {
         readDataFromDb(query, readDataCallback)
     }
 
-    fun getAllAdsFromCatFirstPage(cat: String, readDataCallback: ReadDataCallback?){
-        val query = db.orderByChild(GET_ALL_ADS_FROM_CAT).startAt(cat).endAt(cat + "_\uf8ff").limitToLast(ADS_LIMIT) // если неизвестно время, то берем uf8ff
+    fun getAllAdsFromCatFirstPage(cat: String, filter: String, readDataCallback: ReadDataCallback?){
+        val query = if(filter.isEmpty()){
+            db.orderByChild(GET_ALL_ADS_FROM_CAT)
+                .startAt(cat).endAt(cat + "_\uf8ff")
+                .limitToLast(ADS_LIMIT) // если неизвестно время, то берем uf8ff
+        } else {
+            getAllAdsFromCatByFilterFirstPage(cat, filter)
+        }
         readDataFromDb(query, readDataCallback)
+    }
+
+    fun getAllAdsFromCatByFilterFirstPage(cat: String, tempFilter: String): Query { // фильтрация первой страницы по категориям
+        val orderBy = "cat_" + tempFilter.split("|")[0]
+        val filter = cat + "_" + tempFilter.split("|")[1]
+        return db.orderByChild("/adFilter/$orderBy")
+            .startAt(filter).endAt(filter + "\uf8ff").limitToLast(ADS_LIMIT) // если неизвестно время, то берем uf8ff
+
     }
 
     fun getAllAdsFromCatNextPage(catTime: String, readDataCallback: ReadDataCallback?){
