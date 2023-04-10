@@ -7,7 +7,6 @@ import com.google.firebase.database.Query
 
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.vita_zaebymba.adserviceapp.utils.FilterManager
@@ -74,9 +73,21 @@ class DatabaseManager {
         readDataFromDb(query, readDataCallback)
     }
 
-    fun getAllAdsFirstPage(readDataCallback: ReadDataCallback?){
-        val query = db.orderByChild(GET_ALL_ADS).limitToLast(ADS_LIMIT)
+    fun getAllAdsFirstPage(filter: String, readDataCallback: ReadDataCallback?){
+        val query = if (filter.isEmpty()){
+            db.orderByChild(GET_ALL_ADS).limitToLast(ADS_LIMIT)
+        } else {
+            getAllAdsByFilterFirstPage(filter)
+        }
         readDataFromDb(query, readDataCallback)
+    }
+
+    fun getAllAdsByFilterFirstPage(tempFilter: String): Query {
+        val orderBy = tempFilter.split("|")[0]
+        val filter = tempFilter.split("|")[1]
+        return db.orderByChild("/adFilter/$orderBy")
+            .startAt(filter).endAt(filter + "\uf8ff").limitToLast(ADS_LIMIT) // если неизвестно время, то берем uf8ff
+
     }
 
     fun getAllAdsNextPage(time: String, readDataCallback: ReadDataCallback?){
