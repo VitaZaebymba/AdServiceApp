@@ -90,9 +90,21 @@ class DatabaseManager {
 
     }
 
-    fun getAllAdsNextPage(time: String, readDataCallback: ReadDataCallback?){
-        val query = db.orderByChild(GET_ALL_ADS).endBefore(time).limitToLast(ADS_LIMIT)
+    fun getAllAdsNextPage(time: String, filter: String, readDataCallback: ReadDataCallback?){
+        val query = if (filter.isEmpty()){
+            db.orderByChild(GET_ALL_ADS).endBefore(time).limitToLast(ADS_LIMIT)
+        } else {
+            getAllAdsByFilterNextPage(filter, time)
+        }
         readDataFromDb(query, readDataCallback)
+    }
+
+    fun getAllAdsByFilterNextPage(tempFilter: String, time: String): Query {
+        val orderBy = tempFilter.split("|")[0]
+        val filter = tempFilter.split("|")[1]
+        return db.orderByChild("/adFilter/$orderBy")
+            .endBefore(filter + "_$time").limitToLast(ADS_LIMIT)
+
     }
 
     fun getAllAdsFromCatFirstPage(cat: String, filter: String, readDataCallback: ReadDataCallback?){
