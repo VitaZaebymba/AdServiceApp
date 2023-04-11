@@ -174,7 +174,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     }
 
     private fun uploadImages() { // загрузка всех картинок
-        if(imageAdapter.mainArray.size == imageIndex) { // если нет картинок
+        if(imageIndex == 3) {
             dbManager.publishAd(ad!!, onPublishFinish())
             return
         }
@@ -212,6 +212,14 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         val uploadTask = imStorageRef.putBytes(byteArray) // записываем байты в путь на Storage, который указали
         uploadTask.continueWithTask { // ссылка с Firebase Storage на хранилище
             task -> imStorageRef.downloadUrl
+        }.addOnCompleteListener(listener)
+    }
+
+    private fun updateImage(byteArray: ByteArray, url: String, listener: OnCompleteListener<Uri>) {
+        val imStorageRef = dbManager.dbStorage.storage.getReferenceFromUrl(url) // место и название старой картинки, куда записываем новую
+        val uploadTask = imStorageRef.putBytes(byteArray)
+        uploadTask.continueWithTask {
+                task -> imStorageRef.downloadUrl
         }.addOnCompleteListener(listener)
     }
 
