@@ -318,8 +318,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     }
                 }
             } else {
-                val catTime = "${it.category}_${it.time}"
-                firebaseViewModel.loadAllAdsFromCatNextPage(catTime)
+                it.time?.let { it1 ->
+                    filterDb?.let { it2 ->
+                        firebaseViewModel.loadAllAdsFromCatNextPage(it.category!!, it1, it2)
+                    }
+                }
             }
         }
     }

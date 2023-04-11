@@ -73,9 +73,13 @@ class DatabaseManager {
         readDataFromDb(query, readDataCallback)
     }
 
+
+
+    /******** ИСПОЛЬЗОВАНИЕ ФИЛЬТРА - ПЛЯСКИ С БУБНОМ (НАЧАЛО) ********/
+
     fun getAllAdsFirstPage(filter: String, readDataCallback: ReadDataCallback?){
         val query = if (filter.isEmpty()){
-            db.orderByChild(GET_ALL_ADS).limitToLast(ADS_LIMIT)
+            db.orderByChild(ADFILTER_TIME).limitToLast(ADS_LIMIT)
         } else {
             getAllAdsByFilterFirstPage(filter)
         }
@@ -92,7 +96,7 @@ class DatabaseManager {
 
     fun getAllAdsNextPage(time: String, filter: String, readDataCallback: ReadDataCallback?){
         if (filter.isEmpty()){
-            val query = db.orderByChild(GET_ALL_ADS).endBefore(time).limitToLast(ADS_LIMIT)
+            val query = db.orderByChild(ADFILTER_TIME).endBefore(time).limitToLast(ADS_LIMIT)
             readDataFromDb(query, readDataCallback)
         } else {
             getAllAdsByFilterNextPage(filter, time, readDataCallback)
@@ -110,7 +114,7 @@ class DatabaseManager {
 
     fun getAllAdsFromCatFirstPage(cat: String, filter: String, readDataCallback: ReadDataCallback?){
         val query = if(filter.isEmpty()){
-            db.orderByChild(GET_ALL_ADS_FROM_CAT)
+            db.orderByChild(ADFILTER_CAT_TIME)
                 .startAt(cat).endAt(cat + "_\uf8ff")
                 .limitToLast(ADS_LIMIT) // если неизвестно время, то берем uf8ff
         } else {
@@ -124,13 +128,30 @@ class DatabaseManager {
         val filter = cat + "_" + tempFilter.split("|")[1]
         return db.orderByChild("/adFilter/$orderBy")
             .startAt(filter).endAt(filter + "\uf8ff").limitToLast(ADS_LIMIT) // если неизвестно время, то берем uf8ff
-
     }
 
-    fun getAllAdsFromCatNextPage(catTime: String, readDataCallback: ReadDataCallback?){
-        val query = db.orderByChild(GET_ALL_ADS_FROM_CAT).endBefore(catTime).limitToLast(ADS_LIMIT)
-        readDataFromDb(query, readDataCallback)
+    fun getAllAdsFromCatNextPage(cat: String, time: String, filter: String, readDataCallback: ReadDataCallback?){
+        if (filter.isEmpty()){
+            val query = db.orderByChild(ADFILTER_CAT_TIME).endBefore(cat + "_" + time).limitToLast(ADS_LIMIT)
+            readDataFromDb(query, readDataCallback)
+        } else {
+            getAllAdsFromCatByFilterNextPage(cat, time, filter, readDataCallback)
+        }
     }
+
+    fun getAllAdsFromCatByFilterNextPage(cat: String, time: String, tempFilter: String, readDataCallback: ReadDataCallback?) {
+        val orderBy = "cat_" + tempFilter.split("|")[0]
+        val filter = cat + "_" + tempFilter.split("|")[1]
+        val query = db.orderByChild("/adFilter/$orderBy")
+            .endBefore(filter + "_" + time).limitToLast(ADS_LIMIT)
+        readNextPageFromDb(query, filter, orderBy, readDataCallback)
+    }
+
+
+    /******** ИСПОЛЬЗОВАНИЕ ФИЛЬТРА - ПЛЯСКИ С БУБНОМ (КОНЕЦ) ********/
+
+
+
 
     fun  deleteAd(ad: Ad, listener: FinishWorkListener) {
         if (ad.key == null || ad.uid == null) return
@@ -234,8 +255,8 @@ class DatabaseManager {
         const val FAVS_NODE = "favs"
         const val ADS_LIMIT = 2
 
-        const val GET_ALL_ADS = "/adFilter/time"
-        const val GET_ALL_ADS_FROM_CAT = "/adFilter/cat_time"
+        const val ADFILTER_TIME = "/adFilter/time"
+        const val ADFILTER_CAT_TIME = "/adFilter/cat_time"
     }
 
 }
