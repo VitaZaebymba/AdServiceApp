@@ -169,33 +169,34 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     }
 
     private fun uploadImages() { // загрузка всех картинок
-        if(imageIndex == 3) {
+        if (imageIndex == 3) {
             dbManager.publishAd(ad!!, onPublishFinish())
             return
         }
         val oldUrl = getUrlFromAd()
-        if (imageAdapter.mainArray.size > imageIndex){
-        val byteArray = prepareImageByteArray(imageAdapter.mainArray[imageIndex]) // берем картинку с позиции imageIndex
-        if (oldUrl.startsWith("http")){
-            updateImage(byteArray, oldUrl) {
-                nextImage(it.result.toString())
+        if (imageAdapter.mainArray.size > imageIndex) {
+
+            val byteArray =
+                prepareImageByteArray(imageAdapter.mainArray[imageIndex]) // берем картинку с позиции imageIndex
+            if (oldUrl.startsWith("http")) {
+                updateImage(byteArray, oldUrl) { // на место старой картинки загружаем новую
+                    nextImage(it.result.toString())
+                }
+
+            } else {
+                uploadImage(byteArray) { // загружаем картинку в Storage и нам приходит ссылка
+                    nextImage(it.result.toString())
+                }
             }
 
         } else {
-            uploadImage(byteArray) { // загружаем картинку в Storage и нам приходит ссылка
-                // dbManager.publishAd(ad!!, onPublishFinish())
-                nextImage(it.result.toString())
+            if (oldUrl.startsWith("http")) {
+                deleteImageByUrl(oldUrl) {
+                    nextImage("empty")
+                }
+            } else {
+                nextImage("empty")
             }
-        }
-
-         } else {
-             if (oldUrl.startsWith("http")) {
-                 deleteImageByUrl(oldUrl) {
-                     nextImage("empty")
-                 }
-             } else {
-                 nextImage("empty")
-             }
         }
     }
 
