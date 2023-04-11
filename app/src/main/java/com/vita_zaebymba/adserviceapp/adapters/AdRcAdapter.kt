@@ -15,15 +15,22 @@ import com.vita_zaebymba.adserviceapp.activity.DescriptionActivity
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
 import com.vita_zaebymba.adserviceapp.model.Ad
 import com.vita_zaebymba.adserviceapp.databinding.AdListItemBinding
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHolder>() {
 
     val adArray = ArrayList<Ad>()
+    private var timeFormatter: SimpleDateFormat? = null
 
+    init {
+        timeFormatter = SimpleDateFormat("dd/MM/yy - HH:mm", Locale.getDefault())
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdHolder {
         val binding = AdListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return AdHolder(binding, act) // хранит ссылки на все view
+        return AdHolder(binding, act, timeFormatter!!) // хранит ссылки на все view
     }
 
     override fun onBindViewHolder(holder: AdHolder, position: Int) {
@@ -53,7 +60,7 @@ class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHol
     }
 
 
-    class AdHolder(val binding: AdListItemBinding, val act: MainActivity): RecyclerView.ViewHolder(binding.root) { // переиспользуем элементы, заполняем объявлениями
+    class AdHolder(val binding: AdListItemBinding, val act: MainActivity, val formatter: SimpleDateFormat): RecyclerView.ViewHolder(binding.root) { // переиспользуем элементы, заполняем объявлениями
 
         fun setData(ad: Ad) = with(binding) {
             tvTitleAdList.text = ad.title
@@ -61,6 +68,8 @@ class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHol
             tvPrice.text = ad.price
             tvViewCounter.text = ad.viewsCounter
             tvFavoriteCounter.text = ad.favCounter
+            val publishTime = "Время публикации: ${getTimeFromMillis(ad.time!!)}"
+            tvPublishTime.text = publishTime
 
             Picasso.get().load(ad.mainImage).into(mainImage) // показ картинки в объявлении на главной странице
 
@@ -68,6 +77,13 @@ class AdRcAdapter(val act: MainActivity): RecyclerView.Adapter<AdRcAdapter.AdHol
             showEditPanel(isOwner(ad))
             mainOnClick(ad)
         }
+
+        private fun getTimeFromMillis(timeMillis: String): String { // перевод времени
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = timeMillis.toLong()
+            return formatter.format(calendar.time)
+        }
+
 
         private fun mainOnClick(ad: Ad) = with(binding){
             ibFavorite.setOnClickListener {
