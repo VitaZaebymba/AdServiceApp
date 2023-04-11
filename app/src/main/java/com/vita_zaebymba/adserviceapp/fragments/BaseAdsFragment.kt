@@ -58,25 +58,19 @@ open class BaseAdsFragment: Fragment(), InterAdsClose { // класс для п�
     }
 
     fun showInterAd(){
-
         if (interAd != null){
             interAd?.fullScreenContentCallback = object : FullScreenContentCallback(){ // callback будет следить за рекламой, которая показалась
                 override fun onAdDismissedFullScreenContent() {
                     onClose()
                 }
-
                 override fun onAdFailedToShowFullScreenContent(p0: AdError) {
                     onClose()
                 }
-
             }
-
             interAd?.show(activity as Activity)
-
         } else {
             onClose()
         }
-
     }
 
     override fun onClose() {}

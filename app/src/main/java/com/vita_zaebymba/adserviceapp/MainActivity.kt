@@ -1,5 +1,6 @@
 package com.vita_zaebymba.adserviceapp
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,6 +18,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.navigation.NavigationView
@@ -58,6 +61,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        initAds()
         init()
         initRecyclerView()
         initViewModel()
@@ -84,6 +88,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onResume() {
         super.onResume()
         binding.toolbarMainContent.bNavView.selectedItemId = R.id.id_home // переброс на главную страницу с объявлениями
+        binding.toolbarMainContent.adView2.resume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.toolbarMainContent.adView2.pause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.toolbarMainContent.adView2.destroy()
+    }
+
+
+    private fun initAds(){
+        MobileAds.initialize(this)
+        val adRequest = AdRequest.Builder().build()
+        binding.toolbarMainContent.adView2.loadAd(adRequest)
     }
 
 
@@ -110,8 +132,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK){
                 filter = it.data?.getStringExtra(FilterActivity.FILTER_KEY)!! // переменная для сохранения состояния того, что выбрали в фильтре и возвращать его назад
-                Log.d("MyLog", "Filter: $filter")
-                Log.d("MyLog", "getFilter: ${FilterManager.getFilter(filter!!)}")
                 filterDb = FilterManager.getFilter(filter!!)
             } else if (it.resultCode == RESULT_CANCELED) {
                 filterDb = ""
@@ -301,9 +321,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(SCROLL_DOWN) && newState == RecyclerView.SCROLL_STATE_IDLE){
                    clearUpdate = false
-                    val adsList = firebaseViewModel.liveAdsData.value!!
-                    if (adsList.isNotEmpty()) {
-                        getAdsFromCat(adsList)
+                    val adsList = firebaseViewModel.liveAdsData.value
+                    if (adsList != null) {
+                        if (adsList.isNotEmpty()) {
+                            getAdsFromCat(adsList)
+                        }
                     }
                 }
             }
