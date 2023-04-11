@@ -17,9 +17,10 @@ data class Ad( // бд поместит сразу все значения
     val image2: String? = null,
     val image3: String? = null,
     val key: String? = null,
+    var favCounter: String? = "0",
     val uid: String? = null,
     val time: String? = "0",
-    var favCounter: String? = "0",
+
 
     var isFav: Boolean = false,
 

@@ -116,7 +116,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     fun onClickPublish(view: View){
        ad = fillAd() // заполнили ad
         if(isEditState){
-            ad?.copy(key = ad?.key)?.let { dbManager.publishAd(it, onPublishFinish()) } // передаем копию с измениями, асинхронная операция
+             dbManager.publishAd(ad!!, onPublishFinish()) // передаем копию с измениями, асинхронная операция
         } else {
             //dbManager.publishAd(adTemp, onPublishFinish()) // загрузка текстовой части объявления
             uploadImages()
@@ -132,10 +132,10 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         }
     }
 
-    private fun fillAd(): Ad{
-        val ad: Ad
+    private fun fillAd(): Ad {
+        val adTemp: Ad
         binding.apply {
-            ad = Ad(tvTitleWrite.text.toString(),
+            adTemp = Ad(tvTitleWrite.text.toString(),
                 tvChooseCountry.text.toString(),
                 tvChooseCity.text.toString(),
                 editTel.text.toString(),
@@ -145,16 +145,16 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
                 editPrice.text.toString(),
                 editTextDescription.text.toString(),
                 editEmail.text.toString(),
-                "empty",
-                "empty",
-                "empty",
-                dbManager.db.push().key, //генарация уникального ключа для пути
+                ad?.mainImage ?: "empty",
+                ad?.image2 ?: "empty",
+                ad?.image3 ?:"empty",
+                ad?.key ?: dbManager.db.push().key, //генарация уникального ключа для пути
+                "0",
                 dbManager.auth.uid,
-                System.currentTimeMillis().toString(),
-                "0"
+                ad?.time ?: System.currentTimeMillis().toString()
                 )
         }
-        return ad
+        return adTemp
     }
 
 

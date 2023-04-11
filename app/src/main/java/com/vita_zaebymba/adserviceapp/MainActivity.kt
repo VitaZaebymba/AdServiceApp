@@ -321,11 +321,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(SCROLL_DOWN) && newState == RecyclerView.SCROLL_STATE_IDLE){
                    clearUpdate = false
-                    val adsList = firebaseViewModel.liveAdsData.value
-                    if (adsList != null) {
-                        if (adsList.isNotEmpty()) {
-                            getAdsFromCat(adsList)
-                        }
+                    val adsList = firebaseViewModel.liveAdsData.value!!
+                        if (adsList.isNotEmpty()) { getAdsFromCat(adsList)
                     }
                 }
             }
