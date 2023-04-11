@@ -115,12 +115,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
 
     fun onClickPublish(view: View){
        ad = fillAd() // заполнили ad
-        if(isEditState){
-             dbManager.publishAd(ad!!, onPublishFinish()) // передаем копию с измениями, асинхронная операция
-        } else {
-            //dbManager.publishAd(adTemp, onPublishFinish()) // загрузка текстовой части объявления
-            uploadImages()
-        }
+       uploadImages()
     }
 
     private fun onPublishFinish(): DatabaseManager.FinishWorkListener{
@@ -178,10 +173,29 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
             dbManager.publishAd(ad!!, onPublishFinish())
             return
         }
+        val oldUrl = getUrlFromAd()
+        if (imageAdapter.mainArray.size > imageIndex){
         val byteArray = prepareImageByteArray(imageAdapter.mainArray[imageIndex]) // берем картинку с позиции imageIndex
-        uploadImage(byteArray) { // загружаем картинку в Storage и нам приходит ссылка
-            // dbManager.publishAd(ad!!, onPublishFinish())
-            nextImage(it.result.toString())
+        if (oldUrl.startsWith("http")){
+            updateImage(byteArray, oldUrl) {
+                nextImage(it.result.toString())
+            }
+
+        } else {
+            uploadImage(byteArray) { // загружаем картинку в Storage и нам приходит ссылка
+                // dbManager.publishAd(ad!!, onPublishFinish())
+                nextImage(it.result.toString())
+            }
+        }
+
+         } else {
+             if (oldUrl.startsWith("http")) {
+                 deleteImageByUrl(oldUrl) {
+                     nextImage("empty")
+                 }
+             } else {
+                 nextImage("empty")
+             }
         }
     }
 
@@ -199,6 +213,10 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         }
     }
 
+    private fun getUrlFromAd(): String {
+        return listOf(ad?.mainImage!!, ad?.image2!!, ad?.image3!!)[imageIndex]
+    }
+
     private fun prepareImageByteArray(bitmap: Bitmap): ByteArray { // берем нашу картинку как битмап и превращаем в байты
         val outStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 20, outStream) // сжатие картинки и превращение её в поток
@@ -213,6 +231,10 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         uploadTask.continueWithTask { // ссылка с Firebase Storage на хранилище
             task -> imStorageRef.downloadUrl
         }.addOnCompleteListener(listener)
+    }
+
+    private fun deleteImageByUrl(oldUrl: String, listener: OnCompleteListener<Void>){
+        dbManager.dbStorage.storage.getReferenceFromUrl(oldUrl).delete().addOnCompleteListener(listener)
     }
 
     private fun updateImage(byteArray: ByteArray, url: String, listener: OnCompleteListener<Uri>) {
