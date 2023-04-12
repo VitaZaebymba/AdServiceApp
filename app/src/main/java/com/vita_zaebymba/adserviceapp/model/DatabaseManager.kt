@@ -23,7 +23,7 @@ class DatabaseManager {
             val adFilter = FilterManager.createFilter(ad)
             db.child(ad.key ?: "Empty").child(FILTER_NODE).setValue(adFilter)
                 .addOnCompleteListener {
-                    finishListener.onFinish()
+                    finishListener.onFinish() // (it.isSuccessful)
                 }
         }
     }
@@ -49,7 +49,7 @@ class DatabaseManager {
     private fun addToFavs(ad: Ad, listener: FinishWorkListener){ // добавление в избранное
         ad.key?.let {
             auth.uid?.let { uid -> db.child(it).child(FAVS_NODE).child(uid).setValue(uid).addOnCompleteListener { // db - основной путь, it - key, далее - избранное (favs)
-                if(it.isSuccessful) listener.onFinish()
+                if(it.isSuccessful) listener.onFinish() // (true)
             } }
         }
     }
@@ -156,7 +156,7 @@ class DatabaseManager {
     fun  deleteAd(ad: Ad, listener: FinishWorkListener) {
         if (ad.key == null || ad.uid == null) return
         db.child(ad.key).child(ad.uid).removeValue().addOnCompleteListener { // ключ объявления - название узла, где находится объявление, операция асинхронная
-            if (it.isSuccessful) listener.onFinish()
+            if (it.isSuccessful) listener.onFinish() // (true)
         }
     }
 
@@ -244,7 +244,7 @@ class DatabaseManager {
     }
 
     interface FinishWorkListener { // чтобы знать, когда запись прошла
-        fun onFinish()
+        fun onFinish() // (isDone: Boolean)
     }
 
     companion object {

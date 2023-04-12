@@ -115,14 +115,16 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     }
 
     fun onClickPublish(view: View){
+       //binding.progressLayout.visibility = View.VISIBLE
        ad = fillAd() // заполнили ad
        uploadImages()
     }
 
     private fun onPublishFinish(): DatabaseManager.FinishWorkListener{
         return object: DatabaseManager.FinishWorkListener{
-            override fun onFinish() {
-                finish() // закрываем активити, зная, что данные все опубликовались
+            override fun onFinish() { // (isDone: Boolean)
+                //binding.progressLayout.visibility = View.GONE
+                finish() // закрываем активити, зная, что данные все опубликовались if (isDone)
             }
 
         }
