@@ -242,14 +242,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         clearUpdate = true
 
         when(item.itemId){
-            R.id.id_my_ads -> {
-                supportActionBar?.title = getString(R.string.ad_my_ads)
-                firebaseViewModel.loadMyAds()
-            }
-            R.id.id_favourites -> {
-                supportActionBar?.title = getString(R.string.ad_favourites)
-                firebaseViewModel.loadMyFavs()
-            }
+
             R.id.id_car -> {
                 getAdsFromCat(getString(R.string.ad_car))
                 supportActionBar?.setTitle(getString(R.string.ad_car))
@@ -262,6 +255,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 getAdsFromCat(getString(R.string.ad_phones))
                 supportActionBar?.setTitle(getString(R.string.ad_phones))
             }
+            R.id.id_consoles -> {
+                getAdsFromCat(getString(R.string.ad_consoles))
+                supportActionBar?.setTitle(getString(R.string.ad_consoles))
+            }
             R.id.id_dm -> {
                 getAdsFromCat(getString(R.string.ad_dm))
                 supportActionBar?.setTitle(getString(R.string.ad_dm))
@@ -270,6 +267,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 getAdsFromCat(getString(R.string.ad_witcher))
                 supportActionBar?.setTitle(getString(R.string.ad_witcher))
             }
+
+
             R.id.id_sign_up -> {
                 dialogHelper.createSignDialog(DialogConst.SIGN_UP_STATE) // создание диалогового окна с регистрацией
             }

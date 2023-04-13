@@ -5,14 +5,6 @@
 
     <item android:title="@string/ad_cat1">
         <menu>
-          <item
-              android:title="@string/ad_my_ads"
-              android:id="@+id/id_my_ads"
-              />
-            <item
-                android:title="@string/ad_favourites"
-                android:id="@+id/id_favourites"
-                />
             <item
                 android:title="@string/ad_car"
                 android:id="@+id/id_car"
@@ -28,6 +20,10 @@
             <item
                 android:title="@string/ad_dm"
                 android:id="@+id/id_dm"
+                />
+            <item
+                android:title="@string/ad_consoles"
+                android:id="@+id/id_consoles"
                 />
             <item
                 android:title="@string/ad_witcher"
