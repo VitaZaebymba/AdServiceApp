@@ -31,6 +31,7 @@ import com.vita_zaebymba.adserviceapp.accounthelper.AccountHelper
 import com.vita_zaebymba.adserviceapp.activity.DescriptionActivity
 import com.vita_zaebymba.adserviceapp.activity.EditAdAct
 import com.vita_zaebymba.adserviceapp.activity.FilterActivity
+import com.vita_zaebymba.adserviceapp.activity.showToast
 import com.vita_zaebymba.adserviceapp.adapters.AdRcAdapter
 import com.vita_zaebymba.adserviceapp.databinding.ActivityMainBinding
 import com.vita_zaebymba.adserviceapp.dialoghelper.DialogConst
@@ -196,8 +197,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             clearUpdate = true
                 when(item.itemId){
                     R.id.id_new_ad -> {
-                        val i = Intent(this@MainActivity, EditAdAct::class.java) // активити нового элемента
-                        startActivity(i)
+                        if (mAuth.currentUser != null) {
+                            if (!mAuth.currentUser?.isAnonymous!!) {
+                                val i = Intent(this@MainActivity, EditAdAct::class.java) // активити нового элемента
+                                startActivity(i)
+                            } else {
+                                val guestErr = getString(R.string.guest_err)
+                                showToast(guestErr)
+                            }
+                        } else {
+                            val errReg = getString(R.string.reg_error)
+                            showToast(errReg)
+                        }
                     }
                     R.id.id_my_ads -> {
                         firebaseViewModel.loadMyAds()

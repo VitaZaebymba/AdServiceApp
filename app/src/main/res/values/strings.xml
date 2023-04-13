@@ -57,7 +57,7 @@
     <string name="price">Цена</string>
     <string name="price_hint">*Укажите цену</string>
     <string name="description">Описание</string>
-    <string name="description_hint">Описание</string>
+    <string name="description_hint">Добавьте описание</string>
     <string name="delivery">Отправить доставкой</string>
     <string name="delivery_send">Доставка</string>
     <string name="publish">Разместить объявление</string>
@@ -85,7 +85,10 @@
 
 
     <string name="publish_time">Время публикации:</string>
+
     <string name="fields">Внимание! Все поля со звездочкой должны быть заполнены и добавлено минимум одно фото!</string>
+    <string name="reg_error">Ошибка регистрации!</string>
+    <string name="guest_err">Войдите или зарегистрируйтесь, чтобы опубликовать объявление!</string>
 
 
 </resources>
