@@ -243,30 +243,35 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         when(item.itemId){
             R.id.id_my_ads -> {
-                Toast.makeText(this, "Pressed to ads", Toast.LENGTH_LONG).show()
+                supportActionBar?.title = getString(R.string.ad_my_ads)
+                firebaseViewModel.loadMyAds()
             }
             R.id.id_favourites -> {
-                Toast.makeText(this, "Pressed to favourites", Toast.LENGTH_LONG).show()
+                supportActionBar?.title = getString(R.string.ad_favourites)
+                firebaseViewModel.loadMyFavs()
             }
             R.id.id_car -> {
                 getAdsFromCat(getString(R.string.ad_car))
+                supportActionBar?.setTitle(getString(R.string.ad_car))
             }
             R.id.id_pc -> {
                 getAdsFromCat(getString(R.string.ad_pc))
+                supportActionBar?.setTitle(getString(R.string.ad_pc))
             }
             R.id.id_phones -> {
                 getAdsFromCat(getString(R.string.ad_phones))
+                supportActionBar?.setTitle(getString(R.string.ad_phones))
             }
             R.id.id_dm -> {
                 getAdsFromCat(getString(R.string.ad_dm))
+                supportActionBar?.setTitle(getString(R.string.ad_dm))
             }
             R.id.id_witcher -> {
                 getAdsFromCat(getString(R.string.ad_witcher))
+                supportActionBar?.setTitle(getString(R.string.ad_witcher))
             }
             R.id.id_sign_up -> {
-
                 dialogHelper.createSignDialog(DialogConst.SIGN_UP_STATE) // создание диалогового окна с регистрацией
-
             }
             R.id.id_sign_in -> {
                 dialogHelper.createSignDialog(DialogConst.SIGN_IN_STATE)

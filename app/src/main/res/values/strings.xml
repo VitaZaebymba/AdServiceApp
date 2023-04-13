@@ -89,6 +89,7 @@
     <string name="fields">Внимание! Все поля со звездочкой должны быть заполнены и добавлено минимум одно фото!</string>
     <string name="reg_error">Ошибка регистрации!</string>
     <string name="guest_err">Войдите или зарегистрируйтесь, чтобы опубликовать объявление!</string>
+    <string name="filter_ad">Фильтр</string>
 
 
 </resources>

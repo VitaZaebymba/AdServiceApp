@@ -194,8 +194,7 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
         val oldUrl = getUrlFromAd()
         if (imageAdapter.mainArray.size > imageIndex) {
 
-            val byteArray =
-                prepareImageByteArray(imageAdapter.mainArray[imageIndex]) // берем картинку с позиции imageIndex
+            val byteArray = prepareImageByteArray(imageAdapter.mainArray[imageIndex]) // берем картинку с позиции imageIndex
             if (oldUrl.startsWith("http")) {
                 updateImage(byteArray, oldUrl) { // на место старой картинки загружаем новую
                     nextImage(it.result.toString())

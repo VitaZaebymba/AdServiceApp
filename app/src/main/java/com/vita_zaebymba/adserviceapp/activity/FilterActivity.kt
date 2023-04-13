@@ -108,6 +108,7 @@ class FilterActivity : AppCompatActivity() {
 
     fun actionBarSettings(){
         val ab = supportActionBar
+        supportActionBar?.title = getString(R.string.filter_ad)
         ab?.setDisplayHomeAsUpEnabled(true)
     }
 

@@ -162,7 +162,24 @@ class DatabaseManager {
             "/${ad.uid}" to null
         )
         db.child(ad.key).updateChildren(map).addOnCompleteListener { // ключ объявления - название узла, где находится объявление, операция асинхронная
-            if (it.isSuccessful) listener.onFinish() // (true)
+            if (it.isSuccessful) deleteImagesFromStorage(ad, 0, listener)
+        }
+    }
+
+    private fun deleteImagesFromStorage(ad: Ad, index: Int, listener: FinishWorkListener) {
+        val imageList = listOf(ad.mainImage, ad.image2, ad.image3)
+        dbStorage.storage.getReferenceFromUrl(imageList[index]!!).delete().addOnCompleteListener { // ключ объявления - название узла, где находится объявление, операция асинхронная
+            if (it.isSuccessful) { // (true)
+                if (imageList.size > index + 1) {
+                    if (imageList[index + 1] != "empty") {
+                        deleteImagesFromStorage(ad, index + 1, listener)
+                    } else {
+                        listener.onFinish()
+                    }
+                } else {
+                    listener.onFinish()
+                }
+            }
         }
     }
 
