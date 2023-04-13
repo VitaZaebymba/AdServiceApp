@@ -115,18 +115,32 @@ class EditAdAct : AppCompatActivity(), FragmentCloseInterface {
     }
 
     fun onClickPublish(view: View){
-       //binding.progressLayout.visibility = View.VISIBLE
+        if (isFieldsEmpty()){
+            val fieldsString = getString(R.string.fields)
+            showToast(fieldsString)
+            return
+        }
+       binding.progressLayout.visibility = View.VISIBLE
        ad = fillAd() // заполнили ad
        uploadImages()
+    }
+
+    private fun isFieldsEmpty(): Boolean = with(binding){
+        return tvChooseCountry.text.toString() == getString(R.string.choose_country)
+                || tvChooseCity.text.toString() == getString(R.string.choose_city)
+                || tvCategory.text.toString() == getString(R.string.select_category)
+                || tvTitleWrite.text.isEmpty()
+                || editPrice.text.isEmpty()
+                || editTel.text.isEmpty()
+                || imageAdapter.mainArray.size == 0
     }
 
     private fun onPublishFinish(): DatabaseManager.FinishWorkListener{
         return object: DatabaseManager.FinishWorkListener{
             override fun onFinish() { // (isDone: Boolean)
-                //binding.progressLayout.visibility = View.GONE
+                binding.progressLayout.visibility = View.GONE
                 finish() // закрываем активити, зная, что данные все опубликовались if (isDone)
             }
-
         }
     }
 
