@@ -5,3 +5,4 @@ data class InfoItem ( // класс для нового узла
     val emailCounter: String? = null,
     val callsCounter: String? = null
 )
+

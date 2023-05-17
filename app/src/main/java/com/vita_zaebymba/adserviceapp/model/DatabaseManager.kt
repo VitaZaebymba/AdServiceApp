@@ -276,7 +276,7 @@ class DatabaseManager {
         const val MAIN_NODE = "main"
         const val INFO_NODE = "info"
         const val FAVS_NODE = "favs"
-        const val ADS_LIMIT = 2
+        const val ADS_LIMIT = 30
 
         const val ADFILTER_TIME = "/adFilter/time"
         const val ADFILTER_CAT_TIME = "/adFilter/cat_time"
