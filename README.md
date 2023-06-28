@@ -26,9 +26,20 @@
 - Firebase Authentication.
 
 ![image](https://github.com/VitaZaebymba/AdServiceApp/assets/70800965/85bd0fe8-fb8e-4617-86ea-cd81d1ea693a)
+
+*Рисунок 1 - Экраны разделов (слева направо): разное, избранное, мои объявления [разработано автором]*
+
 ![image](https://github.com/VitaZaebymba/AdServiceApp/assets/70800965/0739edfa-9b9f-4bb4-845f-dcf7d51f5bbf)
+
+*Рисунок 2 - Шаблон объявления [разработано автором]*
+
 ![image](https://github.com/VitaZaebymba/AdServiceApp/assets/70800965/f773f334-fc97-4c2b-9383-95a5266d3bde)
+
+*Рисунок 3 - Экран с подробной информацией об объявлении, звонок продавцу  [разработано автором]*
+
 ![image](https://github.com/VitaZaebymba/AdServiceApp/assets/70800965/c73ec1a3-e231-4044-b3a2-1c576b7d18f9)
+
+*Рисунок 4 - Боковое меню [разработано автором]*
 
 
 
