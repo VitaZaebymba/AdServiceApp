@@ -35,7 +35,6 @@ class AccountHelper(act:MainActivity) {
                     }
                 }
             }
-
         }
     }
 
