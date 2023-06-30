@@ -18,7 +18,6 @@ class SelectImageRvAdapter(val adapterCallback: AdapterCallback): RecyclerView.A
     val mainArray = ArrayList<Bitmap> ()//список со всеми item
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
-
         val viewBinding = SelectImageFragItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)  // шаблон
         return ImageHolder(viewBinding, parent.context, this)
     }
